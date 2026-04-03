@@ -1,0 +1,1695 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>AduKid_AI | لوحة تعلم KG1</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="لوحة متابعة تعلم الطفل في مرحلة KG1 - منصة AduKid_AI للتعلم بالذكاء الاصطناعي"
+  />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ========== CSS Reset ========== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: linear-gradient(135deg, #fff5e6 0%, #fff9f0 100%);
+      color: #2d3748;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    body.sidebar-open {
+      overflow: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    /* ========== التصميم الرئيسي ========== */
+    .main-card {
+      background: white;
+      border-radius: 30px;
+      box-shadow: 0 15px 50px rgba(232, 130, 42, 0.15);
+      padding: 3rem;
+      position: relative;
+      overflow: hidden;
+      border: 3px solid #ffe0b8;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 3px dashed #ffd1a4;
+    }
+
+    .logo {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #e8822a;
+      margin-bottom: 0.5rem;
+      text-shadow: 2px 2px 4px rgba(232, 130, 42, 0.2);
+    }
+
+    .tagline {
+      color: #718096;
+      font-size: 1.2rem;
+      font-weight: 500;
+    }
+
+    /* ========== تخطيط الصفحة ========== */
+    .dashboard-section {
+      display: grid;
+      gap: 2rem;
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #e8822a;
+      margin-bottom: 1.5rem;
+      padding-right: 0.5rem;
+      border-right: 4px solid #e8822a;
+      background: linear-gradient(135deg, #fff8f0 0%, transparent 100%);
+      padding: 0.8rem 1rem;
+      border-radius: 15px;
+    }
+
+    /* ========== شبكة النظرة العامة ========== */
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .overview-card {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      border: 1px solid #ffe0b8;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+    }
+
+    .overview-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(232, 130, 42, 0.15);
+    }
+
+    .overview-card.hero-card {
+      background: linear-gradient(135deg, rgba(17, 138, 178, 0.12) 0%, rgba(17, 138, 178, 0.05) 100%);
+      border: 2px solid #118ab2;
+    }
+
+    .overview-card h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #118ab2;
+      margin-bottom: 1rem;
+    }
+
+    .overview-card p {
+      color: #4a5568;
+      margin-bottom: 1rem;
+    }
+
+    .progress-ring {
+      display: grid;
+      place-items: center;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: white;
+      border: 10px solid #118ab2;
+      margin: 0 auto 1rem;
+      box-shadow: inset 0 0 0 10px rgba(17, 138, 178, 0.28);
+    }
+
+    .progress-ring span {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #118ab2;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 1rem;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      background: rgba(17, 138, 178, 0.18);
+      color: #118ab2;
+    }
+
+    .pill.orange {
+      background: rgba(232, 130, 42, 0.18);
+      color: #e8822a;
+    }
+
+    .pill.green {
+      background: rgba(16, 185, 129, 0.18);
+      color: #10b981;
+    }
+
+    .tasks-list, .notes-list {
+      margin: 0;
+      padding-right: 1.4rem;
+      color: #4a5568;
+    }
+
+    .tasks-list li, .notes-list li {
+      margin-bottom: 0.5rem;
+    }
+
+    /* ========== شبكة الإحصائيات ========== */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      text-align: center;
+      border: 1px solid #ffe0b8;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .stat-value {
+      display: block;
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #e8822a;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: #718096;
+    }
+
+    .stat-trend {
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
+    }
+
+    .stat-trend.positive {
+      color: #10b981;
+    }
+
+    .stat-trend.neutral {
+      color: #6b7280;
+    }
+
+    /* ========== شبكة التقدم ========== */
+    .progress-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .progress-card {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      border: 1px solid #ffe0b8;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .progress-card h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #118ab2;
+      margin-bottom: 1rem;
+    }
+
+    .progress-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+    }
+
+    .progress-bar {
+      height: 10px;
+      background: #e5e7eb;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(135deg, #e8822a, #ff9d45);
+      border-radius: 5px;
+      transition: width 0.5s ease;
+    }
+
+    /* ========== الخطة الأسبوعية ========== */
+    .weekly-plan {
+      background: white;
+      border-radius: 15px;
+      padding: 2rem;
+      border: 1px solid #ffe0b8;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+      margin-bottom: 2rem;
+    }
+
+    .weekly-plan header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .weekly-plan h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #118ab2;
+      margin: 0;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #ffe0b8;
+      color: #e8822a;
+      padding: 0.4rem 1rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .plan-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+
+    .plan-card {
+      background: rgba(17, 138, 178, 0.12);
+      border-radius: 10px;
+      padding: 1.2rem;
+      border: 1px solid #118ab2;
+    }
+
+    .plan-card strong {
+      font-size: 1.1rem;
+      color: #118ab2;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .plan-card p {
+      color: #4a5568;
+      margin: 0 0 0.5rem 0;
+    }
+
+    /* ========== التذكيرات ========== */
+    .reminder-card {
+      background: white;
+      border-radius: 15px;
+      padding: 2rem;
+      border: 1px solid #ffe0b8;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .reminder-card h3 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #118ab2;
+      margin-bottom: 1rem;
+    }
+
+    .cta-row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+    }
+
+    .form-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, #e8822a, #ff9d45);
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    .form-button:hover {
+      background: linear-gradient(135deg, #ff9d45, #e8822a);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(232, 130, 42, 0.3);
+    }
+
+    .btn-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: transparent;
+      color: #e8822a;
+      padding: 0.8rem 1.5rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      border: 2px solid #e8822a;
+    }
+
+    .btn-pill:hover {
+      background: #fff5e6;
+      transform: translateY(-2px);
+    }
+
+    /* ========== التصميم الديكوري ========== */
+    .decoration {
+      position: absolute;
+      opacity: 0.15;
+      z-index: 0;
+    }
+
+    .decoration-1 {
+      top: -30px;
+      left: -30px;
+      width: 150px;
+      height: 150px;
+      background: #e8822a;
+      border-radius: 50%;
+    }
+
+    .decoration-2 {
+      bottom: -40px;
+      right: -40px;
+      width: 180px;
+      height: 180px;
+      background: #4299e1;
+      border-radius: 50%;
+    }
+
+    .decoration-3 {
+      top: 20%;
+      left: 30px;
+      width: 80px;
+      height: 80px;
+      background: #38b2ac;
+      border-radius: 20px;
+      transform: rotate(45deg);
+    }
+
+    .decoration-4 {
+      bottom: 30%;
+      right: 10%;
+      width: 60px;
+      height: 60px;
+      background: #ff9d45;
+      border-radius: 50%;
+    }
+
+    .content-wrapper {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ========== إيموجيز وإضافات طفولية ========== */
+    .fun-emoji {
+      font-size: 1.2rem;
+      margin-left: 0.3rem;
+    }
+
+    .child-friendly {
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="%23e8822a" opacity="0.1"/></svg>');
+      background-size: 200px 200px;
+    }
+
+    /* ========== القائمة الجانبية ========== */
+    .sidebar-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      background: #e8822a;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 10px 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: all 0.3s;
+      font-family: 'Tajawal', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      gap: 8px;
+    }
+
+    .sidebar-toggle:hover {
+      background: #ff9d45;
+      transform: scale(1.05);
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 300px;
+      height: 100%;
+      background: white;
+      box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+      z-index: 2000;
+      transition: right 0.3s ease;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    
+    .sidebar.active {
+      right: 0;
+    }
+    
+    .sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1999;
+      display: none;
+    }
+    
+    .sidebar-overlay.active {
+      display: block;
+    }
+    
+    .sidebar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .sidebar-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #666;
+    }
+    
+    .sidebar-user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      padding: 10px;
+      background: #fffaf0;
+      border-radius: 10px;
+    }
+    
+    .sidebar-user-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #e8822a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 20px;
+    }
+    
+    .sidebar-user-info h3 {
+      margin: 0;
+      font-size: 16px;
+    }
+    
+    .sidebar-user-info p {
+      margin: 0;
+      font-size: 14px;
+      color: #666;
+    }
+    
+    .sidebar-menu {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .sidebar-menu li {
+      margin-bottom: 5px;
+    }
+    
+    .sidebar-menu a {
+      display: block;
+      padding: 12px 15px;
+      text-decoration: none;
+      color: #333;
+      border-radius: 8px;
+      transition: all 0.3s;
+    }
+    
+    .sidebar-menu a:hover {
+      background: #fff5e6;
+    }
+    
+    .sidebar-menu a.active {
+      background: #e8822a;
+      color: white;
+    }
+    
+    .sidebar-footer {
+      margin-top: 30px;
+      padding-top: 15px;
+      border-top: 1px solid #eee;
+    }
+    
+    .logout-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 12px 15px;
+      background: #ffe0b8;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+    
+    .logout-btn:hover {
+      background: #ffd1a4;
+    }
+
+    /* ========== أزرار الرجوع والذكاء الاصطناعي ========== */
+    .floating-buttons {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      z-index: 1000;
+    }
+
+    .floating-btn {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .back-btn {
+      background: linear-gradient(135deg, #118ab2, #06d6a0);
+      color: white;
+    }
+
+    .ai-btn {
+      background: linear-gradient(135deg, #e8822a, #ff9d45);
+      color: white;
+    }
+
+    .floating-btn:hover {
+      transform: translateY(-5px) scale(1.1);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    /* ========== نافذة الذكاء الاصطناعي ========== */
+    .ai-modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90%;
+      max-width: 800px;
+      height: 80vh;
+      background: rgba(20, 20, 30, 0.95);
+      border-radius: 15px;
+      box-shadow: 0 0 25px rgba(155, 89, 182, 0.7);
+      z-index: 3000;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      animation: pulseGlow 4s infinite alternate;
+    }
+
+    @keyframes pulseGlow {
+      from { box-shadow: 0 0 18px rgba(155, 89, 182, 0.5); }
+      to { box-shadow: 0 0 30px rgba(155, 89, 182, 0.9); }
+    }
+
+    .ai-modal.active {
+      display: flex;
+    }
+
+    .ai-modal-header {
+      background: #9b59b6;
+      color: white;
+      padding: 12px;
+      font-weight: bold;
+      font-size: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      letter-spacing: 0.5px;
+      text-shadow: 0 0 6px #000;
+    }
+
+    .ai-modal-close {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .ai-modal-content {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      background: rgba(10, 10, 20, 0.7);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ai-message {
+      max-width: 75%;
+      padding: 12px 16px;
+      border-radius: 12px;
+      margin: 8px 0;
+      font-size: 15px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      opacity: 0;
+      transform: translateY(15px);
+      animation: fadeSlideIn 0.5s forwards;
+    }
+
+    .ai-user {
+      align-self: flex-end;
+      background: linear-gradient(135deg, #8e44ad, #3498db);
+      color: white;
+      border-bottom-right-radius: 0;
+    }
+
+    .ai-bot {
+      align-self: flex-start;
+      background: rgba(255,255,255,0.1);
+      color: #ecf0f1;
+      border-bottom-left-radius: 0;
+    }
+
+    @keyframes fadeSlideIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .ai-modal-form {
+      display: flex;
+      border-top: 1px solid rgba(255,255,255,0.2);
+      background: rgba(0,0,0,0.8);
+    }
+
+    .ai-modal-form input {
+      flex: 1;
+      border: none;
+      padding: 15px;
+      font-size: 16px;
+      background: transparent;
+      color: #fff;
+    }
+    .ai-modal-form input::placeholder {
+      color: rgba(200,200,200,0.6);
+    }
+
+    .ai-modal-form button {
+      background: linear-gradient(135deg, #9b59b6, #8e44ad);
+      border: none;
+      color: white;
+      padding: 0 25px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.3s;
+      text-shadow: 0 0 5px #000;
+      box-shadow: 0 0 10px #9b59b6;
+    }
+    .ai-modal-form button:hover {
+      background: linear-gradient(135deg, #8e44ad, #6a0dad);
+      transform: scale(1.05);
+    }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      z-index: 2999;
+      display: none;
+    }
+
+    .modal-overlay.active {
+      display: block;
+    }
+
+    /* ========== التجاوب ========== */
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+      
+      .main-card {
+        padding: 2rem 1.5rem;
+        border-radius: 25px;
+      }
+      
+      .logo {
+        font-size: 2rem;
+      }
+      
+      .section-title {
+        font-size: 1.3rem;
+      }
+      
+      .overview-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .progress-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .plan-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .weekly-plan header {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .cta-row {
+        flex-direction: column;
+      }
+      
+      .form-button, .btn-pill {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .sidebar {
+        width: 100%;
+        right: -100%;
+      }
+      
+      .floating-buttons {
+        left: 20px;
+        bottom: 20px;
+      }
+      
+      .floating-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+      }
+      
+      .ai-modal {
+        width: 95%;
+        height: 85vh;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .main-card {
+        padding: 1.5rem 1rem;
+        border-radius: 20px;
+      }
+      
+      .logo {
+        font-size: 1.8rem;
+      }
+      
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .floating-buttons {
+        left: 15px;
+        bottom: 15px;
+      }
+    }
+
+    /* ========== الهيدر الثابت الجديد ========== */
+    .main-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 70px;
+      background: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      z-index: 1100;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .header-container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-logo {
+      height: 50px;
+      object-fit: contain;
+    }
+
+    .sidebar-toggle-btn {
+      background: #e8822a;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 8px 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: all 0.3s;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    .sidebar-toggle-btn:hover {
+      background: #ff9d45;
+      transform: scale(1.05);
+    }
+
+    body {
+      padding-top: 80px !important;
+    }
+
+    .sidebar-toggle {
+      display: none !important;
+    }
+
+    /* ========== Attendance Modal Styles ========== */
+    .attendance-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      z-index: 4000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(5px);
+    }
+    
+    .attendance-modal-overlay.active {
+      display: flex;
+    }
+    
+    .attendance-modal {
+      background: white;
+      width: 90%;
+      max-width: 500px;
+      padding: 2.5rem;
+      border-radius: 25px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      border: 3px solid #e8822a;
+      animation: modalSlideUp 0.4s ease;
+    }
+    
+    @keyframes modalSlideUp {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    
+    .attendance-modal h2 {
+      color: #e8822a;
+      margin-bottom: 1rem;
+      font-size: 1.8rem;
+    }
+    
+    .attendance-modal p {
+      color: #4a5568;
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+    }
+    
+    .attendance-options {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .attendance-btn {
+      padding: 1rem;
+      border-radius: 15px;
+      border: none;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-family: 'Tajawal', sans-serif;
+    }
+    
+    .btn-present {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+    }
+    
+    .btn-present:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+    }
+    
+    .btn-excused {
+      background: #fff5e6;
+      color: #e8822a;
+      border: 2px solid #e8822a;
+    }
+    
+    .btn-excused:hover {
+      background: #ffe0b8;
+    }
+  </style>
+</head>
+<body class="child-friendly">
+  <!-- الهيدر الثابت -->
+  <header class="main-header">
+    <div class="header-container">
+      <div class="header-logo-container">
+        <img src="logo.jpeg" alt="EduKid AI Logo" class="header-logo">
+      </div>
+      <button class="sidebar-toggle-btn" id="headerSidebarToggle">
+        <span>القائمة</span>
+        <span>☰</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- زر القائمة الجانبية القديم (مخفي عبر CSS) -->
+  <button class="sidebar-toggle">☰ القائمة</button>
+  
+  <!-- القائمة الجانبية -->
+  <div class="sidebar-overlay"></div>
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2>القائمة الرئيسية</h2>
+      <button class="sidebar-close">×</button>
+    </div>
+    
+    <div class="sidebar-user">
+      <div class="sidebar-user-avatar" id="user-avatar">و</div>
+      <div class="sidebar-user-info">
+        <h3 id="sidebar-parent-name">ولي الأمر</h3>
+        <p id="sidebar-children">الأطفال: نور، عمر</p>
+      </div>
+    </div>
+    
+    <ul class="sidebar-menu">
+      <li><a href="index.html">الصفحة الرئيسية</a></li>
+      <li><a href="dashboard-kg1.html" class="active">لوحة تعلم KG1</a></li>
+      <li><a href="games.html">الألعاب التعليمية</a></li>
+      <li><a href="books.html">المكتبة الرقمية</a></li>
+      <li><a href="stories.html">القصص الصوتية</a></li>
+      <li><a href="parent-report.html">لوحة ولي الأمر</a></li>
+    </ul>
+    
+    <div class="sidebar-footer">
+      <button class="logout-btn" id="logout-btn">
+        <span>تسجيل الخروج</span>
+        <span>🚪</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- مودال تسجيل الحضور -->
+  <div class="attendance-modal-overlay" id="attendanceModalOverlay">
+    <div class="attendance-modal">
+      <h2>صباح الخير يا بطل! ☀️</h2>
+      <p>أهلاً بك في يوم جديد من التعلم والمغامرة. من فضلك سجل حضورك لليوم لنبدأ رحلتنا الممتعة!</p>
+      <div class="attendance-options">
+        <button class="attendance-btn btn-present" onclick="handleQuickAttendance('present')">حاضر ومستعد! ✅</button>
+        <button class="attendance-btn btn-excused" onclick="handleQuickAttendance('excused')">سأغيب اليوم (بعذر) 📝</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- أزرار الرجوع والذكاء الاصطناعي -->
+  <div class="floating-buttons">
+    <a href="index.html" class="floating-btn back-btn">🏠</a>
+    <button class="floating-btn ai-btn" id="ai-btn">🤖</button>
+  </div>
+
+  <!-- نافذة الذكاء الاصطناعي -->
+  <div class="modal-overlay" id="ai-modal-overlay"></div>
+  <div class="ai-modal" id="ai-modal">
+    <div class="ai-modal-header">
+      <span>🤖 مساعد AduKid_AI</span>
+      <button class="ai-modal-close" id="ai-modal-close">×</button>
+    </div>
+    <div class="ai-modal-content" id="ai-modal-content">
+      <div class="ai-message ai-bot">
+        مرحباً! أنا مساعد AduKid_AI 🤖. كيف يمكنني مساعدتك في تعلم طفلك في مرحلة KG1 اليوم؟
+      </div>
+    </div>
+    <form class="ai-modal-form" id="ai-modal-form">
+      <input type="text" id="ai-user-input" placeholder="اكتب رسالتك هنا..." required />
+      <button type="submit">إرسال</button>
+    </form>
+  </div>
+
+  <div class="container">
+    <div class="main-card">
+      <!-- العناصر الديكورية -->
+      <div class="decoration decoration-1"></div>
+      <div class="decoration decoration-2"></div>
+      <div class="decoration decoration-3"></div>
+      <div class="decoration decoration-4"></div>
+      
+      <div class="content-wrapper">
+        <!-- الهيدر -->
+        <div class="header">
+          <div class="logo">AduKid_AI <span class="fun-emoji">🧩</span></div>
+          <div class="tagline">لوحة متابعة تعلم مرحلة KG1 - معرض ISEF 2025</div>
+        </div>
+
+        <!-- محتوى لوحة KG1 -->
+        <div class="dashboard-section">
+          <h2 class="section-title">لوحة متابعة KG1 <span class="fun-emoji">🌟</span></h2>
+          
+          <!-- قسم اختيار الطفل (مخفي برمجياً إذا وجد مستخدم واحد) -->
+          <section class="children-selector" id="children-selector-section">
+            <button class="child-card active" data-child-id="kg1">
+              <div class="child-avatar">ط</div>
+              <span class="child-name" id="display-student-name">الطالب</span>
+            </button>
+          </section>
+
+          <!-- شريط معلومات الطفل المختار -->
+          <div class="selected-child-bar">
+            <span id="selected-child-info">جاري تحميل البيانات...</span>
+          </div>
+
+          <!-- إحصائيات سريعة -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <span class="stat-value" id="attendance-rate">92%</span>
+              <span class="stat-label">معدل التفاعل الأكاديمي</span>
+              <span class="stat-trend positive" id="academic-trend">يتغير حسب اللعب والقراءة والاستماع</span>
+            </div>
+            
+            <div class="stat-card">
+              <span class="stat-value" id="completed-activities">14/16</span>
+              <span class="stat-label">الأنشطة المكتملة</span>
+              <span class="stat-trend neutral" id="activities-trend">يتم تحديثه تلقائيا من النشاط الفعلي</span>
+            </div>
+            
+            <div class="stat-card">
+              <span class="stat-value" id="mastered-skills">5</span>
+              <span class="stat-label">المهارات المتقنة</span>
+              <span class="stat-trend" id="skills-trend">تظهر عند وصول المادة إلى 60% فأكثر</span>
+            </div>
+            
+            <div class="stat-card">
+              <span class="stat-value" id="behavior-notes">0</span>
+              <span class="stat-label">مؤشر المهارات الحياتية</span>
+              <span class="stat-trend positive" id="life-trend">يرتفع مع القصص والتفاعل المتنوع</span>
+            </div>
+          </div>
+
+          <!-- تقدم الأطفال -->
+          <div class="progress-grid">
+            <div class="progress-card">
+              <h3>منحنى التقدم الأكاديمي</h3>
+              <div class="progress-item">
+                <div class="progress-meta">
+                  <span>اللغة العربية</span>
+                  <span>82%</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-bar-fill" style="width: 82%"></div>
+                </div>
+              </div>
+              <div class="progress-item">
+                <div class="progress-meta">
+                  <span>الرياضيات</span>
+                  <span>75%</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-bar-fill" style="width: 75%"></div>
+                </div>
+              </div>
+              <div class="progress-item">
+                <div class="progress-meta">
+                  <span>اللغة الإنجليزية</span>
+                  <span>68%</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-bar-fill" style="width: 68%"></div>
+                </div>
+              </div>
+              <div class="progress-item">
+                <div class="progress-meta">
+                  <span>المهارات الحياتية</span>
+                  <span>90%</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-bar-fill" style="width: 90%"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="progress-card">
+              <h3>المهام المعلقة</h3>
+              <ul class="tasks-list">
+                <li>قراءة قصة "رحلة الحروف" قبل الخميس 12 أكتوبر</li>
+                <li>نشاط العد بالمكعبات - مطلوب اليوم</li>
+                <li>رفع تسجيل صوتي للحروف - مكتمل ✓</li>
+              </ul>
+              <div class="pill-row">
+                <span class="pill green">مهمة جديدة: نشاط الألوان</span>
+                <span class="pill">⏰ مستعجل</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ملاحظات المعلمين -->
+          <div class="overview-grid">
+            <article class="overview-card">
+              <h3>ملاحظات المعلم الأسبوعية</h3>
+              <ul class="notes-list">
+                <li><strong>الأحد 8 أكتوبر:</strong> تفاعل رائع خلال حلقة القراءة. نطق الكلمات الجديدة كان واضحًا.</li>
+                <li><strong>الثلاثاء 10 أكتوبر:</strong> احتاج إلى مساعدة بسيطة في العد العكسي. يمكن اللعب بلعبة "عد من 10 إلى 1".</li>
+                <li><strong>الخميس 12 أكتوبر:</strong> أكمل بطاقة المهام الأسبوعية بالكامل. حصل على وسام "نجم الأسبوع".</li>
+              </ul>
+              <div class="pill-row">
+                <span class="pill green">🤗 مشاركة إيجابية في الحلقة الصباحية</span>
+              </div>
+            </article>
+
+            <article class="overview-card">
+              <h3>ملخص التفاعل والحضور</h3>
+              <div class="progress-ring">
+                <span>92%</span>
+              </div>
+              <p style="text-align: center;" id="attendance-summary-text">
+                التفاعل الأكاديمي يُحسب من الألعاب والكتب والقصص، والحضور يظهر هنا كمرجع إضافي.
+              </p>
+              <div class="pill-row">
+                <span class="pill green" id="attendance-status-pill">✅ الحضور يُعرض بشكل منفصل عن التفاعل</span>
+              </div>
+            </article>
+          </div>
+
+          <!-- خطة الأسبوع القادم -->
+          <article class="weekly-plan">
+            <header>
+              <div>
+                <h2>الخطة الأسبوعية القادمة</h2>
+                <p style="margin:0;color:#4a5568;">إجمالي الوقت: 4 ساعات موزعة على خمسة أيام.</p>
+              </div>
+              <span class="badge">📅 الأسبوع الرابع من الفصل الأول</span>
+            </header>
+
+            <div class="plan-grid">
+              <div class="plan-card">
+                <strong>اللغة العربية</strong>
+                <p>الحرف جيم مع كلمات (جمل، جبل، جزر).</p>
+                <span class="pill">نشاط: تشكيل الحرف من الصلصال</span>
+              </div>
+              <div class="plan-card">
+                <strong>الرياضيات</strong>
+                <p>العد حتى 10 باستخدام المكعبات وألعاب الجمع البسيط.</p>
+                <span class="pill">🎲 لعبة عد الكرات</span>
+              </div>
+              <div class="plan-card">
+                <strong>اللغة الإنجليزية</strong>
+                <p>مراجعة الألوان الأساسية (Red, Blue, Yellow, Green).</p>
+                <span class="pill">🌈 نشاط: Color Explorer</span>
+              </div>
+              <div class="plan-card">
+                <strong>نشاط حسّي</strong>
+                <p>صندوق الرمل: إخفاء الحروف واكتشافها باللمس.</p>
+                <span class="pill">👐 تنمية الحواس</span>
+              </div>
+              <div class="plan-card" style="background: rgba(255, 107, 107, 0.1); border-color: var(--accent);">
+                <strong>علاج التلعثم</strong>
+                <p>تدريبات النطق السلس والثقة بالنفس.</p>
+                <a href="stuttering-game.html" class="pill" style="background: var(--accent); color: white; text-decoration: none;">🎮 ابدأ اللعبة الآن</a>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- الفوتر -->
+        <div class="footer" style="text-align: center; margin-top: 2rem; color: #718096; font-size: 0.9rem; padding: 1rem; background: #fffaf0; border-radius: 15px;">
+          © 2024 AduKid_AI - مشروع معرض ISEF 2025. جميع الحقوق محفوظة. <span class="fun-emoji">🎉</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
+  <script src="activity.js"></script>
+  <script>
+    function getCurrentUser() {
+      try {
+        const rawUser = localStorage.getItem('adukid_user');
+        return rawUser ? JSON.parse(rawUser) : null;
+      } catch (error) {
+        return null;
+      }
+    }
+
+    function updateStageStorageFromUser(user) {
+      const grade = (user?.grade || '').toString().trim().toLowerCase();
+      if (grade === 'kg1' || grade === 'kg2') {
+        localStorage.setItem('selectedStage', grade.toUpperCase());
+      }
+    }
+
+    function clearSessionAndGoHome() {
+      localStorage.removeItem('adukid_user');
+      localStorage.removeItem('selectedStage');
+      window.location.href = 'index.html';
+    }
+
+    async function checkLoggedInUser() {
+      const user = getCurrentUser();
+      if (user && user.studentName) {
+        const grade = (user.grade || '').toString().trim().toLowerCase();
+        if (grade && grade !== 'kg1') {
+          window.location.href = 'dashboard-kg2.html';
+          return;
+        }
+        const studentName = (user.studentName || '').trim();
+        const parentName = (user.parentName || '').trim();
+        const gradeText = (user.gradeText || user.grade || '').trim();
+        const avatarSource = studentName || parentName || 'و';
+
+        document.getElementById('sidebar-parent-name').textContent = parentName || 'ولي الأمر';
+        document.getElementById('sidebar-children').textContent = `الطالب: ${studentName || 'غير محدد'} - ${gradeText || 'غير محدد'}`;
+        document.getElementById('user-avatar').textContent = avatarSource.charAt(0);
+        updateStageStorageFromUser(user);
+        try { await updateActivityWidgets(); } catch (e) {}
+      } else {
+        window.location.href = 'index.html';
+      }
+    }
+
+    async function updateActivityWidgets() {
+      const stage = getCurrentStageSafe() || 'KG1';
+      const user = getCurrentUserSafe();
+      const summary = await summarizeActivities(stage);
+      const attSummary = await getAttendanceSummary(stage);
+      const checkedIn = await hasCheckedInToday();
+      
+      // تحديث اسم الطالب في الواجهة
+      const studentName = user ? user.studentName : 'الطالب';
+      const displayStudentName = document.getElementById('display-student-name');
+      if (displayStudentName) displayStudentName.textContent = studentName;
+      
+      const avatar = document.querySelector('.child-avatar');
+      if (avatar) avatar.textContent = studentName.charAt(0);
+      
+      // تحديث معدل الحضور
+      const attendanceRing = document.querySelector('.progress-ring span');
+      if (attendanceRing) {
+        attendanceRing.textContent = `${summary.overallAcademic}%`;
+      }
+      
+      // تحديث إحصائيات الأنشطة
+      const completedInfo = document.getElementById('selected-child-info');
+      if (completedInfo) {
+        const statusText = checkedIn ? 'حاضر اليوم ✅' : 'بانتظار تسجيل الحضور';
+        completedInfo.textContent = `${studentName} - KG1 - ${statusText} - التفاعل الأكاديمي: ${summary.overallAcademic}% - الأنشطة: ${summary.total}/20`;
+      }
+
+      // تحديث أشرطة التقدم
+      const progressMap = {
+        'اللغة العربية': summary.progress.arabic,
+        'الرياضيات': summary.progress.math,
+        'اللغة الإنجليزية': summary.progress.english,
+        'المهارات الحياتية': summary.progress.life
+      };
+
+      const attendanceMetric = document.getElementById('attendance-rate');
+      if (attendanceMetric) {
+        attendanceMetric.textContent = `${summary.overallAcademic}%`;
+      }
+
+      const academicTrend = document.getElementById('academic-trend');
+      if (academicTrend) {
+        academicTrend.textContent = summary.lastTs
+          ? `آخر تفاعل: ${formatArDate(summary.lastTs)}`
+          : 'ابدأ أول لعبة أو كتاب أو قصة لرفع النسبة';
+      }
+
+      const completedActivities = document.getElementById('completed-activities');
+      if (completedActivities) {
+        completedActivities.textContent = `${summary.total}/20`;
+      }
+
+      const activitiesTrend = document.getElementById('activities-trend');
+      if (activitiesTrend) {
+        activitiesTrend.textContent = `ألعاب: ${summary.games} | كتب: ${summary.books} | قصص: ${summary.stories}`;
+      }
+
+      const masteredSkills = document.getElementById('mastered-skills');
+      if (masteredSkills) {
+        const masteredCount = Object.values(summary.progress).filter(value => value >= 60).length;
+        masteredSkills.textContent = masteredCount.toString();
+      }
+
+      const skillsTrend = document.getElementById('skills-trend');
+      if (skillsTrend) {
+        const topSubject = Object.entries(progressMap).sort((a, b) => b[1] - a[1])[0];
+        skillsTrend.textContent = topSubject && topSubject[1] > 0
+          ? `أعلى مادة حاليا: ${topSubject[0]} (${topSubject[1]}%)`
+          : 'لم يبدأ التقدم الأكاديمي بعد';
+      }
+
+      const behaviorNotes = document.getElementById('behavior-notes');
+      if (behaviorNotes) {
+        behaviorNotes.textContent = Math.max(0, Math.ceil(summary.progress.life / 25)).toString();
+      }
+
+      const lifeTrend = document.getElementById('life-trend');
+      if (lifeTrend) {
+        lifeTrend.textContent = `مؤشر المهارات الحياتية: ${summary.progress.life}%`;
+      }
+
+      document.querySelectorAll('.progress-item').forEach(item => {
+        const label = item.querySelector('.progress-meta span:first-child').textContent;
+        const value = progressMap[label] || 0;
+        item.querySelector('.progress-meta span:last-child').textContent = `${value}%`;
+        item.querySelector('.progress-bar-fill').style.width = `${value}%`;
+      });
+
+      const attendanceSummaryText = document.getElementById('attendance-summary-text');
+      if (attendanceSummaryText) {
+        attendanceSummaryText.textContent = `التفاعل الأكاديمي: ${summary.overallAcademic}%، والحضور: ${attSummary.present} حضور، ${attSummary.excused} بعذر، ${attSummary.absent} غياب.`;
+      }
+
+      const attendanceStatusPill = document.getElementById('attendance-status-pill');
+      if (attendanceStatusPill) {
+        attendanceStatusPill.textContent = checkedIn ? '✅ تم تسجيل حضور اليوم' : '⌛ بانتظار تسجيل حضور اليوم';
+      }
+
+      // تحديث قائمة المهام (الأنشطة الأخيرة)
+      const taskList = document.querySelector('.tasks-list');
+      const lastActivities = (await getRecentActivities(stage, 3));
+      
+      if (taskList) {
+        let tasksHtml = '';
+        if (lastActivities.length > 0) {
+          lastActivities.forEach(act => {
+            tasksHtml += `<li>${act.title} - مكتمل ✓</li>`;
+          });
+        }
+        if (!checkedIn) {
+          tasksHtml += `<li style="color: #e8822a; font-weight: bold;">يجب تسجيل حضور اليوم لنتمكن من متابعة تقدمك بدقة</li>`;
+        }
+        tasksHtml += `<li>قراءة قصة جديدة اليوم - مطلوب</li>`;
+        taskList.innerHTML = tasksHtml;
+      }
+    }
+
+    const sidebarToggle = document.querySelector('.sidebar-toggle');
+    const headerSidebarToggle = document.getElementById('headerSidebarToggle');
+    const sidebar = document.querySelector('.sidebar');
+    const sidebarOverlay = document.querySelector('.sidebar-overlay');
+    const sidebarClose = document.querySelector('.sidebar-close');
+    
+    function openSidebar() {
+      sidebar.classList.add('active');
+      sidebarOverlay.classList.add('active');
+      document.body.classList.add('sidebar-open');
+      if (sidebarToggle) sidebarToggle.setAttribute('aria-expanded', 'true');
+      if (headerSidebarToggle) headerSidebarToggle.setAttribute('aria-expanded', 'true');
+    }
+    
+    function closeSidebar() {
+      sidebar.classList.remove('active');
+      sidebarOverlay.classList.remove('active');
+      document.body.classList.remove('sidebar-open');
+      if (sidebarToggle) sidebarToggle.setAttribute('aria-expanded', 'false');
+      if (headerSidebarToggle) headerSidebarToggle.setAttribute('aria-expanded', 'false');
+    }
+    
+    if (sidebarToggle) sidebarToggle.setAttribute('aria-expanded', 'false');
+    if (headerSidebarToggle) {
+      headerSidebarToggle.setAttribute('aria-expanded', 'false');
+      headerSidebarToggle.addEventListener('click', openSidebar);
+    }
+    if (sidebarToggle) sidebarToggle.addEventListener('click', openSidebar);
+    sidebarClose.addEventListener('click', closeSidebar);
+    sidebarOverlay.addEventListener('click', closeSidebar);
+
+    sidebar.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', closeSidebar);
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeSidebar();
+    });
+
+    document.getElementById('logout-btn').addEventListener('click', function() {
+      if (confirm('هل أنت متأكد من تسجيل الخروج؟')) {
+        clearSessionAndGoHome();
+      }
+    });
+
+    // تفعيل نافذة الذكاء الاصطناعي
+    const aiBtn = document.getElementById('ai-btn');
+    const aiModal = document.getElementById('ai-modal');
+    const aiModalOverlay = document.getElementById('ai-modal-overlay');
+    const aiModalClose = document.getElementById('ai-modal-close');
+    const aiModalForm = document.getElementById('ai-modal-form');
+    const aiUserInput = document.getElementById('ai-user-input');
+    const aiModalContent = document.getElementById('ai-modal-content');
+
+    aiBtn.addEventListener('click', function() {
+      aiModal.classList.add('active');
+      aiModalOverlay.classList.add('active');
+    });
+
+    aiModalClose.addEventListener('click', function() {
+      aiModal.classList.remove('active');
+      aiModalOverlay.classList.remove('active');
+    });
+
+    aiModalOverlay.addEventListener('click', function() {
+      aiModal.classList.remove('active');
+      aiModalOverlay.classList.remove('active');
+    });
+
+    // إرسال رسالة في نافذة الذكاء الاصطناعي
+    aiModalForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const message = aiUserInput.value;
+      addAiMessage(message, 'ai-user');
+      aiUserInput.value = '';
+
+      try {
+        // محاكاة استجابة الذكاء الاصطناعي
+        setTimeout(() => {
+          const responses = [
+            "أرى أن طفلك يتقدم بشكل ممتاز في تعلم الحروف العربية! هل تود معرفة أنشطة إضافية لتعزيز هذا التقدم؟",
+            "بناءً على معدل الحضور والتقدم، أقترح زيادة وقت الأنشطة التفاعلية إلى 40 دقيقة يوميًا",
+            "هل تحتاج مساعدة في فهم تقرير التقدم الأسبوعي لطفلك؟",
+            "يمكنني اقتراح بعض الاستراتيجيات لتحفيز الطفل على إكمال المهام المعلقة",
+            "لاحظت أن طفلك ممتاز في المهارات الحياتية، هل تود تطوير هذا الجانب أكثر؟"
+          ];
+          const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+          addAiMessage(randomResponse, 'ai-bot');
+        }, 1000);
+      } catch (error) {
+        addAiMessage("⚠️ حدث خطأ في الاتصال بالخدمة.", 'ai-bot');
+      }
+    });
+
+    function addAiMessage(content, sender) {
+      const msg = document.createElement("div");
+      msg.classList.add("ai-message", sender);
+      msg.textContent = content;
+      aiModalContent.appendChild(msg);
+      aiModalContent.scrollTop = aiModalContent.scrollHeight;
+    }
+
+    // تفعيل اختيار الطفل
+    const childButtons = document.querySelectorAll('.pill[data-child]');
+    const childInfo = document.getElementById('selected-child-info');
+    
+    // بيانات الأطفال
+    const childrenData = {
+      noor: {
+        name: "نور",
+        grade: "KG1",
+        activities: "14/16",
+        attendance: "92%",
+        info: "نور - KG1 - الأنشطة المكتملة: 14/16 - معدل الحضور: 92%"
+      },
+      omar: {
+        name: "عمر", 
+        grade: "KG2",
+        activities: "12/15",
+        attendance: "88%",
+        info: "عمر - KG2 - الأنشطة المكتملة: 12/15 - معدل الحضور: 88%"
+      },
+      maya: {
+        name: "مايا",
+        grade: "KG1", 
+        activities: "16/16",
+        attendance: "95%",
+        info: "مايا - KG1 - الأنشطة المكتملة: 16/16 - معدل الحضور: 95%"
+      }
+    };
+
+    childButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        // إزالة النشط من جميع الأزرار
+        childButtons.forEach(btn => btn.classList.remove('active'));
+        // إضافة النشط للزر المحدد
+        this.classList.add('active');
+        
+        // تحديث البيانات بناءً على الطفل المحدد
+        const childId = this.getAttribute('data-child');
+        const childData = childrenData[childId];
+        
+        childInfo.textContent = childData.info;
+        document.getElementById('attendance-rate').textContent = childData.attendance;
+        document.getElementById('completed-activities').textContent = childData.activities;
+      });
+    });
+
+    // تفعيل أزرار الإجراءات
+    document.getElementById('download-report').addEventListener('click', function() {
+      alert('سيتم تحميل التقرير الأسبوعي قريباً...');
+    });
+
+    document.getElementById('contact-teacher').addEventListener('click', function() {
+      alert('سيتم فتح نافذة التواصل مع المعلم...');
+    });
+
+    document.getElementById('print-plan').addEventListener('click', function() {
+      window.print();
+    });
+
+    // التحقق من وجود بيانات مستخدم عند تحميل الصفحة
+    document.addEventListener('DOMContentLoaded', async function() {
+      await checkLoggedInUser();
+      // التحقق من الحضور بعد تحميل البيانات
+      setTimeout(() => {
+        checkAndPromptAttendance();
+      }, 1000);
+    });
+
+    /**
+     * وظائف المودال الخاصة بالحضور
+     */
+    function showAttendanceModal() {
+      const modal = document.getElementById('attendanceModalOverlay');
+      if (modal) modal.classList.add('active');
+    }
+
+    function hideAttendanceModal() {
+      const modal = document.getElementById('attendanceModalOverlay');
+      if (modal) modal.classList.remove('active');
+    }
+
+    async function handleQuickAttendance(status) {
+      try {
+        await recordAttendance(status);
+        hideAttendanceModal();
+        // تحديث البيانات في الصفحة بعد التسجيل
+        await updateActivityWidgets();
+        
+        if (status === 'present') {
+          alert('تم تسجيل حضورك بنجاح! استمتع بيومك الدراسي 🌟');
+        } else {
+          alert('تم تسجيل الغياب بعذر. نراك قريباً إن شاء الله!');
+        }
+      } catch (error) {
+        console.error("Attendance recording failed:", error);
+        alert('عذراً، حدث خطأ أثناء تسجيل الحضور. يرجى المحاولة مرة أخرى.');
+      }
+    }
+    
+  </script>
+</body>
+</html>

@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>سمارت كيدز | لوحة التعلم</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="لوحة متابعة تعلم الطفل في منصة سمارت كيدز مع تخصيص كامل لمرحلتي KG1 و KG2، تقدم أسبوعي، مهام، وأنشطة مقترحة."
+  />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* متغيرات التصميم من index.html */
+    :root {
+      --primary: #FF9E1F;
+      --primary-dark: #E88A0D;
+      --primary-light: #FFD699;
+      --secondary: #4A90E2;
+      --secondary-light: #8EC0F0;
+      --accent: #FF6B6B;
+      --dark: #2D3748;
+      --light: #F7FAFC;
+      --white: #FFFFFF;
+      --gray-light: #E2E8F0;
+      --gray: #A0AEC0;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.12);
+      --radius: 16px;
+      --transition: all 0.3s ease;
+
+      /* متغيرات خاصة باللوحة */
+      --kg1-accent: #118ab2;
+      --kg1-bg: rgba(17, 138, 178, 0.12);
+      --kg2-accent: #fb8500;
+      --kg2-bg: rgba(251, 133, 0, 0.12);
+      --neutral-bg: rgba(142, 202, 230, 0.18);
+      --card-radius: var(--radius);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background-color: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* إضافة أنماط القائمة الجانبية */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 300px;
+      height: 100%;
+      background: white;
+      box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+      z-index: 2000;
+      transition: right 0.3s ease;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    
+    .sidebar.active {
+      right: 0;
+    }
+    
+    .sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1999;
+      display: none;
+    }
+    
+    .sidebar-overlay.active {
+      display: block;
+    }
+    
+    .sidebar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .sidebar-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #666;
+    }
+    
+    .sidebar-user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      padding: 10px;
+      background: #fffaf0;
+      border-radius: 10px;
+    }
+    
+    .sidebar-user-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #e8822a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 20px;
+    }
+    
+    .sidebar-user-info h3 {
+      margin: 0;
+      font-size: 16px;
+    }
+    
+    .sidebar-user-info p {
+      margin: 0;
+      font-size: 14px;
+      color: #666;
+    }
+    
+    .sidebar-menu {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .sidebar-menu li {
+      margin-bottom: 5px;
+    }
+    
+    .sidebar-menu a {
+      display: block;
+      padding: 12px 15px;
+      text-decoration: none;
+      color: #333;
+      border-radius: 8px;
+      transition: all 0.3s;
+    }
+    
+    .sidebar-menu a:hover {
+      background: #fff5e6;
+    }
+    
+    .sidebar-menu a.active {
+      background: #e8822a;
+      color: white;
+    }
+    
+    .sidebar-footer {
+      margin-top: 30px;
+      padding-top: 15px;
+      border-top: 1px solid #eee;
+    }
+    
+    .logout-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 12px 15px;
+      background: #ffe0b8;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+    
+    .logout-btn:hover {
+      background: #ffd1a4;
+    }
+    
+    .sidebar-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      background: #e8822a;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: all 0.3s;
+    }
+    
+    .sidebar-toggle:hover {
+      background: #ff9d45;
+      transform: scale(1.1);
+    }
+
+    /* شريط التنقل - مطابق للصفحة الرئيسية */
+    .navbar {
+      background: var(--white);
+      border-radius: var(--radius);
+      margin: 1rem auto;
+      max-width: min(1200px, 94vw);
+      box-shadow: var(--shadow);
+      padding: 0.8rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 10px;
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 700;
+      font-size: 1.4rem;
+    }
+
+    .brand span:first-child {
+      font-size: 2rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      transition: var(--transition);
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      background-color: var(--primary-light);
+      color: var(--primary-dark);
+    }
+
+    main {
+      max-width: min(1200px, 94vw);
+      margin: 0 auto;
+      padding: 1.5rem 0;
+      flex: 1;
+    }
+
+    section {
+      margin-bottom: 4rem;
+    }
+
+    /* قسم البادئة - مطابق للصفحة الرئيسية */
+    .dashboard-hero {
+      display: grid;
+      gap: 1.6rem;
+      padding: clamp(2.2rem, 5vw, 2.8rem);
+      border-radius: var(--radius);
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      overflow: hidden;
+      color: white;
+      text-align: center;
+    }
+
+    .dashboard-hero::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+      border-radius: 50%;
+      z-index: 0;
+    }
+
+    .dashboard-hero::after {
+      content: "";
+      position: absolute;
+      bottom: -30%;
+      left: -10%;
+      width: 150px;
+      height: 150px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+      border-radius: 50%;
+      z-index: 0;
+    }
+
+    .dashboard-hero > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .dashboard-hero h1 {
+      margin: 0;
+      font-size: clamp(2.2rem, 5vw, 3.2rem);
+      font-family: "Tajawal", sans-serif;
+    }
+
+    .dashboard-hero p {
+      margin: 0 auto;
+      line-height: 1.9;
+      max-width: 760px;
+      opacity: 0.9;
+    }
+
+    .dashboard-hero .badge {
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      color: var(--primary-dark);
+      padding: 0.4rem 1rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      align-self: center;
+    }
+
+    /* محدد المرحلة - تم تحسينه */
+    .stage-switcher {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+
+    .stage-switcher button {
+      min-width: 160px;
+      padding: 0.85rem 1.6rem;
+      border-radius: 50px;
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      background: rgba(255, 255, 255, 0.22);
+      color: var(--white);
+      font-weight: 800;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .stage-switcher button:hover,
+    .stage-switcher button:focus-visible {
+      transform: translateY(-4px);
+      background: rgba(255, 255, 255, 0.36);
+      box-shadow: 0 18px 36px rgba(2, 48, 71, 0.22);
+    }
+
+    .stage-switcher button[data-active="true"] {
+      background: var(--white);
+      color: var(--primary-dark);
+      box-shadow: 0 18px 40px rgba(2, 48, 71, 0.24);
+    }
+
+    /* قسم اللوحة الرئيسية */
+    .dashboard-section {
+      margin-top: 3rem;
+      display: grid;
+      gap: 2rem;
+    }
+
+    .stage-wrapper {
+      display: none;
+      animation: fadeIn 0.4s ease forwards;
+    }
+
+    .stage-wrapper[data-visible="true"] {
+      display: grid;
+      gap: 1.8rem;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* شبكة النظرة العامة */
+    .overview-grid {
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+
+    /* بطاقات النظرة العامة - مطابقة للصفحة الرئيسية */
+    .overview-card {
+      border-radius: var(--card-radius);
+      padding: clamp(1.6rem, 4vw, 2.2rem);
+      display: grid;
+      gap: 1rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--gray-light);
+      background: var(--white);
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .overview-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .overview-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(to left, var(--primary), var(--secondary));
+    }
+
+    .overview-card h3 {
+      margin: 0;
+      font-size: 1.35rem;
+      color: var(--dark);
+    }
+
+    .progress-ring {
+      display: grid;
+      place-items: center;
+      position: relative;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 10px solid var(--gray-light);
+      margin: 0 auto;
+      box-shadow: inset 0 0 0 10px rgba(142, 202, 230, 0.28);
+    }
+
+    .progress-ring span {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+    }
+
+    .tasks-list,
+    .notes-list {
+      display: grid;
+      gap: 0.85rem;
+      margin: 0;
+      padding-inline-start: 1.4rem;
+      color: var(--dark);
+      opacity: 0.8;
+      line-height: 1.85;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      background: var(--light);
+      color: var(--dark);
+    }
+
+    /* تخصيص المراحل */
+    .stage-wrapper[data-stage="KG1"] .overview-card.hero-card {
+      border: 1px solid var(--kg1-accent);
+      background: var(--kg1-bg);
+    }
+
+    .stage-wrapper[data-stage="KG1"] .overview-card.hero-card h3,
+    .stage-wrapper[data-stage="KG1"] .overview-card.hero-card p {
+      color: var(--kg1-accent);
+    }
+
+    .stage-wrapper[data-stage="KG1"] .progress-ring {
+      box-shadow: inset 0 0 0 10px rgba(17, 138, 178, 0.28);
+      border-color: var(--kg1-accent);
+    }
+
+    .stage-wrapper[data-stage="KG2"] .overview-card.hero-card {
+      border: 1px solid var(--kg2-accent);
+      background: var(--kg2-bg);
+    }
+
+    .stage-wrapper[data-stage="KG2"] .overview-card.hero-card h3,
+    .stage-wrapper[data-stage="KG2"] .overview-card.hero-card p {
+      color: var(--kg2-accent);
+    }
+
+    .stage-wrapper[data-stage="KG2"] .progress-ring {
+      box-shadow: inset 0 0 0 10px rgba(251, 133, 0, 0.28);
+      border-color: var(--kg2-accent);
+    }
+
+    /* الخطة الأسبوعية */
+    .weekly-plan {
+      border-radius: var(--card-radius);
+      background: var(--white);
+      border: 1px solid var(--gray-light);
+      box-shadow: var(--shadow);
+      padding: clamp(1.6rem, 4vw, 2.4rem);
+      display: grid;
+      gap: 1.4rem;
+      transition: var(--transition);
+    }
+
+    .weekly-plan:hover {
+      box-shadow: var(--shadow-lg);
+    }
+
+    .weekly-plan header {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .weekly-plan header h2 {
+      margin: 0;
+      font-size: clamp(1.6rem, 3vw, 2.1rem);
+      font-family: "Tajawal", sans-serif;
+      color: var(--dark);
+    }
+
+    .plan-grid {
+      display: grid;
+      gap: 1.2rem;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+
+    .plan-card {
+      border-radius: var(--radius);
+      border: 1px solid var(--gray-light);
+      background: var(--light);
+      padding: 1.2rem;
+      display: grid;
+      gap: 0.8rem;
+      transition: var(--transition);
+    }
+
+    .plan-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+    }
+
+    .plan-card strong {
+      font-size: 1.1rem;
+      color: var(--dark);
+    }
+
+    /* بطاقة التذكيرات */
+    .reminder-card {
+      border-radius: var(--card-radius);
+      padding: clamp(1.6rem, 4vw, 2.2rem);
+      background: var(--white);
+      border: 1px solid var(--gray-light);
+      box-shadow: var(--shadow);
+      display: grid;
+      gap: 1rem;
+      transition: var(--transition);
+    }
+
+    .reminder-card:hover {
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* الأزرار - مطابقة للصفحة الرئيسية */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--primary);
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: var(--transition);
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(255, 158, 31, 0.3);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(255, 158, 31, 0.4);
+    }
+
+    .btn-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: transparent;
+      color: var(--primary);
+      padding: 0.8rem 1.5rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: var(--transition);
+      border: 2px solid var(--primary);
+    }
+
+    .btn-pill:hover {
+      background: var(--primary-light);
+      transform: translateY(-2px);
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      justify-content: flex-start;
+    }
+
+    .cta-row .btn-primary,
+    .cta-row .btn-pill {
+      min-width: 170px;
+    }
+
+    /* الفوتر - مطابق للصفحة الرئيسية */
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--dark);
+      opacity: 0.7;
+      border-top: 1px solid var(--gray-light);
+      margin-top: 4rem;
+    }
+
+    /* تحسينات للاستجابة */
+    @media (max-width: 860px) {
+      .dashboard-hero {
+        text-align: center;
+      }
+      .dashboard-hero p {
+        margin: 0 auto;
+      }
+      .weekly-plan header {
+        justify-content: center;
+        text-align: center;
+      }
+      .cta-row {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+      }
+      
+      .nav-links {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      
+      .nav-links a {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.7rem;
+      }
+      
+      .sidebar {
+        width: 280px;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .overview-card {
+        text-align: center;
+      }
+      .tasks-list,
+      .notes-list {
+        text-align: start;
+      }
+      
+      .stage-switcher {
+        flex-direction: column;
+      }
+      
+      .stage-switcher button {
+        width: 100%;
+      }
+      
+      .cta-row {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .cta-row .btn-primary,
+      .cta-row .btn-pill {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .sidebar {
+        width: 100%;
+        right: -100%;
+      }
+    }
+    /* ========== الهيدر الثابت الجديد ========== */
+    .main-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 70px;
+      background: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      z-index: 1100;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .header-container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-logo {
+      height: 50px;
+      object-fit: contain;
+    }
+
+    .sidebar-toggle-btn {
+      background: #e8822a;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 8px 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: all 0.3s;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    .sidebar-toggle-btn:hover {
+      background: #ff9d45;
+      transform: scale(1.05);
+    }
+
+    body {
+      padding-top: 80px !important;
+    }
+
+    .sidebar-toggle {
+      display: none !important;
+    }
+  </style>
+  <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
+  <script src="activity.js"></script>
+  <script>
+    // إعادة توجيه فورية إلى اللوحة المخصصة للمرحلة
+    (function() {
+      const url = getCurrentDashboardUrl();
+      if (url && !window.location.href.includes(url)) {
+        window.location.replace(url);
+      }
+    })();
+  </script>
+</head>
+<body>
+  <!-- الهيدر الثابت -->
+  <header class="main-header">
+    <div class="header-container">
+      <div class="header-logo-container">
+        <img src="logo.jpeg" alt="EduKid AI Logo" class="header-logo">
+      </div>
+      <button class="sidebar-toggle-btn" id="headerSidebarToggle">
+        <span>القائمة</span>
+        <span>☰</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- زر القائمة الجانبية -->
+  <button class="sidebar-toggle">☰</button>
+  
+  <!-- القائمة الجانبية -->
+  <div class="sidebar-overlay"></div>
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2>القائمة الرئيسية</h2>
+      <button class="sidebar-close">×</button>
+    </div>
+    
+    <div class="sidebar-user">
+      <div class="sidebar-user-avatar" id="user-avatar">ط</div>
+      <div class="sidebar-user-info">
+        <h3 id="sidebar-student-name">اسم الطالب</h3>
+        <p id="sidebar-grade">المرحلة: رياض الأطفال</p>
+      </div>
+    </div>
+    
+    <ul class="sidebar-menu">
+      <li><a href="index.html">الصفحة الرئيسية</a></li>
+      <li><a href="stages.html">المراحل التعليمية</a></li>
+      <li><a href="dashboard.html" class="active">لوحة التعلم</a></li>
+      <li><a href="games.html">الألعاب التعليمية</a></li>
+      <li><a href="books.html">المكتبة الرقمية</a></li>
+      <li><a href="stories.html">القصص الصوتية</a></li>
+      <li><a href="parent-report.html">لوحة ولي الأمر</a></li>
+    </ul>
+    
+    <div class="sidebar-footer">
+      <button class="logout-btn" id="logout-btn">
+        <span>تسجيل الخروج</span>
+        <span>🚪</span>
+      </button>
+    </div>
+  </div>
+
+
+  </header>
+
+  <main>
+    <section class="dashboard-hero">
+      <span class="badge">📊 لوحة متابعة مخصصة</span>
+      <h1>مرحبا بكم في لوحة التعلم</h1>
+      <p>
+        اختر مرحلة طفلك للاطلاع على تقدم المهارات، المهام الأسبوعية، والأنشطة المقترحة. تم تصميم الواجهة بحيث تعكس
+        احتياجات كل مرحلة وتعرض لك ملخصًا واضحًا للإنجازات اليومية والأهداف القادمة.
+      </p>
+      <div class="stage-switcher" aria-label="اختيار المرحلة">
+        <button type="button" data-stage-btn data-stage="KG1" data-active="true">KG1 (4-5 سنوات)</button>
+        <button type="button" data-stage-btn data-stage="KG2">KG2 (5-6 سنوات)</button>
+      </div>
+    </section>
+
+    <section class="dashboard-section">
+      <!-- KG1 BOARD -->
+      <div class="stage-wrapper" data-stage="KG1" data-visible="true">
+        <div class="overview-grid">
+          <article class="overview-card hero-card">
+            <h3>نبذة سريعة عن أسبوع KG1</h3>
+            <p>
+              التركيز على الحروف (أ، ب، ت) والأرقام (1-5)، مع أنشطة حسية لتعزيز الإدراك الحسي والبصري. يُنصح بقضاء
+              30 دقيقة يوميًا في مراجعة الكلمات المصورة وترديد الأغاني التعليمية.
+            </p>
+            <div class="pill-row">
+              <span class="pill">🎯 هدف الأسبوع: التعرف على الحرف باء</span>
+              <span class="pill">🎵 أغنية الحروف يوم الثلاثاء</span>
+            </div>
+          </article>
+
+          <article class="overview-card">
+            <h3>تقدّم المهارات</h3>
+            <div class="progress-ring" data-progress-ring>
+              <span data-progress-value>68%</span>
+            </div>
+            <p style="margin:0;text-align:center;color:var(--dark);opacity:0.7;">
+              تم إنجاز 8 من أصل 12 نشاطًا لهذا الأسبوع. استمروا في اللعب التفاعلي لرفع النسبة إلى 100%.
+            </p>
+          </article>
+
+          <article class="overview-card">
+            <h3>قائمة المهام اليومية</h3>
+            <ul class="tasks-list">
+              <li>قراءة قصة "نونو والنجمة اللامعة" بصوت عالٍ.</li>
+              <li>ألعاب مطابقة الألوان في مركز الألعاب (قسم English).</li>
+              <li>نشاط العد باستخدام بطاقات الفراشات حتى الرقم 5.</li>
+            </ul>
+          </article>
+
+          <article class="overview-card">
+            <h3>ملاحظات المعلمة</h3>
+            <ul class="notes-list">
+              <li>التفاعل ممتاز في أنشطة النطق – استمر في تكرار الحروف بصوت واضح.</li>
+              <li>يفضل تخصيص وقت للمهارات الحركية: قص ولصق الحروف الورقية.</li>
+            </ul>
+            <div class="pill-row">
+              <span class="pill">🤗 مشاركة إيجابية في الحلقة الصباحية</span>
+            </div>
+          </article>
+        </div>
+
+        <article class="weekly-plan">
+          <header>
+            <div>
+              <h2>الخطة الأسبوعية لـ KG1</h2>
+              <p style="margin:0;color:var(--dark);opacity:0.7;">إجمالي الوقت: 4 ساعات موزعة على خمسة أيام.</p>
+            </div>
+            <span class="badge">📅 الأسبوع الثالث من الفصل الأول</span>
+          </header>
+
+          <div class="plan-grid">
+            <div class="plan-card" style="background:var(--kg1-bg);border-color:var(--kg1-accent);">
+              <strong>اللغة العربية</strong>
+              <p style="margin:0;color:var(--kg1-accent);">الحرف باء مع كلمات (باب، بطة، بلبل).</p>
+              <span class="pill" style="background:rgba(17,138,178,0.18);color:var(--kg1-accent);">
+                نشاط: تشكيل الحرف من الصلصال
+              </span>
+            </div>
+            <div class="plan-card">
+              <strong>الرياضيات</strong>
+              <p style="margin:0;">العد حتى 5 باستخدام المكعبات وألعاب الجمع البسيط.</p>
+              <span class="pill">🎲 لعبة عد الكرات</span>
+            </div>
+            <div class="plan-card">
+              <strong>اللغة الإنجليزية</strong>
+              <p style="margin:0;">مراجعة الألوان الأساسية (Red, Blue, Yellow).</p>
+              <span class="pill">🌈 نشاط: Color Explorer</span>
+            </div>
+            <div class="plan-card">
+              <strong>نشاط حسّي</strong>
+              <p style="margin:0;">صندوق الرمل: إخفاء الحروف واكتشافها باللمس.</p>
+              <span class="pill">👐 تنمية الحواس</span>
+            </div>
+            <div class="plan-card" style="background: rgba(255, 107, 107, 0.1); border-color: var(--accent);">
+              <strong>علاج التلعثم</strong>
+              <p style="margin:0;">تدريبات النطق السلس والثقة بالنفس.</p>
+              <a href="stuttering-game.html" class="pill" style="background: var(--accent); color: white; text-decoration: none;">🎮 ابدأ اللعبة</a>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- KG2 BOARD -->
+      <div class="stage-wrapper" data-stage="KG2">
+        <div class="overview-grid">
+          <article class="overview-card hero-card">
+            <h3>نظرة عامة على أسبوع KG2</h3>
+            <p>
+              نعمل على قراءة جمل قصيرة، حل مسائل جمع داخل نطاق 20، واستكشاف تجربة علمية بسيطة حول الطفو والغرق. ينصح
+              بمتابعة تقدم الطفل عبر تقارير نهاية الأسبوع.
+            </p>
+            <div class="pill-row">
+              <span class="pill" style="background:rgba(251,133,0,0.18);color:var(--kg2-accent);">
+                ✨ هدف الأسبوع: كتابة جملة من 4 كلمات
+              </span>
+              <span class="pill">🔍 تجربة الطفو يوم الأربعاء</span>
+            </div>
+          </article>
+
+          <article class="overview-card">
+            <h3>تقدّم المهارات</h3>
+            <div class="progress-ring">
+              <span>82%</span>
+            </div>
+            <p style="margin:0;text-align:center;color:var(--dark);opacity:0.7;">
+              تم تنفيذ 11 نشاطًا من أصل 13. التركيز القادم على تحسين الطلاقة في القراءة والنطق.
+            </p>
+          </article>
+
+          <article class="overview-card">
+            <h3>مهام اليوم</h3>
+            <ul class="tasks-list">
+              <li>قراءة فقرة "أصدقاء الغابة الصغار" ومناقشة القيمة التعاونية.</li>
+              <li>حل 5 مسائل جمع من كتاب "رحلة الأرقام".</li>
+              <li>مشاهدة فيديو التجربة العلمية وتسجيل النتائج بالرسم.</li>
+            </ul>
+          </article>
+
+          <article class="overview-card">
+            <h3>ملاحظات المعلّم</h3>
+            <ul class="notes-list">
+              <li>الطفل يميز الحروف المركبة بشكل جيد. تابعوا تمارين الكتابة اليومية.</li>
+              <li>احتاج إلى تشجيع إضافي أثناء تجربة الطفو، يُفضل تكرارها في المنزل.</li>
+            </ul>
+            <div class="pill-row">
+              <span class="pill">💬 يُنصح بإجراء حوار حول "ماذا تعلمت اليوم؟"</span>
+            </div>
+          </article>
+        </div>
+
+        <article class="weekly-plan">
+          <header>
+            <div>
+              <h2>الخطة الأسبوعية لـ KG2</h2>
+              <p style="margin:0;color:var(--dark);opacity:0.7;">
+                إجمالي الوقت: 5 ساعات مع تركيز على القراءة المستقلة والأنشطة العلمية.
+              </p>
+            </div>
+            <span class="badge">📅 الأسبوع الخامس من الفصل الأول</span>
+          </header>
+
+          <div class="plan-grid">
+            <div class="plan-card" style="background:var(--kg2-bg);border-color:var(--kg2-accent);">
+              <strong>اللغة العربية</strong>
+              <p style="margin:0;color:var(--kg2-accent);">قراءة جمل تحتوي على حرف الراء وتكوين جملة جديدة.</p>
+              <span class="pill" style="background:rgba(251,133,0,0.18);color:var(--kg2-accent);">
+                نشاط: إعادة سرد القصة
+              </span>
+            </div>
+            <div class="plan-card">
+              <strong>الرياضيات</strong>
+              <p style="margin:0;">تمارين جمع وطرح مع الأرقام الثنائية ضمن 20 باستخدام سباق الأرقام.</p>
+              <span class="pill">🚗 Math Number Race</span>
+            </div>
+            <div class="plan-card">
+              <strong>اللغة الإنجليزية</strong>
+              <p style="margin:0;">كتابة كلمات CVC (sun, fish, bird) وتكوين جمل قصيرة.</p>
+              <span class="pill">🛤️ Word Trail Activity</span>
+            </div>
+            <div class="plan-card">
+              <strong>علوم مبسطة</strong>
+              <p style="margin:0;">تجربة الطفو والغرق وتسجيل النتائج في دفتر الرسم.</p>
+              <span class="pill">🔬 مختبر العلوم الصغير</span>
+            </div>
+            <div class="plan-card" style="background: rgba(255, 107, 107, 0.1); border-color: var(--accent);">
+              <strong>علاج التلعثم</strong>
+              <p style="margin:0;">تدريبات النطق السلس والثقة بالنفس.</p>
+              <a href="stuttering-game.html" class="pill" style="background: var(--accent); color: white; text-decoration: none;">🎮 ابدأ اللعبة</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    تتبّع تقدم طفلك يوميًا مع لوحة سمارت كيدز التفاعلية. 💡
+  </footer>
+
+  <script>
+    function getCurrentUser() {
+      try {
+        const rawUser = localStorage.getItem('adukid_user');
+        return rawUser ? JSON.parse(rawUser) : null;
+      } catch (error) {
+        return null;
+      }
+    }
+
+    function updateStageStorageFromUser(user) {
+      const grade = (user?.grade || '').toString().trim().toLowerCase();
+      if (grade === 'kg1' || grade === 'kg2') {
+        localStorage.setItem('selectedStage', grade.toUpperCase());
+      }
+    }
+
+    function clearSessionAndGoHome() {
+      localStorage.removeItem('adukid_user');
+      localStorage.removeItem('selectedStage');
+      window.location.href = 'index.html';
+    }
+
+    function checkLoggedInUser() {
+      const user = getCurrentUser();
+      if (user && user.studentName) {
+        document.getElementById('sidebar-student-name').textContent = user.studentName;
+        document.getElementById('sidebar-grade').textContent = `المرحلة: ${user.gradeText || 'غير محدد'}`;
+        document.getElementById('user-avatar').textContent = user.studentName.charAt(0);
+        updateStageStorageFromUser(user);
+      } else {
+        window.location.href = 'index.html';
+      }
+    }
+
+    // تفعيل زر القائمة الجانبية
+    const sidebarToggle = document.querySelector('.sidebar-toggle');
+    const headerSidebarToggle = document.getElementById('headerSidebarToggle');
+    const sidebar = document.querySelector('.sidebar');
+    const sidebarOverlay = document.querySelector('.sidebar-overlay');
+    const sidebarClose = document.querySelector('.sidebar-close');
+    
+    function openSidebar() {
+      sidebar.classList.add('active');
+      sidebarOverlay.classList.add('active');
+    }
+    
+    function closeSidebar() {
+      sidebar.classList.remove('active');
+      sidebarOverlay.classList.remove('active');
+    }
+    
+    if (headerSidebarToggle) headerSidebarToggle.addEventListener('click', openSidebar);
+    if (sidebarToggle) sidebarToggle.addEventListener('click', openSidebar);
+    sidebarClose.addEventListener('click', closeSidebar);
+    sidebarOverlay.addEventListener('click', closeSidebar);
+
+    // تفعيل زر تسجيل الخروج
+    document.getElementById('logout-btn').addEventListener('click', function() {
+      if (confirm('هل أنت متأكد من تسجيل الخروج؟')) {
+        clearSessionAndGoHome();
+      }
+    });
+
+    function redirectToStageDashboard() {
+      const rawUser = localStorage.getItem('adukid_user');
+      const user = rawUser ? JSON.parse(rawUser) : null;
+      const grade = (user?.grade || localStorage.getItem('selectedStage') || 'KG1').toString().trim().toUpperCase();
+      window.location.href = grade === 'KG2' ? 'dashboard-kg2.html' : 'dashboard-kg1.html';
+    }
+
+    // التحقق من وجود بيانات مستخدم عند تحميل الصفحة
+    document.addEventListener('DOMContentLoaded', function() {
+      checkLoggedInUser();
+      redirectToStageDashboard();
+    });
+
+    // وظائف لوحة التعلم
+    const stageButtons = document.querySelectorAll("[data-stage-btn]");
+    const stageWrappers = document.querySelectorAll(".stage-wrapper");
+
+    function setStage(stage) {
+      stageButtons.forEach(button => {
+        button.dataset.active = button.dataset.stage === stage ? "true" : "false";
+      });
+
+      stageWrappers.forEach(wrapper => {
+        wrapper.dataset.visible = wrapper.dataset.stage === stage ? "true" : "false";
+      });
+    }
+
+    stageButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        localStorage.setItem('selectedStage', button.dataset.stage);
+        setStage(button.dataset.stage);
+      });
+    });
+
+    const savedStage = localStorage.getItem('selectedStage') || 'KG1';
+    setStage(savedStage);
+  </script>
+
+  <!-- زر المساعد الذكي -->
+  <div class="ai-assistant">
+    <button class="ai-button pulse">🤖</button>
+    <div class="ai-tooltip">اسألني عن أي شيء!</div>
+    
+    <!-- نافذة الدردشة -->
+    <div class="ai-chat">
+      <div class="chat-header">
+        <h3><span>🤖</span> المساعد الذكي</h3>
+        <button class="close-chat">×</button>
+      </div>
+      <div class="chat-body">
+        <div class="message ai-message">
+          مرحباً! أنا المساعد الذكي لسمارت كيدز. كيف يمكنني مساعدتك اليوم؟
+        </div>
+      </div>
+      <div class="chat-footer">
+        <input type="text" class="chat-input" placeholder="اكتب رسالتك هنا...">
+        <button class="send-button">➤</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- زر العودة للصفحة السابقة -->
+  <button class="return-button" onclick="history.back()">
+    ← العودة
+  </button>
+
+  <style>
+    /* زر المساعد الذكي */
+    .ai-assistant {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      z-index: 1000;
+    }
+
+    .ai-button {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #FF9E1F, #4A90E2);
+      border: none;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      color: white;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ai-button::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+      border-radius: 50%;
+    }
+
+    .ai-button:hover {
+      transform: scale(1.1) rotate(5deg);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .ai-button.pulse {
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(255, 158, 31, 0.7);
+      }
+      70% {
+        box-shadow: 0 0 0 15px rgba(255, 158, 31, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(255, 158, 31, 0);
+      }
+    }
+
+    .ai-tooltip {
+      position: absolute;
+      bottom: 85px;
+      left: 0;
+      background: white;
+      color: #2D3748;
+      padding: 0.8rem 1.2rem;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+      width: 200px;
+      text-align: center;
+      font-weight: 500;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      transform: translateY(10px);
+    }
+
+    .ai-tooltip::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 10px solid transparent;
+      border-top-color: white;
+    }
+
+    .ai-button:hover + .ai-tooltip {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    /* نافذة الدردشة */
+    .ai-chat {
+      position: fixed;
+      bottom: 120px;
+      left: 30px;
+      width: 350px;
+      height: 450px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+      z-index: 1001;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .ai-chat.active {
+      display: flex;
+    }
+
+    .chat-header {
+      background: linear-gradient(135deg, #FF9E1F, #4A90E2);
+      color: white;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .chat-header h3 {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .close-chat {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .close-chat:hover {
+      transform: scale(1.2);
+    }
+
+    .chat-body {
+      flex: 1;
+      padding: 1rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .message {
+      max-width: 80%;
+      padding: 0.8rem 1rem;
+      border-radius: 1.2rem;
+      line-height: 1.5;
+    }
+
+    .ai-message {
+      background: #F7FAFC;
+      color: #2D3748;
+      align-self: flex-start;
+      border-bottom-right-radius: 0.2rem;
+    }
+
+    .user-message {
+      background: #FFD699;
+      color: #2D3748;
+      align-self: flex-end;
+      border-bottom-left-radius: 0.2rem;
+    }
+
+    .chat-footer {
+      padding: 1rem;
+      border-top: 1px solid #E2E8F0;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .chat-input {
+      flex: 1;
+      padding: 0.8rem 1rem;
+      border: 1px solid #E2E8F0;
+      border-radius: 50px;
+      font-family: inherit;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .chat-input:focus {
+      border-color: #FF9E1F;
+    }
+
+    .send-button {
+      background: #FF9E1F;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .send-button:hover {
+      background: #E88A0D;
+      transform: scale(1.1);
+    }
+
+    /* زر العودة */
+    .return-button {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: linear-gradient(135deg, #E8822A, #FF9D45);
+      color: white;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(232, 130, 42, 0.3);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .return-button:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 8px 25px rgba(232, 130, 42, 0.5);
+      background: linear-gradient(135deg, #FF9D45, #E8822A);
+    }
+
+    .return-button:active {
+      transform: translateY(0) scale(1);
+    }
+
+    @media (max-width: 768px) {
+      .ai-chat {
+        width: 90vw;
+        left: 5vw;
+        right: 5vw;
+      }
+      
+      .return-button {
+        bottom: 20px;
+        right: 20px;
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+      }
+      
+      .ai-assistant {
+        bottom: 20px;
+        left: 20px;
+      }
+    }
+  </style>
+
+  <script>
+    // تفعيل المساعد الذكي
+    const aiButton = document.querySelector('.ai-button');
+    const aiChat = document.querySelector('.ai-chat');
+    const closeChat = document.querySelector('.close-chat');
+    const sendButton = document.querySelector('.send-button');
+    const chatInput = document.querySelector('.chat-input');
+    const chatBody = document.querySelector('.chat-body');
+    
+    aiButton.addEventListener('click', () => {
+      aiChat.classList.toggle('active');
+    });
+    
+    closeChat.addEventListener('click', () => {
+      aiChat.classList.remove('active');
+    });
+    
+    function addMessage(text, isUser = false) {
+      const messageDiv = document.createElement('div');
+      messageDiv.classList.add('message');
+      messageDiv.classList.add(isUser ? 'user-message' : 'ai-message');
+      messageDiv.textContent = text;
+      chatBody.appendChild(messageDiv);
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }
+    
+    sendButton.addEventListener('click', () => {
+      const message = chatInput.value.trim();
+      if (message) {
+        addMessage(message, true);
+        chatInput.value = '';
+        
+        // محاكاة رد المساعد
+        setTimeout(() => {
+          const responses = [
+            "هذا سؤال رائع! يمكنني مساعدتك في ذلك.",
+            "أفهم ما تقصده. دعني أقدم لك بعض المعلومات المفيدة.",
+            "شكراً لسؤالك! إليك الإجابة التي تبحث عنها.",
+            "أنا هنا لمساعدتك. هل تحتاج إلى مزيد من التفاصيل؟"
+          ];
+          const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+          addMessage(randomResponse);
+        }, 1000);
+      }
+    });
+    
+    chatInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        sendButton.click();
+      }
+    });
+  </script>
+</body>
+</html>

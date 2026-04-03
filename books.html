@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>AduKid_AI | المكتبة الرقمية التفاعلية</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="استعرض مكتبة AduKid_AI الرقمية للأطفال في رياض الأطفال، واختر لغة الملف ومرحلة KG1 أو KG2 قبل عرض ملف الـ PDF"
+  />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ========== CSS Reset ========== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: linear-gradient(135deg, #fff5e6 0%, #fff9f0 100%);
+      color: #2d3748;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    /* ========== التصميم الرئيسي ========== */
+    .main-card {
+      background: white;
+      border-radius: 30px;
+      box-shadow: 0 15px 50px rgba(232, 130, 42, 0.15);
+      padding: 3rem;
+      position: relative;
+      overflow: hidden;
+      border: 3px solid #ffe0b8;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 3px dashed #ffd1a4;
+    }
+
+    .logo {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #e8822a;
+      margin-bottom: 0.5rem;
+      text-shadow: 2px 2px 4px rgba(232, 130, 42, 0.2);
+    }
+
+    .tagline {
+      color: #718096;
+      font-size: 1.2rem;
+      font-weight: 500;
+    }
+
+    /* ========== تخطيط الصفحة ========== */
+    .page-layout {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #e8822a;
+      margin-bottom: 1.5rem;
+      padding-right: 0.5rem;
+      border-right: 4px solid #e8822a;
+      background: linear-gradient(135deg, #fff8f0 0%, transparent 100%);
+      padding: 0.8rem 1rem;
+      border-radius: 15px;
+    }
+
+    /* ========== قسم البطل الرئيسي ========== */
+    .hero-section {
+      background: #fffaf5;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 5px 15px rgba(232, 130, 42, 0.1);
+      border: 2px solid #ffe8d1;
+      margin-bottom: 2rem;
+    }
+
+    .hero-content h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #e8822a;
+      margin-bottom: 1rem;
+      line-height: 1.3;
+    }
+
+    .hero-content p {
+      color: #4a5568;
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #ffe0b8;
+      color: #e8822a;
+      padding: 0.4rem 1rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .badge-row {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin: 1.5rem 0;
+    }
+
+    /* ========== محدد المرحلة ========== */
+    .stage-switcher {
+      display: flex;
+      gap: 0.5rem;
+      background: #fffaf5;
+      padding: 0.5rem;
+      border-radius: 50px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+      width: fit-content;
+      margin: 1.5rem 0;
+      border: 1px solid #ffe0b8;
+    }
+
+    .stage-switcher button {
+      padding: 0.7rem 1.5rem;
+      border: none;
+      border-radius: 50px;
+      background: transparent;
+      color: #4a5568;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+    }
+
+    .stage-switcher button[data-active="true"] {
+      background: #e8822a;
+      color: white;
+      box-shadow: 0 2px 8px rgba(232, 130, 42, 0.3);
+    }
+
+    .stage-switcher button:hover:not([data-active="true"]) {
+      background: #fff5e6;
+    }
+
+    /* ========== شبكة الكتب ========== */
+    .books-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .book-card {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      border: 1px solid #ffe0b8;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .book-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(232, 130, 42, 0.15);
+    }
+
+    .book-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .book-icon {
+      font-size: 2.5rem;
+      flex-shrink: 0;
+    }
+
+    .book-info h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #e8822a;
+      margin-bottom: 0.5rem;
+    }
+
+    .book-subtitle {
+      color: #718096;
+      font-size: 0.9rem;
+      margin: 0;
+    }
+
+    .book-description {
+      color: #4a5568;
+      line-height: 1.6;
+    }
+
+    .book-meta {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .book-tag {
+      background: #fff5e6;
+      color: #e8822a;
+      padding: 0.3rem 0.8rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .book-footer {
+      margin-top: auto;
+    }
+
+    /* ========== أقسام المواد ========== */
+    .subject-section {
+      background: #fffaf5;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 5px 15px rgba(232, 130, 42, 0.1);
+      border: 2px solid #ffe8d1;
+      margin-bottom: 2rem;
+    }
+
+    .section-description {
+      text-align: center;
+      color: #4a5568;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ========== نصائح ========== */
+    .tips-card {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      border: 1px solid #ffe0b8;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+      margin-top: 2rem;
+    }
+
+    .tips-card h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #e8822a;
+      margin-bottom: 1rem;
+    }
+
+    .tips-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .tips-list li {
+      padding: 0.5rem 0;
+      position: relative;
+      padding-right: 1.5rem;
+      color: #4a5568;
+    }
+
+    .tips-list li::before {
+      content: "•";
+      color: #e8822a;
+      position: absolute;
+      right: 0;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    /* ========== أزرار ========== */
+    .form-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, #e8822a, #ff9d45);
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    .form-button:hover {
+      background: linear-gradient(135deg, #ff9d45, #e8822a);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(232, 130, 42, 0.3);
+    }
+
+    .btn-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: transparent;
+      color: #e8822a;
+      padding: 0.8rem 1.5rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      border: 2px solid #e8822a;
+    }
+
+    .btn-pill:hover {
+      background: #fff5e6;
+      transform: translateY(-2px);
+    }
+
+    /* ========== عارض PDF ========== */
+    .pdf-viewer-container {
+      position: fixed;
+      inset: 0;
+      background: white;
+      z-index: 2000;
+      display: none;
+      flex-direction: column;
+    }
+
+    .pdf-viewer-container.active {
+      display: flex;
+    }
+
+    .pdf-viewer-header {
+      padding: 1rem 1.5rem;
+      background: #e8822a;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .pdf-viewer-header h3 {
+      margin: 0;
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+
+    .pdf-viewer-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .pdf-viewer-iframe {
+      flex: 1;
+      width: 100%;
+      border: none;
+      background: #f7fafc;
+    }
+
+    .pdf-viewer-actions {
+      padding: 1rem;
+      background: #fffaf5;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      border-top: 1px solid #ffe0b8;
+    }
+
+    /* ========== التصميم الديكوري ========== */
+    .decoration {
+      position: absolute;
+      opacity: 0.15;
+      z-index: 0;
+    }
+
+    .decoration-1 {
+      top: -30px;
+      left: -30px;
+      width: 150px;
+      height: 150px;
+      background: #e8822a;
+      border-radius: 50%;
+    }
+
+    .decoration-2 {
+      bottom: -40px;
+      right: -40px;
+      width: 180px;
+      height: 180px;
+      background: #4299e1;
+      border-radius: 50%;
+    }
+
+    .decoration-3 {
+      top: 20%;
+      left: 30px;
+      width: 80px;
+      height: 80px;
+      background: #38b2ac;
+      border-radius: 20px;
+      transform: rotate(45deg);
+    }
+
+    .decoration-4 {
+      bottom: 30%;
+      right: 10%;
+      width: 60px;
+      height: 60px;
+      background: #ff9d45;
+      border-radius: 50%;
+    }
+
+    .content-wrapper {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ========== إيموجيز وإضافات طفولية ========== */
+    .fun-emoji {
+      font-size: 1.2rem;
+      margin-left: 0.3rem;
+    }
+
+    .child-friendly {
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="%23e8822a" opacity="0.1"/></svg>');
+      background-size: 200px 200px;
+    }
+
+    /* ========== القائمة الجانبية ========== */
+    .sidebar-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      background: #e8822a;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 10px 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: all 0.3s;
+      font-family: 'Tajawal', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      gap: 8px;
+    }
+
+    .sidebar-toggle:hover {
+      background: #ff9d45;
+      transform: scale(1.05);
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 300px;
+      height: 100%;
+      background: white;
+      box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+      z-index: 2000;
+      transition: right 0.3s ease;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    
+    .sidebar.active {
+      right: 0;
+    }
+    
+    .sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1999;
+      display: none;
+    }
+    
+    .sidebar-overlay.active {
+      display: block;
+    }
+    
+    .sidebar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .sidebar-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #666;
+    }
+    
+    .sidebar-user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      padding: 10px;
+      background: #fffaf0;
+      border-radius: 10px;
+    }
+    
+    .sidebar-user-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #e8822a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 20px;
+    }
+    
+    .sidebar-user-info h3 {
+      margin: 0;
+      font-size: 16px;
+    }
+    
+    .sidebar-user-info p {
+      margin: 0;
+      font-size: 14px;
+      color: #666;
+    }
+    
+    .sidebar-menu {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .sidebar-menu li {
+      margin-bottom: 5px;
+    }
+    
+    .sidebar-menu a {
+      display: block;
+      padding: 12px 15px;
+      text-decoration: none;
+      color: #333;
+      border-radius: 8px;
+      transition: all 0.3s;
+    }
+    
+    .sidebar-menu a:hover {
+      background: #fff5e6;
+    }
+    
+    .sidebar-menu a.active {
+      background: #e8822a;
+      color: white;
+    }
+    
+    .sidebar-footer {
+      margin-top: 30px;
+      padding-top: 15px;
+      border-top: 1px solid #eee;
+    }
+    
+    .logout-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 12px 15px;
+      background: #ffe0b8;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+    
+    .logout-btn:hover {
+      background: #ffd1a4;
+    }
+
+    /* ========== التجاوب ========== */
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+      
+      .main-card {
+        padding: 2rem 1.5rem;
+        border-radius: 25px;
+      }
+      
+      .logo {
+        font-size: 2rem;
+      }
+      
+      .section-title {
+        font-size: 1.3rem;
+      }
+      
+      .books-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .stage-switcher {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .pdf-viewer-actions {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .sidebar {
+        width: 100%;
+        right: -100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .main-card {
+        padding: 1.5rem 1rem;
+        border-radius: 20px;
+      }
+      
+      .logo {
+        font-size: 1.8rem;
+      }
+      
+      .hero-content h1 {
+        font-size: 1.8rem;
+      }
+    }
+
+    /* ========== الهيدر الثابت الجديد ========== */
+    .main-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 70px;
+      background: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      z-index: 1100;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .header-container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-logo {
+      height: 50px;
+      object-fit: contain;
+    }
+
+    .sidebar-toggle-btn {
+      background: #e8822a;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 8px 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: all 0.3s;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    .sidebar-toggle-btn:hover {
+      background: #ff9d45;
+      transform: scale(1.05);
+    }
+
+    body {
+      padding-top: 80px !important;
+    }
+
+    .sidebar-toggle {
+      display: none !important;
+    }
+  </style>
+</head>
+<body class="child-friendly">
+  <!-- الهيدر الثابت -->
+  <header class="main-header">
+    <div class="header-container">
+      <div class="header-logo-container">
+        <img src="logo.jpeg" alt="EduKid AI Logo" class="header-logo">
+      </div>
+      <button class="sidebar-toggle-btn" id="headerSidebarToggle">
+        <span>القائمة</span>
+        <span>☰</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- زر القائمة الجانبية القديم (مخفي عبر CSS) -->
+  <button class="sidebar-toggle">☰ القائمة</button>
+  
+  <!-- القائمة الجانبية -->
+  <div class="sidebar-overlay"></div>
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2>القائمة الرئيسية</h2>
+      <button class="sidebar-close">×</button>
+    </div>
+    
+    <div class="sidebar-user">
+      <div class="sidebar-user-avatar" id="user-avatar">ط</div>
+      <div class="sidebar-user-info">
+        <h3 id="sidebar-student-name">اسم الطالب</h3>
+        <p id="sidebar-grade">المرحلة: رياض الأطفال</p>
+      </div>
+    </div>
+    
+    <ul class="sidebar-menu">
+      <li><a href="index.html">الصفحة الرئيسية</a></li>
+      <li><a href="dashboard.html" id="sidebar-dashboard-link">لوحة التعلم</a></li>
+      <li><a href="games.html">الألعاب التعليمية</a></li>
+      <li><a href="books.html" class="active">المكتبة الرقمية</a></li>
+      <li><a href="stories.html">القصص الصوتية</a></li>
+      <li><a href="parent-report.html">لوحة ولي الأمر</a></li>
+    </ul>
+    
+    <div class="sidebar-footer">
+      <button class="logout-btn" id="logout-btn">
+        <span>تسجيل الخروج</span>
+        <span>🚪</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="main-card">
+      <!-- العناصر الديكورية -->
+      <div class="decoration decoration-1"></div>
+      <div class="decoration decoration-2"></div>
+      <div class="decoration decoration-3"></div>
+      <div class="decoration decoration-4"></div>
+      
+      <div class="content-wrapper">
+        <!-- الهيدر -->
+        <div class="header">
+          <div class="logo">AduKid_AI <span class="fun-emoji">🧸</span></div>
+          <div class="tagline">المكتبة الرقمية التفاعلية - معرض ISEF 2025</div>
+        </div>
+
+        <!-- محتوى الصفحة الرئيسية -->
+        <div class="page-layout">
+          <!-- قسم البطل -->
+          <div class="hero-section">
+            <div class="hero-content">
+              <h1>المكتبة الرقمية التفاعلية <span class="fun-emoji">📚</span></h1>
+              <p>مجموعة مختارة من الكتب والملفات التعليمية المصممة بعناية لكل مرحلة، لتعزيز مهارات القراءة والحساب والعلوم.</p>
+              
+              <div class="badge-row">
+                <span class="badge">📖 كتب تفاعلية</span>
+                <span class="badge">🎨 ملفات تلوين</span>
+                <span class="badge">🔢 تمارين حسابية</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- كتب اللغة العربية -->
+          <div class="subject-section" id="arabic-books">
+            <h2 class="section-title">كتب اللغة العربية <span class="fun-emoji">📖</span></h2>
+            <p class="section-description">كتب تعليمية باللغة العربية مصممة خصيصًا لمرحلة رياض الأطفال</p>
+
+            <div class="books-grid" data-books-grid>
+              <!-- يتم ملء البطاقات عبر JavaScript -->
+            </div>
+          </div>
+
+          <!-- كتب اللغة الإنجليزية -->
+          <div class="subject-section" id="english-books">
+            <h2 class="section-title">كتب اللغة الإنجليزية <span class="fun-emoji">📚</span></h2>
+            <p class="section-description">كتب تعليمية باللغة الإنجليزية مصممة خصيصًا لمرحلة رياض الأطفال</p>
+
+            <div class="books-grid" data-english-books-grid>
+              <!-- يتم ملء البطاقات عبر JavaScript -->
+            </div>
+          </div>
+
+          <!-- كتب الرياضيات -->
+          <div class="subject-section" id="math-books">
+            <h2 class="section-title">كتب الرياضيات <span class="fun-emoji">🧮</span></h2>
+            <p class="section-description">كتب تعليمية في الرياضيات مصممة خصيصًا لمرحلة رياض الأطفال</p>
+
+            <div class="books-grid" data-math-books-grid>
+              <!-- يتم ملء البطاقات عبر JavaScript -->
+            </div>
+          </div>
+
+          <!-- نصائح -->
+          <div class="tips-card">
+            <h3>نصائح للاستفادة من ملفات الـ PDF</h3>
+            <ul class="tips-list">
+              <li>اختر الكتاب المناسب لعمر طفلك ومستواه التعليمي</li>
+              <li>استخدم خاصية الطباعة لتجهيز نسخ ورقية للأنشطة التفاعلية داخل المنزل أو الصف</li>
+              <li>يمكن للمساعد الذكي في المنصة قراءة الملف بصوتٍ عالٍ عند الحاجة لدعم مهارات النطق</li>
+              <li>استخدم زر الرجوع للعودة إلى المكتبة واختيار كتاب آخر</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- الفوتر -->
+        <div class="footer" style="text-align: center; margin-top: 2rem; color: #718096; font-size: 0.9rem; padding: 1rem; background: #fffaf0; border-radius: 15px;">
+          © 2024 AduKid_AI - مشروع معرض ISEF 2025. جميع الحقوق محفوظة. <span class="fun-emoji">🎉</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- عارض PDF -->
+  <div class="pdf-viewer-container" id="pdfViewer">
+    <div class="pdf-viewer-header">
+      <h3 id="pdfViewerTitle">عرض الكتاب</h3>
+      <button class="btn-pill" type="button" id="closePdfViewer" style="background: rgba(255,255,255,0.2); color: white;">✕ إغلاق</button>
+    </div>
+    <div class="pdf-viewer-content">
+      <iframe class="pdf-viewer-iframe" id="pdfFrame" title="عارض PDF"></iframe>
+    </div>
+    <div class="pdf-viewer-actions">
+      <button class="btn-pill" id="backToLibrary">← العودة إلى المكتبة</button>
+      <a class="form-button" id="downloadPdf" download>📥 تحميل الملف</a>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
+  <script src="activity.js"></script>
+  <script>
+    function getCurrentUser() {
+      try {
+        const rawUser = localStorage.getItem('adukid_user');
+        return rawUser ? JSON.parse(rawUser) : null;
+      } catch (error) {
+        return null;
+      }
+    }
+
+    function updateStageStorageFromUser(user) {
+      const grade = (user?.grade || '').toString().trim().toLowerCase();
+      if (grade === 'kg1' || grade === 'kg2') {
+        localStorage.setItem('selectedStage', grade.toUpperCase());
+      }
+    }
+
+    function clearSessionAndGoHome() {
+      localStorage.removeItem('adukid_user');
+      localStorage.removeItem('selectedStage');
+      window.location.href = 'index.html';
+    }
+
+    function checkLoggedInUser() {
+      const user = getCurrentUser();
+      if (user && user.studentName) {
+        document.getElementById('sidebar-student-name').textContent = user.studentName;
+        document.getElementById('sidebar-grade').textContent = `المرحلة: ${user.gradeText || 'غير محدد'}`;
+        document.getElementById('user-avatar').textContent = user.studentName.charAt(0);
+        updateStageStorageFromUser(user);
+        const dashboardLink = document.getElementById('sidebar-dashboard-link');
+        if (dashboardLink) {
+          dashboardLink.href = getCurrentDashboardUrl();
+          dashboardLink.textContent = `لوحة تعلم ${getStageLabel(user.grade)}`;
+        }
+      } else {
+        window.location.href = 'index.html';
+      }
+    }
+
+    // تفعيل زر القائمة الجانبية
+    const sidebarToggle = document.querySelector('.sidebar-toggle');
+    const headerSidebarToggle = document.getElementById('headerSidebarToggle');
+    const sidebar = document.querySelector('.sidebar');
+    const sidebarOverlay = document.querySelector('.sidebar-overlay');
+    const sidebarClose = document.querySelector('.sidebar-close');
+    
+    function openSidebar() {
+      sidebar.classList.add('active');
+      sidebarOverlay.classList.add('active');
+    }
+    
+    function closeSidebar() {
+      sidebar.classList.remove('active');
+      sidebarOverlay.classList.remove('active');
+    }
+    
+    if (headerSidebarToggle) {
+      headerSidebarToggle.addEventListener('click', openSidebar);
+    }
+    if (sidebarToggle) {
+      sidebarToggle.addEventListener('click', openSidebar);
+    }
+    sidebarClose.addEventListener('click', closeSidebar);
+    sidebarOverlay.addEventListener('click', closeSidebar);
+
+    // تفعيل زر تسجيل الخروج
+    document.getElementById('logout-btn').addEventListener('click', function() {
+      if (confirm('هل أنت متأكد من تسجيل الخروج؟')) {
+        clearSessionAndGoHome();
+      }
+    });
+
+    // التحقق من وجود بيانات مستخدم عند تحميل الصفحة
+    document.addEventListener('DOMContentLoaded', function() {
+      checkLoggedInUser();
+    });
+
+    // بيانات الكتب
+    const booksData = [
+      {
+        id: "arabic-kg1",
+        emoji: "📘",
+        title: "كتاب اللغة العربية - KG1",
+        subtitle: "كتاب تعليمي باللغة العربية",
+        summary: "كتاب تعليمي شامل باللغة العربية مصمم خصيصًا لمرحلة KG1، يحتوي على أنشطة تفاعلية وتدريبات ممتعة.",
+        badges: ["العربية", "KG1", "28 صفحة"],
+        pdf: "Arabic_KG1.pdf",
+        stage: "KG1",
+        subject: "arabic"
+      },
+      {
+        id: "arabic-kg2",
+        emoji: "📗",
+        title: "كتاب اللغة العربية - KG2",
+        subtitle: "كتاب تعليمي باللغة العربية",
+        summary: "كتاب تعليمي متقدم باللغة العربية مصمم خصيصًا لمرحلة KG2، مع أنشطة أكثر تعقيدًا وتحديًا.",
+        badges: ["العربية", "KG2", "32 صفحة"],
+        pdf: "Arabic_KG2.pdf",
+        stage: "KG2",
+        subject: "arabic"
+      }
+    ];
+
+    const englishBooksData = [
+      {
+        id: "english-kg1",
+        emoji: "📕",
+        title: "English Book - KG1",
+        subtitle: "English Learning Book",
+        summary: "Comprehensive English learning book specially designed for KG1 level, with fun activities and exercises.",
+        badges: ["English", "KG1", "26 pages"],
+        pdf: "English_KG1.pdf",
+        stage: "KG1",
+        subject: "english"
+      },
+      {
+        id: "english-kg2",
+        emoji: "📙",
+        title: "English Book - KG2",
+        subtitle: "English Learning Book",
+        summary: "Advanced English learning book specially designed for KG2 level, with more challenging activities.",
+        badges: ["English", "KG2", "30 pages"],
+        pdf: "English_KG2.pdf",
+        stage: "KG2",
+        subject: "english"
+      }
+    ];
+
+    const mathBooksData = [
+      {
+        id: "math-kg1",
+        emoji: "📐",
+        title: "كتاب الرياضيات - KG1",
+        subtitle: "كتاب تعليمي في الرياضيات",
+        summary: "كتاب أساسيات الرياضيات لمرحلة KG1 مع أنشطة وتمارين ممتعة لتثبيت المفاهيم.",
+        badges: ["الرياضيات", "KG1", "ملف PDF"],
+        pdf: "math_KG1.pdf",
+        stage: "KG1",
+        subject: "math"
+      },
+      {
+        id: "math-kg2",
+        emoji: "📏",
+        title: "كتاب الرياضيات - KG2",
+        subtitle: "كتاب تعليمي في الرياضيات",
+        summary: "كتاب الرياضيات المتقدم لمرحلة KG2 مع أنشطة أكثر تحدياً وتدريبات تطبيقية.",
+        badges: ["الرياضيات", "KG2", "ملف PDF"],
+        pdf: "math_KG2.pdf",
+        stage: "KG2",
+        subject: "math"
+      }
+    ];
+
+    // عناصر DOM
+    const booksGrid = document.querySelector("[data-books-grid]");
+    const englishBooksGrid = document.querySelector("[data-english-books-grid]");
+    const mathBooksGrid = document.querySelector("[data-math-books-grid]");
+    const pdfViewer = document.getElementById("pdfViewer");
+    const pdfFrame = document.getElementById("pdfFrame");
+    const pdfViewerTitle = document.getElementById("pdfViewerTitle");
+    const closePdfViewer = document.getElementById("closePdfViewer");
+    const backToLibrary = document.getElementById("backToLibrary");
+    const downloadPdf = document.getElementById("downloadPdf");
+
+    // دالة عرض الكتب العربية
+    function renderBooks() {
+      const fragment = document.createDocumentFragment();
+      const currentStage = getCurrentStageSafe() || 'KG1';
+      const filteredBooks = booksData.filter(book => book.stage === currentStage);
+
+      filteredBooks.forEach(book => {
+        const card = document.createElement("article");
+        card.className = "book-card";
+        card.innerHTML = `
+          <div class="book-header">
+            <div class="book-icon">${book.emoji}</div>
+            <div class="book-info">
+              <h3>${book.title}</h3>
+              <p class="book-subtitle">${book.subtitle}</p>
+            </div>
+          </div>
+          <p class="book-description">${book.summary}</p>
+          <div class="book-meta">
+            ${book.badges.map(badge => `<span class="book-tag">${badge}</span>`).join("")}
+          </div>
+          <div class="book-footer">
+            <button class="form-button" type="button" data-open-pdf data-book-id="${book.id}">
+              📖 قراءة الكتاب
+            </button>
+          </div>
+        `;
+        fragment.appendChild(card);
+      });
+
+      booksGrid.innerHTML = '';
+      booksGrid.appendChild(fragment);
+    }
+
+    // دالة عرض الكتب الإنجليزية
+    function renderEnglishBooks() {
+      const fragment = document.createDocumentFragment();
+      const currentStage = getCurrentStageSafe() || 'KG1';
+      const filteredBooks = englishBooksData.filter(book => book.stage === currentStage);
+
+      filteredBooks.forEach(book => {
+        const card = document.createElement("article");
+        card.className = "book-card";
+        card.innerHTML = `
+          <div class="book-header">
+            <div class="book-icon">${book.emoji}</div>
+            <div class="book-info">
+              <h3>${book.title}</h3>
+              <p class="book-subtitle">${book.subtitle}</p>
+            </div>
+          </div>
+          <p class="book-description">${book.summary}</p>
+          <div class="book-meta">
+            ${book.badges.map(badge => `<span class="book-tag">${badge}</span>`).join("")}
+          </div>
+          <div class="book-footer">
+            <button class="form-button" type="button" data-open-pdf data-book-id="${book.id}">
+              📖 Read Book
+            </button>
+          </div>
+        `;
+        fragment.appendChild(card);
+      });
+
+      englishBooksGrid.innerHTML = '';
+      englishBooksGrid.appendChild(fragment);
+    }
+
+    // دالة عرض كتب الرياضيات
+    function renderMathBooks() {
+      const fragment = document.createDocumentFragment();
+      const currentStage = getCurrentStageSafe() || 'KG1';
+      const filteredBooks = mathBooksData.filter(book => book.stage === currentStage);
+
+      filteredBooks.forEach(book => {
+        const card = document.createElement("article");
+        card.className = "book-card";
+        card.innerHTML = `
+          <div class="book-header">
+            <div class="book-icon">${book.emoji}</div>
+            <div class="book-info">
+              <h3>${book.title}</h3>
+              <p class="book-subtitle">${book.subtitle}</p>
+            </div>
+          </div>
+          <p class="book-description">${book.summary}</p>
+          <div class="book-meta">
+            ${book.badges.map(badge => `<span class="book-tag">${badge}</span>`).join("")}
+          </div>
+          <div class="book-footer">
+            <button class="form-button" type="button" data-open-pdf data-book-id="${book.id}">
+              📖 قراءة الكتاب
+            </button>
+          </div>
+        `;
+        fragment.appendChild(card);
+      });
+
+      mathBooksGrid.innerHTML = '';
+      mathBooksGrid.appendChild(fragment);
+    }
+
+    // دالة فتح عارض PDF
+    async function openPdfViewer(bookId) {
+      let book;
+      
+      book = booksData.find(item => item.id === bookId) ||
+             englishBooksData.find(item => item.id === bookId) ||
+             mathBooksData.find(item => item.id === bookId);
+      
+      if (!book) return;
+
+      pdfViewerTitle.textContent = book.title;
+      pdfFrame.src = book.pdf;
+      downloadPdf.href = book.pdf;
+      downloadPdf.download = book.pdf;
+      try {
+        await logActivity({
+          type: 'book',
+          subType: 'read',
+          title: book.title,
+          meta: { id: book.id, file: book.pdf, subject: book.subject }
+        });
+      } catch (e) {}
+      
+      pdfViewer.classList.add("active");
+      document.body.style.overflow = "hidden";
+    }
+
+    // دالة إغلاق عارض PDF
+    function closePdfViewerFunc() {
+      pdfViewer.classList.remove("active");
+      pdfFrame.src = "";
+      document.body.style.overflow = "auto";
+    }
+
+    // دالة تغيير المرحلة
+    function setStage(stage) {
+      const lockedStage = getCurrentStageSafe() || 'KG1';
+      localStorage.setItem('selectedStage', lockedStage);
+      
+      renderBooks();
+      renderEnglishBooks();
+      renderMathBooks();
+    }
+
+    // تفعيل الأحداث
+    function attachEvents() {
+      // أحداث فتح PDF
+      document.addEventListener("click", function(event) {
+        const openButton = event.target.closest("[data-open-pdf]");
+        if (openButton) {
+          event.preventDefault();
+          openPdfViewer(openButton.dataset.bookId);
+        }
+      });
+
+      // أحداث إغلاق PDF
+      closePdfViewer.addEventListener("click", closePdfViewerFunc);
+      backToLibrary.addEventListener("click", closePdfViewerFunc);
+
+      // إغلاق PDF بالزر Escape
+      document.addEventListener("keydown", function(event) {
+        if (event.key === "Escape" && pdfViewer.classList.contains("active")) {
+          closePdfViewerFunc();
+        }
+      });
+    }
+
+    // تهيئة الصفحة
+    function init() {
+      const savedStage = getCurrentStageSafe() || 'KG1';
+      setStage(savedStage);
+      attachEvents();
+    }
+
+    // تشغيل التهيئة عند تحميل الصفحة
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>

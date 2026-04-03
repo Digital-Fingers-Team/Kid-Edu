@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>معمل الأشكال العجيبة | سمارت كيدز</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="استكشف الأشكال الهندسية الأساسية من خلال نشاط سحب وإفلات وتقييم فوري." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4A90E2;
+      --primary-dark: #357ABD;
+      --primary-light: #E3F2FD;
+      --secondary: #FF9E1F;
+      --secondary-light: #FFE0B2;
+      --accent: #FF6B6B;
+      --success: #4CAF50;
+      --dark: #2D3748;
+      --light: #F7FAFC;
+      --white: #FFFFFF;
+      --gray-light: #E2E8F0;
+      --gray: #A0AEC0;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.12);
+      --radius: 16px;
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background-color: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .navbar {
+      background: var(--white);
+      border-radius: var(--radius);
+      margin: 1rem auto;
+      max-width: min(1200px, 94vw);
+      box-shadow: var(--shadow);
+      padding: 0.8rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 10px;
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 700;
+      font-size: 1.4rem;
+    }
+
+    .brand-icon {
+      font-size: 2rem;
+    }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      flex-direction: column;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+
+    .nav-toggle span {
+      width: 25px;
+      height: 3px;
+      background: var(--dark);
+      margin: 3px 0;
+      transition: var(--transition);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      transition: var(--transition);
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      background-color: var(--primary-light);
+      color: var(--primary-dark);
+    }
+
+    .page-wrapper {
+      max-width: min(1200px, 94vw);
+      margin: 0 auto;
+      padding: 1.5rem 0;
+      flex: 1;
+    }
+
+    .game-detail-hero {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .game-detail-header {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 2rem;
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      padding: 0.4rem 1rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .game-detail-header h1 {
+      font-size: 2.2rem;
+      color: var(--dark);
+      margin-bottom: 1rem;
+    }
+
+    .game-detail-header p {
+      font-size: 1.1rem;
+      color: var(--dark);
+      opacity: 0.8;
+      margin-bottom: 1.5rem;
+    }
+
+    .game-detail-meta {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .game-detail-meta span {
+      background: var(--light);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .game-detail-actions {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .game-detail-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 2rem;
+      align-self: start;
+    }
+
+    .game-detail-card h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      color: var(--dark);
+    }
+
+    .game-detail-card dl {
+      margin-bottom: 1.5rem;
+    }
+
+    .game-detail-card dl div {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.8rem;
+    }
+
+    .game-detail-card dt {
+      font-weight: 500;
+    }
+
+    .game-detail-card dd {
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .card-note {
+      font-size: 0.9rem;
+      color: var(--dark);
+      opacity: 0.7;
+      border-top: 1px solid var(--gray-light);
+      padding-top: 1rem;
+    }
+
+    section {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    section header h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      color: var(--dark);
+    }
+
+    section ol, section ul {
+      padding-right: 1.5rem;
+    }
+
+    section li {
+      margin-bottom: 0.8rem;
+    }
+
+    .btn-primary, .btn-secondary {
+      padding: 0.8rem 1.8rem;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      border: none;
+      box-shadow: 0 4px 10px rgba(74, 144, 226, 0.3);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(74, 144, 226, 0.4);
+    }
+
+    .btn-secondary {
+      background: white;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+
+    .btn-secondary:hover {
+      background: var(--primary);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    /* منطقة اللعبة التفاعلية */
+    .game-area {
+      display: none;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .shapes-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      padding: 1rem;
+      background: var(--light);
+      border-radius: var(--radius);
+      min-height: 300px;
+    }
+
+    .shape {
+      width: 100px;
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: grab;
+      transition: var(--transition);
+      margin: 0 auto;
+    }
+
+    .shape.dragging {
+      opacity: 0.5;
+      transform: scale(0.9);
+    }
+
+    .shape.correct {
+      border: 3px solid var(--success);
+    }
+
+    .shape.incorrect {
+      border: 3px solid var(--accent);
+    }
+
+    .shape-circle {
+      background: var(--primary-light);
+      border-radius: 50%;
+    }
+
+    .shape-square {
+      background: var(--secondary-light);
+    }
+
+    .shape-triangle {
+      background: #E8F5E9;
+      clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    }
+
+    .shape-rectangle {
+      background: #FFF3E0;
+      width: 120px;
+    }
+
+    .shape-star {
+      background: #FCE4EC;
+      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    }
+
+    .shape-heart {
+      background: #FFEBEE;
+      clip-path: path("M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z");
+    }
+
+    .shape-diamond {
+      background: #E3F2FD;
+      clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    }
+
+    .shape-oval {
+      background: #E8F5E9;
+      border-radius: 50%;
+      width: 120px;
+    }
+
+    .shape-pentagon {
+      background: #FFF3E0;
+      clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+    }
+
+    .targets-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      padding: 1rem;
+      background: var(--light);
+      border-radius: var(--radius);
+      min-height: 300px;
+    }
+
+    .target {
+      width: 100px;
+      height: 100px;
+      border: 2px dashed var(--gray);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+      transition: var(--transition);
+    }
+
+    .target.hover {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .target.correct {
+      border-color: var(--success);
+      background: #E8F5E9;
+    }
+
+    .target.incorrect {
+      border-color: var(--accent);
+      background: #FFEBEE;
+    }
+
+    .game-feedback {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+      min-height: 2rem;
+    }
+
+    .feedback-correct {
+      color: var(--success);
+    }
+
+    .feedback-incorrect {
+      color: var(--accent);
+    }
+
+    .game-timer {
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+
+    .game-progress {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .progress-bar {
+      height: 10px;
+      background: var(--gray-light);
+      border-radius: 5px;
+      overflow: hidden;
+      margin-top: 0.5rem;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--primary);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .game-completed {
+      display: none;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .game-completed h2 {
+      font-size: 2rem;
+      color: var(--success);
+      margin-bottom: 1rem;
+    }
+
+    .game-completed p {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .medal {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--dark);
+      opacity: 0.7;
+      border-top: 1px solid var(--gray-light);
+      margin-top: 4rem;
+    }
+
+    /* تصميم متجاوب */
+    @media (max-width: 1024px) {
+      .nav-links {
+        gap: 0.3rem;
+      }
+      
+      .nav-links a {
+        padding: 0.5rem 0.7rem;
+        font-size: 0.85rem;
+      }
+      
+      .game-detail-hero {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+      }
+      
+      .nav-toggle {
+        display: flex;
+      }
+      
+      .nav-links {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      
+      .nav-links.is-open {
+        display: flex;
+      }
+      
+      .nav-links a {
+        width: 100%;
+        text-align: center;
+      }
+      
+      .game-detail-meta {
+        flex-wrap: wrap;
+      }
+      
+      .game-detail-actions {
+        flex-direction: column;
+      }
+      
+      .game-area {
+        grid-template-columns: 1fr;
+      }
+      
+      .shapes-container, .targets-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .shapes-container, .targets-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ========== الهيدر الثابت الجديد ========== */
+    .main-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 70px;
+      background: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      z-index: 1100;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .header-container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-logo {
+      height: 50px;
+      object-fit: contain;
+    }
+
+    .sidebar-toggle-btn {
+      background: #e8822a;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 8px 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: all 0.3s;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    .sidebar-toggle-btn:hover {
+      background: #ff9d45;
+      transform: scale(1.05);
+    }
+
+    body {
+      padding-top: 80px !important;
+    }
+
+    /* ========== القائمة الجانبية ========== */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 300px;
+      height: 100%;
+      background: white;
+      box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+      z-index: 2000;
+      transition: right 0.3s ease;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    
+    .sidebar.active {
+      right: 0;
+    }
+    
+    .sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1999;
+      display: none;
+    }
+    
+    .sidebar-overlay.active {
+      display: block;
+    }
+    
+    .sidebar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .sidebar-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #666;
+    }
+    
+    .sidebar-user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      padding: 10px;
+      background: #fffaf0;
+      border-radius: 10px;
+    }
+    
+    .sidebar-user-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #e8822a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 20px;
+    }
+    
+    .sidebar-user-info h3 {
+      margin: 0;
+      font-size: 16px;
+    }
+    
+    .sidebar-user-info p {
+      margin: 0;
+      font-size: 14px;
+      color: #666;
+    }
+    
+    .sidebar-menu {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .sidebar-menu li {
+      margin-bottom: 5px;
+    }
+    
+    .sidebar-menu a {
+      display: block;
+      padding: 12px 15px;
+      text-decoration: none;
+      color: #333;
+      border-radius: 8px;
+      transition: all 0.3s;
+    }
+    
+    .sidebar-menu a:hover {
+      background: #fff5e6;
+    }
+    
+    .sidebar-menu a.active {
+      background: #e8822a;
+      color: white;
+    }
+    
+    .sidebar-footer {
+      margin-top: 30px;
+      padding-top: 15px;
+      border-top: 1px solid #eee;
+    }
+    
+    .logout-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 12px 15px;
+      background: #ffe0b8;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+    
+    .logout-btn:hover {
+      background: #ffd1a4;
+    }
+  </style>
+</head>
+<body>
+  <!-- الهيدر الثابت -->
+  <header class="main-header">
+    <div class="header-container">
+      <div class="header-logo-container">
+        <img src="logo.jpeg" alt="EduKid AI Logo" class="header-logo">
+      </div>
+      <button class="sidebar-toggle-btn" id="headerSidebarToggle">
+        <span>القائمة</span>
+        <span>☰</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- القائمة الجانبية -->
+  <div class="sidebar-overlay"></div>
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2>القائمة الرئيسية</h2>
+      <button class="sidebar-close">×</button>
+    </div>
+    
+    <div class="sidebar-user">
+      <div class="sidebar-user-avatar" id="sidebar-user-avatar">ط</div>
+      <div class="sidebar-user-info">
+        <h3 id="sidebar-student-name">اسم الطالب</h3>
+        <p id="sidebar-grade">المرحلة: رياض الأطفال</p>
+      </div>
+    </div>
+    
+    <ul class="sidebar-menu">
+      <li><a href="index.html">الصفحة الرئيسية</a></li>
+      <li><a href="dashboard.html" id="sidebar-dashboard-link">لوحة التعلم</a></li>
+      <li><a href="games.html" class="active">الألعاب التعليمية</a></li>
+      <li><a href="books.html">المكتبة الرقمية</a></li>
+      <li><a href="stories.html">القصص الصوتية</a></li>
+      <li><a href="parent-report.html">لوحة ولي الأمر</a></li>
+    </ul>
+    
+    <div class="sidebar-footer">
+      <button class="logout-btn" id="logout-btn">
+        <span>تسجيل الخروج</span>
+        <span>🚪</span>
+      </button>
+    </div>
+  </div>
+
+  <main class="page-wrapper game-detail-page">
+    <section class="game-detail-hero">
+      <div class="game-detail-header">
+        <span class="badge">🧩 معمل الأشكال العجيبة</span>
+        <h1>اكتشف الأشكال من خلال التجربة</h1>
+        <p>
+          لعبة سحب وإفلات تتيح للطفل مطابقة الأشكال (مثلث، مربع، دائرة) مع لوحاتها، مع ملاحظات فورية على دقة الاختيار.
+        </p>
+        <div class="game-detail-meta">
+          <span>مستوى 1</span>
+          <span>عدد الأشكال: 9</span>
+          <span>تقييم لحظي</span>
+        </div>
+        <div class="game-detail-actions">
+          <button type="button" class="btn-primary" id="start-game-btn">ابدأ التجربة</button>
+          <a class="btn-secondary" href="games.html">⬅ العودة إلى مركز الألعاب</a>
+        </div>
+
+        <!-- منطقة اللعبة التفاعلية -->
+        <div class="game-area" id="game-area">
+          <div class="game-timer" id="game-timer">00:00</div>
+          <div class="game-progress">
+            <div>الأشكال المطابقة: <span id="matched-count">0</span> / <span id="total-shapes">9</span></div>
+            <div class="progress-bar">
+              <div class="progress-fill" id="progress-fill"></div>
+            </div>
+          </div>
+
+          <div class="shapes-container" id="shapes-container">
+            <!-- سيتم إضافة الأشكال ديناميكيًا -->
+          </div>
+
+          <div class="targets-container" id="targets-container">
+            <!-- سيتم إضافة الأهداف ديناميكيًا -->
+          </div>
+
+          <div class="game-feedback" id="game-feedback"></div>
+        </div>
+
+        <div class="game-completed" id="game-completed">
+          <div class="medal">🏆</div>
+          <h2>أحسنت! أكملت جميع الأشكال</h2>
+          <p>لقد أكملت المهمة في <span id="completion-time">00:00</span> دقيقة</p>
+          <p>عدد المحاولات: <span id="attempts-count">0</span></p>
+          <div class="game-detail-actions">
+            <button type="button" class="btn-primary" id="play-again-btn">العب مرة أخرى</button>
+            <a class="btn-secondary" href="games.html">العودة إلى الألعاب</a>
+          </div>
+        </div>
+      </div>
+      <aside class="game-detail-card">
+        <h2>سجل الأداء</h2>
+        <dl>
+          <div><dt>أشكال صحيحة</dt><dd id="correct-shapes">0 / 9</dd></div>
+          <div><dt>عدد المحاولات</dt><dd id="attempts">0</dd></div>
+          <div><dt>زمن الجولة</dt><dd id="current-time">00:00</dd></div>
+        </dl>
+        <p class="card-note">أكمل الجولة في أقل من 5 دقائق لتحصل على وسام "عالم الأشكال".</p>
+      </aside>
+    </section>
+
+    <section class="game-instructions">
+      <header>
+        <h2>طريقة اللعب</h2>
+      </header>
+      <ol>
+        <li>اختر الشكل الظاهر في لوحة العرض.</li>
+        <li>اسحب النسخة المطابقة إلى المكان الصحيح.</li>
+        <li>استمع للتقييم الفوري (صحيح/حاول مرة أخرى).li>
+        <li>بعد اكتمال المجموعة، يبدأ مستوى جديد بأشكال مركبة.</li>
+      </ol>
+    </section>
+
+    <section class="game-tasks">
+      <header>
+        <h2>الهدف التعليمي</h2>
+      </header>
+      <ul>
+        <li>تمييز الأشكال الأساسية والقدرة على تسميتها.</li>
+        <li>تطوير التنسيق البصري الحركي.</li>
+        <li>التعرف على الأشكال المركبة (مثل البيت، القارب) من خلال مكوناتها.</li>
+      </ul>
+    </section>
+
+    <section class="game-support">
+      <header>
+        <h2>أنشطة إضافية</h2>
+      </header>
+      <p>
+        اصنع أشكالاً باستخدام العصي الخشبية أو العجين، واطلب من طفلك تسمية الشكل أو الابتكار بأشكال جديدة.
+      </p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© 2025 سمارت كيدز – الرياضيات تبدأ من الأشكال!</p>
+  </footer>
+
+  <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
+  <script src="activity.js"></script>
+  <script>
+    // بيانات الأشكال
+    const shapes = [
+      { id: 'circle', name: 'دائرة', type: 'circle', class: 'shape-circle' },
+      { id: 'square', name: 'مربع', type: 'square', class: 'shape-square' },
+      { id: 'triangle', name: 'مثلث', type: 'triangle', class: 'shape-triangle' },
+      { id: 'rectangle', name: 'مستطيل', type: 'rectangle', class: 'shape-rectangle' },
+      { id: 'star', name: 'نجمة', type: 'star', class: 'shape-star' },
+      { id: 'heart', name: 'قلب', type: 'heart', class: 'shape-heart' },
+      { id: 'diamond', name: 'معين', type: 'diamond', class: 'shape-diamond' },
+      { id: 'oval', name: 'بيضاوي', type: 'oval', class: 'shape-oval' },
+      { id: 'pentagon', name: 'خماسي', type: 'pentagon', class: 'shape-pentagon' }
+    ];
+
+    // متغيرات اللعبة
+    let gameStarted = false;
+    let startTime;
+    let timerInterval;
+    let matchedCount = 0;
+    let attempts = 0;
+    let draggedShape = null;
+
+    // عناصر DOM
+    const startGameBtn = document.getElementById('start-game-btn');
+    const gameArea = document.getElementById('game-area');
+    const shapesContainer = document.getElementById('shapes-container');
+    const targetsContainer = document.getElementById('targets-container');
+    const gameFeedback = document.getElementById('game-feedback');
+    const gameTimer = document.getElementById('game-timer');
+    const matchedCountElement = document.getElementById('matched-count');
+    const totalShapesElement = document.getElementById('total-shapes');
+    const progressFill = document.getElementById('progress-fill');
+    const correctShapesElement = document.getElementById('correct-shapes');
+    const attemptsElement = document.getElementById('attempts');
+    const currentTimeElement = document.getElementById('current-time');
+    const gameCompleted = document.getElementById('game-completed');
+    const completionTimeElement = document.getElementById('completion-time');
+    const attemptsCountElement = document.getElementById('attempts-count');
+    const playAgainBtn = document.getElementById('play-again-btn');
+
+    // تهيئة اللعبة
+    function initGame() {
+      // إضافة مستمعي الأحداث
+      startGameBtn.addEventListener('click', startGame);
+      playAgainBtn.addEventListener('click', startGame);
+      
+      // تحديث العدد الإجمالي للأشكال
+      totalShapesElement.textContent = shapes.length;
+    }
+
+    // بدء اللعبة
+    function startGame() {
+      gameStarted = true;
+      matchedCount = 0;
+      attempts = 0;
+      
+      // إعادة تعيين واجهة اللعبة
+      gameArea.style.display = 'grid';
+      gameCompleted.style.display = 'none';
+      gameFeedback.textContent = '';
+      
+      // تحديث الإحصائيات
+      updateStats();
+      
+      // إنشاء الأشكال والأهداف
+      createShapes();
+      createTargets();
+      
+      // بدء المؤقت
+      startTimer();
+      
+      // إخفاء زر البدء
+      startGameBtn.style.display = 'none';
+      try { logActivity({ type: 'game', subType: 'start', title: 'معمل الأشكال العجيبة' }); } catch (e) {}
+    }
+
+    // إنشاء الأشكال القابلة للسحب
+    function createShapes() {
+      shapesContainer.innerHTML = '';
+      
+      // خلط الأشعار عشوائياً
+      const shuffledShapes = [...shapes].sort(() => Math.random() - 0.5);
+      
+      shuffledShapes.forEach(shape => {
+        const shapeElement = document.createElement('div');
+        shapeElement.className = `shape ${shape.class}`;
+        shapeElement.id = `shape-${shape.id}`;
+        shapeElement.draggable = true;
+        shapeElement.setAttribute('data-type', shape.type);
+        
+        // إضافة اسم الشكل
+        const shapeName = document.createElement('div');
+        shapeName.textContent = shape.name;
+        shapeName.style.marginTop = '0.5rem';
+        shapeName.style.fontSize = '0.9rem';
+        shapeName.style.fontWeight = '500';
+        
+        shapeElement.appendChild(shapeName);
+        
+        // إضافة مستمعي أحداث السحب
+        shapeElement.addEventListener('dragstart', handleDragStart);
+        shapeElement.addEventListener('dragend', handleDragEnd);
+        
+        shapesContainer.appendChild(shapeElement);
+      });
+    }
+
+    // إنشاء الأهداف
+    function createTargets() {
+      targetsContainer.innerHTML = '';
+      
+      shapes.forEach(shape => {
+        const targetElement = document.createElement('div');
+        targetElement.className = 'target';
+        targetElement.id = `target-${shape.id}`;
+        targetElement.setAttribute('data-type', shape.type);
+        
+        // إضافة اسم الشكل
+        const shapeName = document.createElement('div');
+        shapeName.textContent = shape.name;
+        shapeName.style.marginTop = '0.5rem';
+        shapeName.style.fontSize = '0.9rem';
+        shapeName.style.fontWeight = '500';
+        
+        targetElement.appendChild(shapeName);
+        
+        // إضافة مستمعي أحداث السحب
+        targetElement.addEventListener('dragover', handleDragOver);
+        targetElement.addEventListener('dragenter', handleDragEnter);
+        targetElement.addEventListener('dragleave', handleDragLeave);
+        targetElement.addEventListener('drop', handleDrop);
+        
+        targetsContainer.appendChild(targetElement);
+      });
+    }
+
+    // بدء المؤقت
+    function startTimer() {
+      startTime = new Date();
+      
+      if (timerInterval) {
+        clearInterval(timerInterval);
+      }
+      
+      timerInterval = setInterval(() => {
+        const currentTime = new Date();
+        const elapsedTime = new Date(currentTime - startTime);
+        const minutes = elapsedTime.getMinutes().toString().padStart(2, '0');
+        const seconds = elapsedTime.getSeconds().toString().padStart(2, '0');
+        
+        gameTimer.textContent = `${minutes}:${seconds}`;
+        currentTimeElement.textContent = `${minutes}:${seconds}`;
+      }, 1000);
+    }
+
+    // تحديث الإحصائيات
+    function updateStats() {
+      matchedCountElement.textContent = matchedCount;
+      correctShapesElement.textContent = `${matchedCount} / ${shapes.length}`;
+      attemptsElement.textContent = attempts;
+      
+      // تحديث شريط التقدم
+      const progress = (matchedCount / shapes.length) * 100;
+      progressFill.style.width = `${progress}%`;
+    }
+
+    // معالجة بدء السحب
+    function handleDragStart(e) {
+      draggedShape = this;
+      this.classList.add('dragging');
+      e.dataTransfer.setData('text/plain', this.id);
+    }
+
+    // معالجة نهاية السحب
+    function handleDragEnd() {
+      this.classList.remove('dragging');
+      draggedShape = null;
+      
+      // إزالة تأثير التمرير من جميع الأهداف
+      document.querySelectorAll('.target').forEach(target => {
+        target.classList.remove('hover');
+      });
+    }
+
+    // معالجة السحب فوق الهدف
+    function handleDragOver(e) {
+      e.preventDefault();
+    }
+
+    // معالجة دخول السحب إلى الهدف
+    function handleDragEnter(e) {
+      e.preventDefault();
+      this.classList.add('hover');
+    }
+
+    // معالجة خروج السحب من الهدف
+    function handleDragLeave() {
+      this.classList.remove('hover');
+    }
+
+    // معالجة إفلات الشكل
+    async function handleDrop(e) {
+      e.preventDefault();
+      this.classList.remove('hover');
+      
+      const shapeId = e.dataTransfer.getData('text/plain');
+      const shapeElement = document.getElementById(shapeId);
+      const shapeType = shapeElement.getAttribute('data-type');
+      const targetType = this.getAttribute('data-type');
+      
+      attempts++;
+      updateStats();
+      
+      // التحقق من المطابقة
+      if (shapeType === targetType) {
+        // تطابق صحيح
+        this.classList.add('correct');
+        shapeElement.classList.add('correct');
+        shapeElement.draggable = false;
+        
+        gameFeedback.textContent = 'أحسنت! تطابق صحيح! 🌟';
+        gameFeedback.className = 'game-feedback feedback-correct';
+        
+        matchedCount++;
+        updateStats();
+        
+        try { 
+          await logActivity({ 
+            type: 'game', 
+            subType: 'answer_correct', 
+            title: `شكل ${shapeType}`, 
+            meta: { game: 'معمل الأشكال العجيبة', shape: shapeType } 
+          }); 
+        } catch (e) {}
+        
+        // التحقق من اكتمال اللعبة
+        if (matchedCount === shapes.length) {
+          await endGame();
+        }
+      } else {
+        // تطابق خاطئ
+        this.classList.add('incorrect');
+        
+        gameFeedback.textContent = 'حاول مرة أخرى!';
+        gameFeedback.className = 'game-feedback feedback-incorrect';
+        try { 
+          await logActivity({ 
+            type: 'game', 
+            subType: 'answer_incorrect', 
+            title: `خطأ في شكل ${shapeType}`, 
+            meta: { game: 'معمل الأشكال العجيبة', shape: shapeType } 
+          }); 
+        } catch (e) {}
+        
+        // إزالة التأثير بعد فترة
+        setTimeout(() => {
+          this.classList.remove('incorrect');
+        }, 1000);
+      }
+    }
+
+    // إنهاء اللعبة
+    async function endGame() {
+      clearInterval(timerInterval);
+      
+      // حساب الوقت المستغرق
+      const endTime = new Date();
+      const elapsedTime = new Date(endTime - startTime);
+      const minutes = elapsedTime.getMinutes().toString().padStart(2, '0');
+      const seconds = elapsedTime.getSeconds().toString().padStart(2, '0');
+      
+      completionTimeElement.textContent = `${minutes}:${seconds}`;
+      attemptsCountElement.textContent = attempts;
+      
+      // إظهار شاشة الإكمال
+      gameArea.style.display = 'none';
+      gameCompleted.style.display = 'block';
+      
+      // إظهار زر البدء مرة أخرى
+      startGameBtn.style.display = 'inline-flex';
+      try { await logActivity({ type: 'game', subType: 'complete', title: 'معمل الأشكال العجيبة', meta: { attempts } }); } catch (e) {}
+    }
+
+    function getCurrentUser() {
+      try {
+        const rawUser = localStorage.getItem('adukid_user');
+        return rawUser ? JSON.parse(rawUser) : null;
+      } catch (error) {
+        return null;
+      }
+    }
+
+    function checkLoggedInUser() {
+      const user = getCurrentUser();
+      if (user && user.studentName) {
+        document.getElementById('sidebar-student-name').textContent = user.studentName;
+        document.getElementById('sidebar-grade').textContent = `المرحلة: ${user.gradeText || 'غير محدد'}`;
+        document.getElementById('sidebar-user-avatar').textContent = user.studentName.charAt(0);
+        const dashboardLink = document.getElementById('sidebar-dashboard-link');
+        if (dashboardLink) {
+          const grade = (user?.grade || '').toString().trim().toUpperCase();
+          dashboardLink.href = grade === 'KG2' ? 'dashboard-kg2.html' : 'dashboard-kg1.html';
+        }
+      }
+    }
+
+    // تهيئة اللعبة عند تحميل الصفحة
+    window.addEventListener('DOMContentLoaded', async () => {
+      checkLoggedInUser();
+
+      // تفعيل القائمة الجانبية
+      const sidebarToggle = document.getElementById('headerSidebarToggle');
+      const sidebar = document.querySelector('.sidebar');
+      const sidebarOverlay = document.querySelector('.sidebar-overlay');
+      const sidebarClose = document.querySelector('.sidebar-close');
+      
+      function openSidebar() {
+        sidebar.classList.add('active');
+        sidebarOverlay.classList.add('active');
+      }
+      
+      function closeSidebar() {
+        sidebar.classList.remove('active');
+        sidebarOverlay.classList.remove('active');
+      }
+      
+      if (sidebarToggle) sidebarToggle.addEventListener('click', openSidebar);
+      if (sidebarClose) sidebarClose.addEventListener('click', closeSidebar);
+      if (sidebarOverlay) sidebarOverlay.addEventListener('click', closeSidebar);
+
+      // تسجيل الخروج
+      const logoutBtn = document.getElementById('logout-btn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', function() {
+          if (confirm('هل أنت متأكد من تسجيل الخروج؟')) {
+            localStorage.removeItem('adukid_user');
+            localStorage.removeItem('selectedStage');
+            window.location.href = 'index.html';
+          }
+        });
+      }
+
+      try { await logActivity({ type: 'game', subType: 'open', title: 'معمل الأشكال العجيبة' }); } catch (e) {}
+      initGame();
+    });
+  </script>
+  <!-- زر العودة -->
+  <style>
+    .return-button {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: linear-gradient(135deg, #e8822a, #ff9d45);
+      color: white;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: bold;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: 2px solid #ffb366;
+    }
+    
+    .return-button:hover {
+      background: linear-gradient(135deg, #ff9d45, #e8822a);
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+    }
+    
+    .return-button:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    @media (max-width: 768px) {
+      .return-button {
+        bottom: 20px;
+        right: 20px;
+        padding: 10px 20px;
+        font-size: 14px;
+      }
+    }
+  </style>
+  <a href="javascript:history.back()" class="return-button">← عودة</a>
+</body>
+</html>

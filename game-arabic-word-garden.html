@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>حديقة الكلمات | سمارت كيدز</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="لعبة مطابقة الكلمات بالصور لتطوير مفردات الأطفال باللغة العربية" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* تنسيقات متوافقة مع الموقع الرئيسي */
+    :root {
+      --primary: #FF9E1F;
+      --primary-dark: #E88A0D;
+      --primary-light: #FFD699;
+      --secondary: #4A90E2;
+      --secondary-light: #8EC0F0;
+      --accent: #FF6B6B;
+      --dark: #2D3748;
+      --light: #F7FAFC;
+      --white: #FFFFFF;
+      --gray-light: #E2E8F0;
+      --gray: #A0AEC0;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.12);
+      --radius: 16px;
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background-color: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* شريط التنقل - متوافق مع التصميم الرئيسي */
+    .navbar {
+      background: var(--white);
+      border-radius: var(--radius);
+      margin: 1rem auto;
+      max-width: min(1200px, 94vw);
+      box-shadow: var(--shadow);
+      padding: 0.8rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 10px;
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 700;
+      font-size: 1.4rem;
+    }
+
+    .brand span:first-child {
+      font-size: 2rem;
+    }
+
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--primary);
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: var(--transition);
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(255, 158, 31, 0.3);
+    }
+
+    .back-button:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(255, 158, 31, 0.4);
+    }
+
+    /* ========== الهيدر الثابت الجديد ========== */
+    .main-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 70px;
+      background: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      z-index: 1100;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .header-container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-logo {
+      height: 50px;
+      object-fit: contain;
+    }
+
+    .sidebar-toggle-btn {
+      background: #e8822a;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 8px 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: all 0.3s;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    .sidebar-toggle-btn:hover {
+      background: #ff9d45;
+      transform: scale(1.05);
+    }
+
+    body {
+      padding-top: 80px !important;
+    }
+
+    /* ========== القائمة الجانبية ========== */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 300px;
+      height: 100%;
+      background: white;
+      box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+      z-index: 2000;
+      transition: right 0.3s ease;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    
+    .sidebar.active {
+      right: 0;
+    }
+    
+    .sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1999;
+      display: none;
+    }
+    
+    .sidebar-overlay.active {
+      display: block;
+    }
+    
+    .sidebar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .sidebar-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #666;
+    }
+    
+    .sidebar-user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      padding: 10px;
+      background: #fffaf0;
+      border-radius: 10px;
+    }
+    
+    .sidebar-user-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #e8822a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 20px;
+    }
+    
+    .sidebar-user-info h3 {
+      margin: 0;
+      font-size: 16px;
+    }
+    
+    .sidebar-user-info p {
+      margin: 0;
+      font-size: 14px;
+      color: #666;
+    }
+    
+    .sidebar-menu {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .sidebar-menu li {
+      margin-bottom: 5px;
+    }
+    
+    .sidebar-menu a {
+      display: block;
+      padding: 12px 15px;
+      text-decoration: none;
+      color: #333;
+      border-radius: 8px;
+      transition: all 0.3s;
+    }
+    
+    .sidebar-menu a:hover {
+      background: #fff5e6;
+    }
+    
+    .sidebar-menu a.active {
+      background: #e8822a;
+      color: white;
+    }
+    
+    .sidebar-footer {
+      margin-top: 30px;
+      padding-top: 15px;
+      border-top: 1px solid #eee;
+    }
+    
+    .logout-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 12px 15px;
+      background: #ffe0b8;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+    
+    .logout-btn:hover {
+      background: #ffd1a4;
+    }
+
+    /* محتوى اللعبة */
+    .game-container {
+      max-width: min(1200px, 94vw);
+      margin: 0 auto;
+      padding: 1.5rem 0;
+      flex: 1;
+    }
+
+    .game-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .game-title {
+      color: var(--dark);
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .game-title span {
+      color: var(--primary);
+    }
+
+    .game-subtitle {
+      color: var(--dark);
+      opacity: 0.8;
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 1.1rem;
+    }
+
+    /* لوحة المعلومات */
+    .game-info {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .info-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      text-align: center;
+      transition: var(--transition);
+    }
+
+    .info-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .info-label {
+      font-size: 0.9rem;
+      color: var(--dark);
+      opacity: 0.8;
+      margin-bottom: 0.5rem;
+    }
+
+    .info-value {
+      font-size: 2rem;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .progress-bar {
+      height: 8px;
+      background-color: var(--gray-light);
+      border-radius: 4px;
+      margin-top: 0.5rem;
+      overflow: hidden;
+    }
+
+    .progress {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+
+    /* منطقة اللعبة */
+    .game-area {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 2rem;
+    }
+
+    .current-word-container {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .current-word-label {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .current-word {
+      color: white;
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+
+    .images-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .image-card {
+      background-color: var(--light);
+      border-radius: var(--radius);
+      overflow: hidden;
+      cursor: pointer;
+      transition: var(--transition);
+      border: 3px solid transparent;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .image-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .image-card.selected {
+      border-color: var(--primary);
+      box-shadow: 0 5px 15px rgba(255, 158, 31, 0.3);
+    }
+
+    .image-card.wrong {
+      border-color: var(--accent);
+    }
+
+    .emoji-display {
+      font-size: 5rem;
+      padding: 1.5rem 0;
+      background-color: white;
+    }
+
+    .image-card p {
+      padding: 1rem;
+      font-weight: bold;
+      color: var(--dark);
+      background-color: white;
+      border-top: 1px solid var(--gray-light);
+    }
+
+    /* أزرار التحكم */
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 50px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      font-weight: 700;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 4px 10px rgba(255, 158, 31, 0.3);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: var(--primary-dark);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(255, 158, 31, 0.4);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+
+    .btn-secondary:hover:not(:disabled) {
+      background: var(--primary-light);
+      transform: translateY(-3px);
+    }
+
+    .btn:disabled {
+      background-color: var(--gray-light);
+      color: var(--gray);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+      border: none;
+    }
+
+    /* رسائل التغذية الراجعة */
+    .feedback {
+      text-align: center;
+      margin-top: 1.5rem;
+      min-height: 40px;
+      font-weight: bold;
+      font-size: 1.1rem;
+      padding: 0.8rem;
+      border-radius: 8px;
+      transition: var(--transition);
+    }
+
+    .feedback.correct {
+      color: var(--primary);
+      background-color: rgba(255, 158, 31, 0.1);
+      border: 1px solid rgba(255, 158, 31, 0.3);
+    }
+
+    .feedback.wrong {
+      color: var(--accent);
+      background-color: rgba(255, 107, 107, 0.1);
+      border: 1px solid rgba(255, 107, 107, 0.3);
+    }
+
+    /* شاشة النتائج */
+    .results-screen {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 3rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+      display: none;
+      margin-bottom: 2rem;
+    }
+
+    .results-title {
+      color: var(--dark);
+      margin-bottom: 1.5rem;
+      font-size: 2.2rem;
+    }
+
+    .score-display {
+      font-size: 4rem;
+      color: var(--primary);
+      margin: 1.5rem 0;
+      font-weight: bold;
+    }
+
+    .stars {
+      font-size: 3.5rem;
+      margin: 1.5rem 0;
+      color: var(--primary);
+    }
+
+    .result-message {
+      font-size: 1.3rem;
+      color: var(--dark);
+      opacity: 0.8;
+      margin-bottom: 2.5rem;
+      line-height: 1.6;
+    }
+
+    /* تذييل الصفحة */
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--dark);
+      opacity: 0.7;
+      border-top: 1px solid var(--gray-light);
+      margin-top: 4rem;
+    }
+
+    /* زر المساعد الذكي */
+    .ai-assistant {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      z-index: 1000;
+    }
+
+    .ai-button {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border: none;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      color: white;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ai-button::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+      border-radius: 50%;
+    }
+
+    .ai-button:hover {
+      transform: scale(1.1) rotate(5deg);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .ai-button.pulse {
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(255, 158, 31, 0.7);
+      }
+      70% {
+        box-shadow: 0 0 0 15px rgba(255, 158, 31, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(255, 158, 31, 0);
+      }
+    }
+
+    .ai-tooltip {
+      position: absolute;
+      bottom: 85px;
+      left: 0;
+      background: var(--white);
+      color: var(--dark);
+      padding: 0.8rem 1.2rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      width: 200px;
+      text-align: center;
+      font-weight: 500;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+      transform: translateY(10px);
+    }
+
+    .ai-tooltip::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 10px solid transparent;
+      border-top-color: var(--white);
+    }
+
+    .ai-button:hover + .ai-tooltip {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    /* نافذة الدردشة */
+    .ai-chat {
+      position: fixed;
+      bottom: 120px;
+      left: 30px;
+      width: 350px;
+      height: 450px;
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      z-index: 1001;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .ai-chat.active {
+      display: flex;
+    }
+
+    .chat-header {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .chat-header h3 {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .close-chat {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .close-chat:hover {
+      transform: scale(1.2);
+    }
+
+    .chat-body {
+      flex: 1;
+      padding: 1rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .message {
+      max-width: 80%;
+      padding: 0.8rem 1rem;
+      border-radius: 1.2rem;
+      line-height: 1.5;
+    }
+
+    .ai-message {
+      background: var(--light);
+      color: var(--dark);
+      align-self: flex-start;
+      border-bottom-right-radius: 0.2rem;
+    }
+
+    .user-message {
+      background: var(--primary-light);
+      color: var(--dark);
+      align-self: flex-end;
+      border-bottom-left-radius: 0.2rem;
+    }
+
+    .chat-footer {
+      padding: 1rem;
+      border-top: 1px solid var(--gray-light);
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .chat-input {
+      flex: 1;
+      padding: 0.8rem 1rem;
+      border: 1px solid var(--gray-light);
+      border-radius: 50px;
+      font-family: inherit;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .chat-input:focus {
+      border-color: var(--primary);
+    }
+
+    .send-button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .send-button:hover {
+      background: var(--primary-dark);
+      transform: scale(1.05);
+    }
+
+    /* التكيف مع الشاشات الصغيرة */
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+      }
+      
+      .game-title {
+        font-size: 2rem;
+      }
+      
+      .game-subtitle {
+        font-size: 1rem;
+      }
+      
+      .images-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .controls {
+        flex-direction: column;
+      }
+      
+      .game-area {
+        padding: 1.5rem;
+      }
+      
+      .results-screen {
+        padding: 2rem;
+      }
+      
+      .ai-chat {
+        width: 300px;
+        height: 400px;
+        left: 20px;
+        bottom: 110px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .ai-assistant {
+        bottom: 20px;
+        left: 20px;
+      }
+      
+      .ai-button {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+      }
+      
+      .ai-chat {
+        width: calc(100vw - 40px);
+        left: 20px;
+        right: 20px;
+      }
+    }
+
+    /* تأثيرات إضافية */
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .pulse {
+      animation: pulse 0.5s ease;
+    }
+  </style>
+</head>
+<body>
+  <!-- الهيدر الثابت -->
+  <header class="main-header">
+    <div class="header-container">
+      <div class="header-logo-container">
+        <img src="logo.jpeg" alt="EduKid AI Logo" class="header-logo">
+      </div>
+      <button class="sidebar-toggle-btn" id="headerSidebarToggle">
+        <span>القائمة</span>
+        <span>☰</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- القائمة الجانبية -->
+  <div class="sidebar-overlay"></div>
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2>القائمة الرئيسية</h2>
+      <button class="sidebar-close">×</button>
+    </div>
+    
+    <div class="sidebar-user">
+      <div class="sidebar-user-avatar" id="sidebar-user-avatar">ط</div>
+      <div class="sidebar-user-info">
+        <h3 id="sidebar-student-name">اسم الطالب</h3>
+        <p id="sidebar-grade">المرحلة: رياض الأطفال</p>
+      </div>
+    </div>
+    
+    <ul class="sidebar-menu">
+      <li><a href="index.html">الصفحة الرئيسية</a></li>
+      <li><a href="dashboard.html" id="sidebar-dashboard-link">لوحة التعلم</a></li>
+      <li><a href="games.html">الألعاب التعليمية</a></li>
+      <li><a href="books.html">المكتبة الرقمية</a></li>
+      <li><a href="stories.html">القصص الصوتية</a></li>
+      <li><a href="parent-report.html">لوحة ولي الأمر</a></li>
+    </ul>
+    
+    <div class="sidebar-footer">
+      <button class="logout-btn" id="logout-btn">
+        <span>تسجيل الخروج</span>
+        <span>🚪</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- محتوى اللعبة -->
+  <main class="game-container">
+    <div class="game-header">
+      <h1 class="game-title">حديقة <span>الكلمات</span></h1>
+      <p class="game-subtitle">اطابق الكلمة مع الصورة الصحيحة قبل أن تذبل الأزهار! العب وتعلم مع سمارت كيدز</p>
+    </div>
+
+    <!-- لوحة المعلومات -->
+    <div class="game-info">
+      <div class="info-card">
+        <div class="info-label">النتيجة</div>
+        <div class="info-value" id="score">0</div>
+        <div class="progress-bar">
+          <div class="progress" id="score-progress" style="width: 0%"></div>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-label">الوقت المتبقي</div>
+        <div class="info-value" id="timer">60</div>
+        <div class="progress-bar">
+          <div class="progress" id="timer-progress" style="width: 100%"></div>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-label">المستوى</div>
+        <div class="info-value" id="level">1</div>
+        <div class="progress-bar">
+          <div class="progress" id="level-progress" style="width: 0%"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- منطقة اللعبة -->
+    <div class="game-area" id="game-area">
+      <div class="current-word-container">
+        <div class="current-word-label">اختر الصورة المناسبة للكلمة:</div>
+        <div class="current-word" id="current-word">...</div>
+      </div>
+      
+      <div class="images-grid" id="images-grid">
+        <!-- سيتم إضافة الصور ديناميكياً -->
+      </div>
+      
+      <div class="controls">
+        <button class="btn btn-primary" id="check-btn" disabled>
+          <span>✓</span>
+          <span>تحقق</span>
+        </button>
+        <button class="btn btn-secondary" id="next-btn" disabled>
+          <span>→</span>
+          <span>التالي</span>
+        </button>
+      </div>
+      
+      <div class="feedback" id="feedback"></div>
+    </div>
+
+    <!-- شاشة النتائج -->
+    <div class="results-screen" id="results-screen">
+      <h2 class="results-title">تهانينا! أكملت اللعبة</h2>
+      <div class="score-display" id="final-score">0</div>
+      <div class="stars" id="stars">★★★</div>
+      <p class="result-message" id="result-message">أداء رائع! واصل التقدم</p>
+      <div class="controls">
+        <button class="btn btn-primary" id="play-again-btn">
+          <span>🔄</span>
+          <span>العب مرة أخرى</span>
+        </button>
+        <a href="games.html" class="btn btn-secondary">
+          <span>🏠</span>
+          <span>العودة إلى مركز الألعاب</span>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- تذييل الصفحة -->
+  <footer class="footer">
+    © <span id="year"></span> منصة سمارت كيدز التعليمية • صُمّمت لتجعل التعلم ممتعًا وآمنًا للأطفال في رياض الأطفال.
+  </footer>
+
+  <!-- زر المساعد الذكي -->
+  <div class="ai-assistant">
+    <button class="ai-button pulse">🤖</button>
+    <div class="ai-tooltip">اسألني عن أي شيء!</div>
+    
+    <!-- نافذة الدردشة -->
+    <div class="ai-chat">
+      <div class="chat-header">
+        <h3><span>🤖</span> المساعد الذكي</h3>
+        <button class="close-chat">×</button>
+      </div>
+      <div class="chat-body">
+        <div class="message ai-message">
+          مرحباً! أنا المساعد الذكي لسمارت كيدز. كيف يمكنني مساعدتك اليوم؟
+        </div>
+      </div>
+      <div class="chat-footer">
+        <input type="text" class="chat-input" placeholder="اكتب رسالتك هنا...">
+        <button class="send-button">➤</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
+  <script src="activity.js"></script>
+  <script>
+    // بيانات اللعبة - الكلمات والصور المقابلة لها
+    const gameData = [
+      {
+        word: "تفاحة",
+        image: "🍎",
+        options: ["🍎", "🍌", "🍊", "🍓"]
+      },
+      {
+        word: "قطة",
+        image: "🐱",
+        options: ["🐶", "🐱", "🐭", "🐹"]
+      },
+      {
+        word: "سيارة",
+        image: "🚗",
+        options: ["🚗", "🚲", "🚂", "🚀"]
+      },
+      {
+        word: "منزل",
+        image: "🏠",
+        options: ["🏠", "🏢", "🏭", "🏛️"]
+      },
+      {
+        word: "شمس",
+        image: "☀️",
+        options: ["☀️", "🌙", "⭐", "☁️"]
+      },
+      {
+        word: "زهرة",
+        image: "🌺",
+        options: ["🌺", "🌳", "🌵", "🍀"]
+      },
+      {
+        word: "كتاب",
+        image: "📚",
+        options: ["📚", "📱", "🖥️", "🎮"]
+      },
+      {
+        word: "كرة",
+        image: "⚽",
+        options: ["⚽", "🏀", "🎾", "🎯"]
+      },
+      {
+        word: "قلم",
+        image: "✏️",
+        options: ["✏️", "📏", "📐", "🖊️"]
+      },
+      {
+        word: "شجرة",
+        image: "🌳",
+        options: ["🌳", "🌴", "🌲", "🍃"]
+      }
+    ];
+
+    // عناصر DOM
+    const currentWordElement = document.getElementById('current-word');
+    const imagesGridElement = document.getElementById('images-grid');
+    const scoreElement = document.getElementById('score');
+    const timerElement = document.getElementById('timer');
+    const levelElement = document.getElementById('level');
+    const checkButton = document.getElementById('check-btn');
+    const nextButton = document.getElementById('next-btn');
+    const feedbackElement = document.getElementById('feedback');
+    const gameAreaElement = document.getElementById('game-area');
+    const resultsScreenElement = document.getElementById('results-screen');
+    const finalScoreElement = document.getElementById('final-score');
+    const starsElement = document.getElementById('stars');
+    const resultMessageElement = document.getElementById('result-message');
+    const playAgainButton = document.getElementById('play-again-btn');
+    const scoreProgressElement = document.getElementById('score-progress');
+    const timerProgressElement = document.getElementById('timer-progress');
+    const levelProgressElement = document.getElementById('level-progress');
+
+    // متغيرات اللعبة
+    let score = 0;
+    let currentLevel = 1;
+    let timeLeft = 60;
+    let currentQuestionIndex = 0;
+    let selectedImage = null;
+    let timerInterval;
+    let maxScore = gameData.length * 10;
+
+    // تهيئة اللعبة
+    function initGame() {
+      score = 0;
+      currentLevel = 1;
+      timeLeft = 60;
+      currentQuestionIndex = 0;
+      
+      updateScore();
+      updateLevel();
+      updateTimer();
+      loadQuestion();
+      startTimer();
+      
+      gameAreaElement.style.display = 'block';
+      resultsScreenElement.style.display = 'none';
+    }
+
+    // تحميل السؤال الحالي
+    function loadQuestion() {
+      if (currentQuestionIndex >= gameData.length) {
+        endGame();
+        return;
+      }
+      
+      const currentQuestion = gameData[currentQuestionIndex];
+      currentWordElement.textContent = currentQuestion.word;
+      
+      // مسح الشبكة السابقة
+      imagesGridElement.innerHTML = '';
+      
+      // خلط الخيارات عشوائياً
+      const shuffledOptions = [...currentQuestion.options].sort(() => Math.random() - 0.5);
+      
+      // إضافة الصور إلى الشبكة
+      shuffledOptions.forEach(option => {
+        const imageCard = document.createElement('div');
+        imageCard.className = 'image-card';
+        imageCard.innerHTML = `
+          <div class="emoji-display">${option}</div>
+          <p>${option}</p>
+        `;
+        
+        imageCard.addEventListener('click', () => selectImage(imageCard, option));
+        imagesGridElement.appendChild(imageCard);
+      });
+      
+      // إعادة تعيين حالة الأزرار
+      checkButton.disabled = true;
+      nextButton.disabled = true;
+      feedbackElement.textContent = '';
+      feedbackElement.className = 'feedback';
+      selectedImage = null;
+    }
+
+    // اختيار صورة
+    function selectImage(imageCard, image) {
+      // إلغاء تحديد الصورة السابقة
+      const previouslySelected = document.querySelector('.image-card.selected');
+      if (previouslySelected) {
+        previouslySelected.classList.remove('selected');
+      }
+      
+      // تحديد الصورة الجديدة
+      imageCard.classList.add('selected');
+      selectedImage = image;
+      checkButton.disabled = false;
+    }
+
+    // التحقق من الإجابة
+    async function checkAnswer() {
+      if (!selectedImage) return;
+      
+      const currentQuestion = gameData[currentQuestionIndex];
+      const isCorrect = selectedImage === currentQuestion.image;
+      
+      if (isCorrect) {
+        // الإجابة صحيحة
+        score += 10;
+        updateScore();
+        feedbackElement.textContent = 'إجابة صحيحة! أحسنت! 🌟';
+        feedbackElement.className = 'feedback correct';
+        
+        // زيادة الوقت للمكافأة
+        timeLeft = Math.min(60, timeLeft + 5);
+        updateTimer();
+        
+        // تأثير النبض
+        document.querySelector('.image-card.selected').classList.add('pulse');
+        
+        try {
+          await logActivity({ 
+            type: 'game', 
+            subType: 'answer_correct', 
+            title: `كلمة ${currentQuestion.word}`, 
+            meta: { game: 'حديقة الكلمات', word: currentQuestion.word } 
+          });
+        } catch (e) {}
+      } else {
+        // الإجابة خاطئة
+        feedbackElement.textContent = 'إجابة خاطئة! حاول مرة أخرى.';
+        feedbackElement.className = 'feedback wrong';
+        
+        try {
+          await logActivity({ 
+            type: 'game', 
+            subType: 'answer_incorrect', 
+            title: `خطأ في كلمة ${currentQuestion.word}`, 
+            meta: { game: 'حديقة الكلمات', word: currentQuestion.word } 
+          });
+        } catch (e) {}
+        
+        // إظهار الصورة الصحيحة
+        const imageCards = document.querySelectorAll('.image-card');
+        imageCards.forEach(card => {
+          if (card.querySelector('.emoji-display').textContent === currentQuestion.image) {
+            card.classList.add('selected');
+          }
+        });
+        
+        // تقليل الوقت كعقوبة
+        timeLeft = Math.max(0, timeLeft - 5);
+        updateTimer();
+      }
+      
+      checkButton.disabled = true;
+      nextButton.disabled = false;
+    }
+
+    // الانتقال إلى السؤال التالي
+    function nextQuestion() {
+      currentQuestionIndex++;
+      
+      // زيادة المستوى إذا لزم الأمر
+      if (currentQuestionIndex % 3 === 0 && currentLevel < 3) {
+        currentLevel++;
+        updateLevel();
+      }
+      
+      loadQuestion();
+    }
+
+    // بدء المؤقت
+    function startTimer() {
+      clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        updateTimer();
+        
+        if (timeLeft <= 0) {
+          endGame();
+        }
+      }, 1000);
+    }
+
+    // تحديث المؤقت
+    function updateTimer() {
+      timerElement.textContent = timeLeft;
+      timerProgressElement.style.width = `${(timeLeft / 60) * 100}%`;
+      
+      // تغيير لون المؤقت عندما يقل الوقت
+      if (timeLeft <= 10) {
+        timerElement.style.color = '#f44336';
+      } else if (timeLeft <= 30) {
+        timerElement.style.color = '#ff9800';
+      } else {
+        timerElement.style.color = '#FF9E1F';
+      }
+    }
+
+    // تحديث النتيجة
+    function updateScore() {
+      scoreElement.textContent = score;
+      scoreProgressElement.style.width = `${(score / maxScore) * 100}%`;
+    }
+
+    // تحديث المستوى
+    function updateLevel() {
+      levelElement.textContent = currentLevel;
+      levelProgressElement.style.width = `${(currentQuestionIndex / gameData.length) * 100}%`;
+    }
+
+    // إنهاء اللعبة
+    function endGame() {
+      clearInterval(timerInterval);
+      
+      gameAreaElement.style.display = 'none';
+      resultsScreenElement.style.display = 'block';
+      
+      finalScoreElement.textContent = score;
+      
+      // تحديد النجوم بناءً على النتيجة
+      let stars = '';
+      let message = '';
+      
+      if (score >= 80) {
+        stars = '★★★★★';
+        message = 'أداء متميز! أنت بطل حديقة الكلمات!';
+      } else if (score >= 60) {
+        stars = '★★★★';
+        message = 'أداء رائع! واصل التقدم!';
+      } else if (score >= 40) {
+        stars = '★★★';
+        message = 'أداء جيد! يمكنك القيام بالأفضل!';
+      } else if (score >= 20) {
+        stars = '★★';
+        message = 'حاول مرة أخرى للوصول إلى نتائج أفضل!';
+      } else {
+        stars = '★';
+        message = 'لا تستسلم! حاول مرة أخرى!';
+      }
+      
+      starsElement.textContent = stars;
+      resultMessageElement.textContent = message;
+    }
+
+    // إضافة مستمعي الأحداث
+    checkButton.addEventListener('click', checkAnswer);
+    nextButton.addEventListener('click', nextQuestion);
+    playAgainButton.addEventListener('click', initGame);
+
+    // تهيئة اللعبة عند تحميل الصفحة
+    window.addEventListener('DOMContentLoaded', async () => {
+      // تحديث رابط لوحة التعلم في السايدبار
+      const sidebarDashLink = document.getElementById('sidebar-dashboard-link');
+      if (sidebarDashLink) {
+        const stage = typeof getCurrentStageSafe === 'function' ? getCurrentStageSafe() : localStorage.getItem('selectedStage');
+        sidebarDashLink.href = stage === 'KG2' ? 'dashboard-kg2.html' : 'dashboard-kg1.html';
+      }
+
+      // تفعيل القائمة الجانبية
+      const headerSidebarToggle = document.getElementById('headerSidebarToggle');
+      const sidebar = document.querySelector('.sidebar');
+      const sidebarOverlay = document.querySelector('.sidebar-overlay');
+      const sidebarClose = document.querySelector('.sidebar-close');
+      
+      function openSidebar() {
+        sidebar.classList.add('active');
+        sidebarOverlay.classList.add('active');
+      }
+      
+      function closeSidebar() {
+        sidebar.classList.remove('active');
+        sidebarOverlay.classList.remove('active');
+      }
+      
+      if (headerSidebarToggle) headerSidebarToggle.addEventListener('click', openSidebar);
+      if (sidebarClose) sidebarClose.addEventListener('click', closeSidebar);
+      if (sidebarOverlay) sidebarOverlay.addEventListener('click', closeSidebar);
+
+      // تحديث بيانات المستخدم في السايدبار
+      const user = typeof getCurrentUserSafe === 'function' ? getCurrentUserSafe() : JSON.parse(localStorage.getItem('adukid_user'));
+      if (user && user.studentName) {
+        document.getElementById('sidebar-student-name').textContent = user.studentName;
+        document.getElementById('sidebar-grade').textContent = `المرحلة: ${user.gradeText || 'رياض الأطفال'}`;
+        document.getElementById('sidebar-user-avatar').textContent = user.studentName.charAt(0);
+      }
+
+      // تسجيل الخروج
+      const logoutBtn = document.getElementById('logout-btn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', function() {
+          if (confirm('هل أنت متأكد من تسجيل الخروج؟')) {
+            localStorage.removeItem('adukid_user');
+            localStorage.removeItem('selectedStage');
+            window.location.href = 'index.html';
+          }
+        });
+      }
+
+      try { await logActivity({ type: 'game', subType: 'open', title: 'حديقة الكلمات' }); } catch (e) {}
+      initGame();
+    });
+
+    // تفعيل المساعد الذكي
+    const aiButton = document.querySelector('.ai-button');
+    const aiChat = document.querySelector('.ai-chat');
+    const closeChat = document.querySelector('.close-chat');
+    const sendButton = document.querySelector('.send-button');
+    const chatInput = document.querySelector('.chat-input');
+    const chatBody = document.querySelector('.chat-body');
+    
+    aiButton.addEventListener('click', () => {
+      aiChat.classList.toggle('active');
+    });
+    
+    closeChat.addEventListener('click', () => {
+      aiChat.classList.remove('active');
+    });
+    
+    function addMessage(text, isUser = false) {
+      const messageDiv = document.createElement('div');
+      messageDiv.classList.add('message');
+      messageDiv.classList.add(isUser ? 'user-message' : 'ai-message');
+      messageDiv.textContent = text;
+      chatBody.appendChild(messageDiv);
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }
+    
+    sendButton.addEventListener('click', () => {
+      const message = chatInput.value.trim();
+      if (message) {
+        addMessage(message, true);
+        chatInput.value = '';
+        
+        // محاكاة رد المساعد
+        setTimeout(() => {
+          const responses = [
+            "هذا سؤال رائع! يمكنني مساعدتك في ذلك.",
+            "أفهم ما تقصده. دعني أقدم لك بعض المعلومات المفيدة.",
+            "شكراً لسؤالك! إليك الإجابة التي تبحث عنها.",
+            "أنا هنا لمساعدتك. هل تحتاج إلى مزيد من التفاصيل؟"
+          ];
+          const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+          addMessage(randomResponse);
+        }, 1000);
+      }
+    });
+    
+    chatInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        sendButton.click();
+      }
+    });
+
+    // تحديث سنة التذييل
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+  <!-- زر العودة -->
+  <style>
+    .return-button {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: linear-gradient(135deg, #e8822a, #ff9d45);
+      color: white;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: bold;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: 2px solid #ffb366;
+    }
+    
+    .return-button:hover {
+      background: linear-gradient(135deg, #ff9d45, #e8822a);
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+    }
+    
+    .return-button:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    @media (max-width: 768px) {
+      .return-button {
+        bottom: 20px;
+        right: 20px;
+        padding: 10px 20px;
+        font-size: 14px;
+      }
+    }
+  </style>
+  <a href="javascript:history.back()" class="return-button">← عودة</a>
+</body>
+</html>

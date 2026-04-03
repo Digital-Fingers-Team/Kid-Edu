@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <title>AduKid_AI | منصة التعلم بالذكاء الاصطناعي</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="منصة تعليمية مبتكرة لرياض الأطفال باستخدام الذكاء الاصطناعي - مشروع معرض ISEF 2025">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ========== CSS Reset ========== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: linear-gradient(135deg, #fff5e6 0%, #fff9f0 100%);
+      color: #2d3748;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    /* ========== التصميم الرئيسي ========== */
+    .main-card {
+      background: white;
+      border-radius: 30px;
+      box-shadow: 0 15px 50px rgba(232, 130, 42, 0.15);
+      padding: 3rem;
+      position: relative;
+      overflow: hidden;
+      border: 3px solid #ffe0b8;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 3px dashed #ffd1a4;
+    }
+
+    .logo {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #e8822a;
+      margin-bottom: 0.5rem;
+      text-shadow: 2px 2px 4px rgba(232, 130, 42, 0.2);
+    }
+
+    .tagline {
+      color: #718096;
+      font-size: 1.2rem;
+      font-weight: 500;
+    }
+
+    /* ========== تخطيط الصفحة ========== */
+    .page-layout {
+      max-width: 600px;
+      margin: 0 auto 2rem;
+    }
+
+    .login-section {
+      background: #fffaf5;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 5px 15px rgba(232, 130, 42, 0.1);
+      border: 2px solid #ffe8d1;
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #e8822a;
+      margin-bottom: 1.5rem;
+      padding-right: 0.5rem;
+      border-right: 4px solid #e8822a;
+      background: linear-gradient(135deg, #fff8f0 0%, transparent 100%);
+      padding: 0.8rem 1rem;
+      border-radius: 15px;
+    }
+
+    /* ========== نموذج تسجيل الدخول ========== */
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: #4a5568;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border: 2px solid #ffd1a4;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-family: 'Tajawal', sans-serif;
+      transition: all 0.3s ease;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: #e8822a;
+      box-shadow: 0 0 0 3px rgba(232, 130, 42, 0.2);
+    }
+
+    .form-button {
+      display: block;
+      width: 100%;
+      background: linear-gradient(135deg, #e8822a, #ff9d45);
+      color: white;
+      border: none;
+      padding: 1rem;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 1.5rem;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    .form-button:hover {
+      background: linear-gradient(135deg, #ff9d45, #e8822a);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(232, 130, 42, 0.3);
+    }
+
+    .auth-tabs {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .auth-tab {
+      flex: 1;
+      border: 2px solid #ffd1a4;
+      background: white;
+      color: #4a5568;
+      border-radius: 12px;
+      padding: 0.9rem 1rem;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .auth-tab.active {
+      background: linear-gradient(135deg, #e8822a, #ff9d45);
+      color: white;
+      border-color: #e8822a;
+      box-shadow: 0 6px 16px rgba(232, 130, 42, 0.25);
+    }
+
+    .auth-panel {
+      display: none;
+    }
+
+    .auth-panel.active {
+      display: block;
+    }
+
+    .auth-hint {
+      margin-bottom: 1rem;
+      color: #718096;
+      background: #fff3e4;
+      border: 1px solid #ffe0b8;
+      border-radius: 12px;
+      padding: 0.9rem 1rem;
+      font-size: 0.95rem;
+    }
+
+    .auth-switch {
+      text-align: center;
+      margin-top: 1rem;
+      color: #718096;
+    }
+
+    .link-button {
+      background: none;
+      border: none;
+      color: #e8822a;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .status-note {
+      margin-top: 1rem;
+      background: #fff8f0;
+      border: 1px dashed #ffd1a4;
+      border-radius: 12px;
+      padding: 0.9rem 1rem;
+      color: #4a5568;
+      font-size: 0.95rem;
+    }
+
+    .divider {
+      text-align: center;
+      margin: 2rem 0;
+      position: relative;
+    }
+
+    .divider::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: 0;
+      left: 0;
+      height: 1px;
+      background: #ffd1a4;
+    }
+
+    .divider-text {
+      background: white;
+      padding: 0 1rem;
+      color: #718096;
+      position: relative;
+      display: inline-block;
+    }
+
+    /* ========== التصميم الديكوري ========== */
+    .decoration {
+      position: absolute;
+      opacity: 0.15;
+      z-index: 0;
+    }
+
+    .decoration-1 {
+      top: -30px;
+      left: -30px;
+      width: 150px;
+      height: 150px;
+      background: #e8822a;
+      border-radius: 50%;
+    }
+
+    .decoration-2 {
+      bottom: -40px;
+      right: -40px;
+      width: 180px;
+      height: 180px;
+      background: #4299e1;
+      border-radius: 50%;
+    }
+
+    .decoration-3 {
+      top: 20%;
+      left: 30px;
+      width: 80px;
+      height: 80px;
+      background: #38b2ac;
+      border-radius: 20px;
+      transform: rotate(45deg);
+    }
+
+    .decoration-4 {
+      bottom: 30%;
+      right: 10%;
+      width: 60px;
+      height: 60px;
+      background: #ff9d45;
+      border-radius: 50%;
+    }
+
+    .content-wrapper {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ========== إيموجيز وإضافات طفولية ========== */
+    .fun-emoji {
+      font-size: 1.2rem;
+      margin-left: 0.3rem;
+    }
+
+    .child-friendly {
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="%23e8822a" opacity="0.1"/></svg>');
+      background-size: 200px 200px;
+    }
+
+    /* ========== التجاوب ========== */
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+      
+      .main-card {
+        padding: 2rem 1.5rem;
+        border-radius: 25px;
+      }
+      
+      .page-layout {
+        flex-direction: column;
+      }
+      
+      .logo {
+        font-size: 2rem;
+      }
+      
+      .section-title {
+        font-size: 1.3rem;
+      }
+      
+      .progress-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .main-card {
+        padding: 1.5rem 1rem;
+        border-radius: 20px;
+      }
+      
+      .logo {
+        font-size: 1.8rem;
+      }
+      
+      .progress-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body class="child-friendly">
+  <div class="container">
+    <div class="main-card">
+      <!-- العناصر الديكورية -->
+      <div class="decoration decoration-1"></div>
+      <div class="decoration decoration-2"></div>
+      <div class="decoration decoration-3"></div>
+      <div class="decoration decoration-4"></div>
+      
+      <div class="content-wrapper">
+        <!-- الهيدر -->
+        <div class="header">
+          <div class="logo">AduKid_AI <span class="fun-emoji">🧸</span></div>
+          <div class="tagline">منصة التعلم الذكي لرياض الأطفال - معرض ISEF 2025</div>
+        </div>
+
+        <!-- محتوى الصفحة الرئيسية -->
+        <div class="page-layout">
+          <!-- قسم تسجيل الدخول -->
+          <div class="login-section">
+            <h2 class="section-title">الحسابات المحلية <span class="fun-emoji">👨‍👩‍👧‍👦</span></h2>
+
+            <div class="auth-tabs">
+              <button type="button" class="auth-tab active" data-auth-tab="login">تسجيل الدخول</button>
+              <button type="button" class="auth-tab" data-auth-tab="signup">إنشاء حساب</button>
+            </div>
+
+            <div id="login-panel" class="auth-panel active">
+              <div class="auth-hint">إذا كان لديك حساب بالفعل، أدخل اسم الطالب وكلمة المرور فقط وسيتم فتح لوحة KG1 أو KG2 تلقائياً حسب الحساب المحفوظ.</div>
+              <form id="login-form">
+                <div class="form-group">
+                  <label for="login-student-name" class="form-label">اسم الطالب</label>
+                  <input type="text" id="login-student-name" class="form-input" placeholder="أدخل اسم الطالب" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="login-password" class="form-label">كلمة المرور</label>
+                  <input type="password" id="login-password" class="form-input" placeholder="أدخل كلمة المرور" required>
+                </div>
+
+                <button type="submit" class="form-button">دخول الحساب <span class="fun-emoji">🔐</span></button>
+              </form>
+
+              <div class="auth-switch">
+                ليس لديك حساب؟
+                <button type="button" class="link-button" data-open-auth="signup">أنشئ حسابًا جديدًا</button>
+              </div>
+            </div>
+
+            <div id="signup-panel" class="auth-panel">
+              <div class="auth-hint">إنشاء الحساب يتم بالكامل داخل المتصفح باستخدام التخزين المحلي، وبعد الإنشاء يتم حفظ الصف المختار وربط جميع الصفحات به.</div>
+              <form id="signup-form">
+                <div class="form-group">
+                  <label for="signup-student-name" class="form-label">اسم الطالب</label>
+                  <input type="text" id="signup-student-name" class="form-input" placeholder="أدخل اسم الطالب" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="signup-parent-name" class="form-label">اسم ولي الأمر</label>
+                  <input type="text" id="signup-parent-name" class="form-input" placeholder="أدخل اسم ولي الأمر" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="signup-grade" class="form-label">المرحلة الدراسية</label>
+                  <select id="signup-grade" class="form-input" required>
+                    <option value="">اختر المرحلة</option>
+                    <option value="kg1">رياض الأطفال 1</option>
+                    <option value="kg2">رياض الأطفال 2</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="signup-email" class="form-label">البريد الإلكتروني</label>
+                  <input type="email" id="signup-email" class="form-input" placeholder="أدخل البريد الإلكتروني" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="signup-password" class="form-label">كلمة المرور</label>
+                  <input type="password" id="signup-password" class="form-input" placeholder="أدخل كلمة المرور" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="signup-confirm-password" class="form-label">تأكيد كلمة المرور</label>
+                  <input type="password" id="signup-confirm-password" class="form-input" placeholder="أعد إدخال كلمة المرور" required>
+                </div>
+
+                <button type="submit" class="form-button">إنشاء الحساب <span class="fun-emoji">✨</span></button>
+              </form>
+
+              <div class="auth-switch">
+                لديك حساب بالفعل؟
+                <button type="button" class="link-button" data-open-auth="login">ارجع إلى تسجيل الدخول</button>
+              </div>
+            </div>
+
+            <div class="status-note" id="storage-status">لا يوجد مستخدم نشط حالياً. يمكنك إنشاء حساب أو تسجيل الدخول من البيانات المحفوظة محلياً.</div>
+          </div>
+        </div>
+
+        <!-- الفوتر -->
+        <div class="footer" style="text-align: center; margin-top: 2rem; color: #718096; font-size: 0.9rem; padding: 1rem; background: #fffaf0; border-radius: 15px;">
+          © 2024 AduKid_AI - مشروع معرض ISEF 2025. جميع الحقوق محفوظة. <span class="fun-emoji">🎉</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const ACCOUNTS_STORAGE_KEY = 'adukid_accounts';
+    const USER_STORAGE_KEY = 'adukid_user';
+    const STAGE_STORAGE_KEY = 'selectedStage';
+
+    function normalizeStage(grade) {
+      const normalized = (grade || '').toString().trim().toLowerCase();
+      if (normalized === 'kg1') return 'kg1';
+      if (normalized === 'kg2') return 'kg2';
+      return '';
+    }
+
+    function getGradeText(grade) {
+      if (normalizeStage(grade) === 'kg1') return 'رياض الأطفال 1';
+      if (normalizeStage(grade) === 'kg2') return 'رياض الأطفال 2';
+      return 'غير محدد';
+    }
+
+    function getDashboardUrlFromGrade(grade) {
+      if (normalizeStage(grade) === 'kg1') return 'dashboard-kg1.html';
+      if (normalizeStage(grade) === 'kg2') return 'dashboard-kg2.html';
+      return null;
+    }
+
+    function getAccounts() {
+      try {
+        const raw = localStorage.getItem(ACCOUNTS_STORAGE_KEY);
+        const parsed = raw ? JSON.parse(raw) : [];
+        return Array.isArray(parsed) ? parsed : [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function saveAccounts(accounts) {
+      localStorage.setItem(ACCOUNTS_STORAGE_KEY, JSON.stringify(accounts));
+    }
+
+    function findAccountByStudentName(studentName) {
+      const normalizedName = studentName.trim().toLowerCase();
+      return getAccounts().find(account => account.studentName.trim().toLowerCase() === normalizedName);
+    }
+
+    function updateStorageStatus(user) {
+      const accountsCount = getAccounts().length;
+      const status = document.getElementById('storage-status');
+      if (user) {
+        status.textContent = `المستخدم النشط: ${user.studentName} | الحسابات المحفوظة محلياً: ${accountsCount} | الصف الحالي: ${user.gradeText || getGradeText(user.grade)}`;
+      } else if (accountsCount > 0) {
+        status.textContent = `يوجد ${accountsCount} حساب/حسابات محفوظة محلياً داخل هذا المتصفح. يمكنك تسجيل الدخول بالاسم وكلمة المرور.`;
+      } else {
+        status.textContent = 'لا يوجد مستخدم نشط حالياً. يمكنك إنشاء حساب أو تسجيل الدخول من البيانات المحفوظة محلياً.';
+      }
+    }
+
+    function saveCurrentUser(account) {
+      const normalizedGrade = normalizeStage(account.grade);
+      const userData = {
+        studentName: account.studentName.trim(),
+        parentName: (account.parentName || '').trim(),
+        grade: normalizedGrade,
+        gradeText: account.gradeText || getGradeText(normalizedGrade),
+        email: (account.email || '').trim(),
+        password: account.password,
+        isLoggedIn: true
+      };
+
+      localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(userData));
+      localStorage.setItem(STAGE_STORAGE_KEY, normalizedGrade.toUpperCase());
+      updateStorageStatus(userData);
+      return userData;
+    }
+
+    function checkLoggedInUser() {
+      try {
+        const userData = localStorage.getItem(USER_STORAGE_KEY);
+        const user = userData ? JSON.parse(userData) : null;
+        if (user && user.studentName) {
+          saveCurrentUser(user);
+          return user;
+        }
+      } catch (error) {
+      }
+
+      updateStorageStatus(null);
+      return null;
+    }
+
+    function openAuthTab(tabName) {
+      document.querySelectorAll('.auth-tab').forEach(button => {
+        button.classList.toggle('active', button.dataset.authTab === tabName);
+      });
+
+      document.getElementById('login-panel').classList.toggle('active', tabName === 'login');
+      document.getElementById('signup-panel').classList.toggle('active', tabName === 'signup');
+    }
+
+    function redirectToDashboard(grade) {
+      const dashboardUrl = getDashboardUrlFromGrade(grade);
+      window.location.href = dashboardUrl || 'stages.html';
+    }
+
+    document.querySelectorAll('.auth-tab').forEach(button => {
+      button.addEventListener('click', function() {
+        openAuthTab(this.dataset.authTab);
+      });
+    });
+
+    document.querySelectorAll('[data-open-auth]').forEach(button => {
+      button.addEventListener('click', function() {
+        openAuthTab(this.dataset.openAuth);
+      });
+    });
+
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const studentName = document.getElementById('login-student-name').value.trim();
+      const password = document.getElementById('login-password').value;
+      const account = findAccountByStudentName(studentName);
+
+      if (!account || account.password !== password) {
+        alert('اسم الطالب أو كلمة المرور غير صحيحة.');
+        return;
+      }
+
+      const userData = saveCurrentUser(account);
+      alert(`مرحباً ${userData.studentName}! تم تسجيل الدخول بنجاح.`);
+      redirectToDashboard(userData.grade);
+    });
+
+    document.getElementById('signup-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const gradeSelect = document.getElementById('signup-grade');
+      const studentName = document.getElementById('signup-student-name').value.trim();
+      const parentName = document.getElementById('signup-parent-name').value.trim();
+      const grade = normalizeStage(gradeSelect.value);
+      const gradeText = grade ? gradeSelect.options[gradeSelect.selectedIndex].text : '';
+      const email = document.getElementById('signup-email').value.trim();
+      const password = document.getElementById('signup-password').value;
+      const confirmPassword = document.getElementById('signup-confirm-password').value;
+
+      if (password !== confirmPassword) {
+        alert('كلمتا المرور غير متطابقتين.');
+        return;
+      }
+
+      if (!grade) {
+        alert('اختر المرحلة الدراسية أولاً.');
+        return;
+      }
+
+      if (findAccountByStudentName(studentName)) {
+        alert('يوجد حساب محفوظ بنفس اسم الطالب. استخدم اسمًا مختلفًا أو سجّل الدخول مباشرة.');
+        return;
+      }
+
+      const accounts = getAccounts();
+      const newAccount = {
+        studentName,
+        parentName,
+        grade,
+        gradeText,
+        email,
+        password,
+        createdAt: new Date().toISOString()
+      };
+
+      accounts.push(newAccount);
+      saveAccounts(accounts);
+      saveCurrentUser(newAccount);
+      this.reset();
+      alert(`تم إنشاء حساب ${studentName} بنجاح.`);
+      redirectToDashboard(grade);
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      checkLoggedInUser();
+    });
+  </script>
+</body>
+</html>

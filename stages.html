@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>AduKid_AI | المراحل التعليمية</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="تعرّف على تفاصيل مرحلتي رياض الأطفال KG1 و KG2 في منصة AduKid_AI، مع أهداف المهارات، الأنشطة المقترحة، والموارد التكميلية لكل مرحلة."
+  />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ========== CSS Reset ========== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: linear-gradient(135deg, #fff5e6 0%, #fff9f0 100%);
+      color: #2d3748;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    /* ========== التصميم الرئيسي ========== */
+    .main-card {
+      background: white;
+      border-radius: 30px;
+      box-shadow: 0 15px 50px rgba(232, 130, 42, 0.15);
+      padding: 3rem;
+      position: relative;
+      overflow: hidden;
+      border: 3px solid #ffe0b8;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 3px dashed #ffd1a4;
+    }
+
+    .logo {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #e8822a;
+      margin-bottom: 0.5rem;
+      text-shadow: 2px 2px 4px rgba(232, 130, 42, 0.2);
+    }
+
+    .tagline {
+      color: #718096;
+      font-size: 1.2rem;
+      font-weight: 500;
+    }
+
+    /* ========== تخطيط الصفحة ========== */
+    .page-layout {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .stage-section {
+      flex: 1;
+      background: #fffaf5;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 5px 15px rgba(232, 130, 42, 0.1);
+      border: 2px solid #ffe8d1;
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #e8822a;
+      margin-bottom: 1.5rem;
+      padding-right: 0.5rem;
+      border-right: 4px solid #e8822a;
+      background: linear-gradient(135deg, #fff8f0 0%, transparent 100%);
+      padding: 0.8rem 1rem;
+      border-radius: 15px;
+    }
+
+    /* ========== تنسيق البطاقات ========== */
+    .stage-card {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid #ffe0b8;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .stage-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .stage-name {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #e8822a;
+    }
+
+    .stage-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      font-weight: 800;
+      color: white;
+    }
+
+    .stage-label.kg1 {
+      background: #118ab2;
+    }
+
+    .stage-label.kg2 {
+      background: #fb8500;
+    }
+
+    .stage-meta {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .stage-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: 999px;
+      font-weight: 700;
+      background: rgba(168, 218, 220, 0.32);
+      color: rgba(2, 48, 71, 0.68);
+      font-size: 0.9rem;
+    }
+
+    .stage-card p {
+      margin-bottom: 1rem;
+      color: #4a5568;
+    }
+
+    .stage-card h3 {
+      color: #e8822a;
+      margin-bottom: 0.8rem;
+      font-size: 1.2rem;
+    }
+
+    .stage-card ul {
+      margin-bottom: 1.5rem;
+      padding-right: 1.4rem;
+      color: #4a5568;
+    }
+
+    .stage-card li {
+      margin-bottom: 0.5rem;
+    }
+
+    .stage-actions {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .form-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, #e8822a, #ff9d45);
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Tajawal', sans-serif;
+      text-decoration: none;
+    }
+
+    .form-button:hover {
+      background: linear-gradient(135deg, #ff9d45, #e8822a);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(232, 130, 42, 0.3);
+    }
+
+    .btn-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: transparent;
+      color: #e8822a;
+      padding: 0.8rem 1.5rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      border: 2px solid #e8822a;
+    }
+
+    .btn-pill:hover {
+      background: #fff5e6;
+      transform: translateY(-2px);
+    }
+
+    /* ========== التصميم الديكوري ========== */
+    .decoration {
+      position: absolute;
+      opacity: 0.15;
+      z-index: 0;
+    }
+
+    .decoration-1 {
+      top: -30px;
+      left: -30px;
+      width: 150px;
+      height: 150px;
+      background: #e8822a;
+      border-radius: 50%;
+    }
+
+    .decoration-2 {
+      bottom: -40px;
+      right: -40px;
+      width: 180px;
+      height: 180px;
+      background: #4299e1;
+      border-radius: 50%;
+    }
+
+    .decoration-3 {
+      top: 20%;
+      left: 30px;
+      width: 80px;
+      height: 80px;
+      background: #38b2ac;
+      border-radius: 20px;
+      transform: rotate(45deg);
+    }
+
+    .decoration-4 {
+      bottom: 30%;
+      right: 10%;
+      width: 60px;
+      height: 60px;
+      background: #ff9d45;
+      border-radius: 50%;
+    }
+
+    .content-wrapper {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ========== إيموجيز وإضافات طفولية ========== */
+    .fun-emoji {
+      font-size: 1.2rem;
+      margin-left: 0.3rem;
+    }
+
+    .child-friendly {
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="%23e8822a" opacity="0.1"/></svg>');
+      background-size: 200px 200px;
+    }
+
+    /* ========== القائمة الجانبية ========== */
+    .sidebar-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      background: #e8822a;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 10px 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: all 0.3s;
+      font-family: 'Tajawal', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      gap: 8px;
+    }
+
+    .sidebar-toggle:hover {
+      background: #ff9d45;
+      transform: scale(1.05);
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 300px;
+      height: 100%;
+      background: white;
+      box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+      z-index: 2000;
+      transition: right 0.3s ease;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    
+    .sidebar.active {
+      right: 0;
+    }
+    
+    .sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1999;
+      display: none;
+    }
+    
+    .sidebar-overlay.active {
+      display: block;
+    }
+    
+    .sidebar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .sidebar-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #666;
+    }
+    
+    .sidebar-user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      padding: 10px;
+      background: #fffaf0;
+      border-radius: 10px;
+    }
+    
+    .sidebar-user-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #e8822a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 20px;
+    }
+    
+    .sidebar-user-info h3 {
+      margin: 0;
+      font-size: 16px;
+    }
+    
+    .sidebar-user-info p {
+      margin: 0;
+      font-size: 14px;
+      color: #666;
+    }
+    
+    .sidebar-menu {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .sidebar-menu li {
+      margin-bottom: 5px;
+    }
+    
+    .sidebar-menu a {
+      display: block;
+      padding: 12px 15px;
+      text-decoration: none;
+      color: #333;
+      border-radius: 8px;
+      transition: all 0.3s;
+    }
+    
+    .sidebar-menu a:hover {
+      background: #fff5e6;
+    }
+    
+    .sidebar-menu a.active {
+      background: #e8822a;
+      color: white;
+    }
+    
+    .sidebar-footer {
+      margin-top: 30px;
+      padding-top: 15px;
+      border-top: 1px solid #eee;
+    }
+    
+    .logout-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 12px 15px;
+      background: #ffe0b8;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+    
+    .logout-btn:hover {
+      background: #ffd1a4;
+    }
+
+    /* ========== زر الذكاء الاصطناعي ========== */
+    .ai-assistant-btn {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      width: 70px;
+      height: 70px;
+      background: linear-gradient(135deg, #4a6cf7, #6c5ce7);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(74, 108, 247, 0.4);
+      z-index: 999;
+      transition: all 0.3s ease;
+      border: 3px solid white;
+      animation: pulse 2s infinite;
+    }
+
+    .ai-assistant-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 12px 30px rgba(74, 108, 247, 0.6);
+    }
+
+    .ai-assistant-btn .robot-icon {
+      font-size: 28px;
+      color: white;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 8px 25px rgba(74, 108, 247, 0.4);
+      }
+      50% {
+        box-shadow: 0 8px 30px rgba(74, 108, 247, 0.7);
+      }
+      100% {
+        box-shadow: 0 8px 25px rgba(74, 108, 247, 0.4);
+      }
+    }
+
+    /* ========== نافذة الذكاء الاصطناعي ========== */
+    .ai-chat-modal {
+      display: none;
+      position: fixed;
+      bottom: 120px;
+      left: 30px;
+      width: 350px;
+      height: 500px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 15px 50px rgba(0,0,0,0.2);
+      z-index: 1000;
+      overflow: hidden;
+      border: 3px solid #4a6cf7;
+    }
+
+    .ai-chat-modal.active {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ai-chat-header {
+      background: linear-gradient(135deg, #4a6cf7, #6c5ce7);
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .ai-chat-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    .ai-close-btn {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      padding: 5px;
+    }
+
+    .ai-chat-messages {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      background: #f8f9fa;
+    }
+
+    .ai-message {
+      max-width: 80%;
+      padding: 12px 16px;
+      border-radius: 18px;
+      margin-bottom: 15px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .ai-message.bot {
+      background: white;
+      border-bottom-left-radius: 5px;
+      align-self: flex-start;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .ai-message.user {
+      background: #4a6cf7;
+      color: white;
+      border-bottom-right-radius: 5px;
+      align-self: flex-end;
+      margin-left: auto;
+    }
+
+    .ai-chat-input {
+      padding: 15px;
+      border-top: 1px solid #eee;
+      background: white;
+      display: flex;
+      gap: 10px;
+    }
+
+    .ai-message-input {
+      flex: 1;
+      padding: 12px 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 25px;
+      font-size: 14px;
+      font-family: inherit;
+    }
+
+    .ai-send-btn {
+      background: #4a6cf7;
+      color: white;
+      border: none;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .ai-send-btn:hover {
+      background: #3a56d4;
+      transform: scale(1.05);
+    }
+
+    /* ========== التجاوب ========== */
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+      
+      .main-card {
+        padding: 2rem 1.5rem;
+        border-radius: 25px;
+      }
+      
+      .page-layout {
+        flex-direction: column;
+      }
+      
+      .logo {
+        font-size: 2rem;
+      }
+      
+      .section-title {
+        font-size: 1.3rem;
+      }
+      
+      .stage-actions {
+        flex-direction: column;
+      }
+      
+      .form-button, .btn-pill {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .ai-chat-modal {
+        width: 300px;
+        height: 450px;
+        left: 20px;
+        bottom: 100px;
+      }
+      
+      .ai-assistant-btn {
+        left: 20px;
+        bottom: 20px;
+        width: 60px;
+        height: 60px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .main-card {
+        padding: 1.5rem 1rem;
+        border-radius: 20px;
+      }
+      
+      .logo {
+        font-size: 1.8rem;
+      }
+      
+      .stage-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
+      
+      .sidebar {
+        width: 100%;
+        right: -100%;
+      }
+      
+      .ai-chat-modal {
+        width: calc(100% - 40px);
+        left: 20px;
+        right: 20px;
+      }
+    }
+
+    /* ========== الهيدر الثابت الجديد ========== */
+    .main-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 70px;
+      background: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      z-index: 1100;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .header-container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-logo {
+      height: 50px;
+      object-fit: contain;
+    }
+
+    .sidebar-toggle-btn {
+      background: #e8822a;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 8px 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: all 0.3s;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    .sidebar-toggle-btn:hover {
+      background: #ff9d45;
+      transform: scale(1.05);
+    }
+
+    body {
+      padding-top: 80px !important;
+    }
+
+    .sidebar-toggle {
+      display: none !important;
+    }
+    /* إخفاء النافبار القديم */
+    .navbar {
+      display: none !important;
+    }
+
+    /* ========== القائمة الجانبية ========== */
+    .sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1999;
+      display: none;
+    }
+    
+    .sidebar-overlay.active {
+      display: block;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 300px;
+      height: 100%;
+      background: white;
+      box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+      z-index: 2000;
+      transition: right 0.3s ease;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    
+    .sidebar.active {
+      right: 0;
+    }
+    
+    .sidebar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .sidebar-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #666;
+    }
+    
+    .sidebar-user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      padding: 10px;
+      background: #fffaf0;
+      border-radius: 10px;
+    }
+    
+    .sidebar-user-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #e8822a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 20px;
+    }
+    
+    .sidebar-user-info h3 {
+      margin: 0;
+      font-size: 16px;
+    }
+    
+    .sidebar-user-info p {
+      margin: 0;
+      font-size: 14px;
+      color: #666;
+    }
+    
+    .sidebar-menu {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .sidebar-menu li {
+      margin-bottom: 5px;
+    }
+    
+    .sidebar-menu a {
+      display: block;
+      padding: 12px 15px;
+      text-decoration: none;
+      color: #333;
+      border-radius: 8px;
+      transition: all 0.3s;
+    }
+    
+    .sidebar-menu a:hover {
+      background: #fff5e6;
+    }
+    
+    .sidebar-menu a.active {
+      background: #e8822a;
+      color: white;
+    }
+    
+    .sidebar-footer {
+      margin-top: 30px;
+      padding-top: 15px;
+      border-top: 1px solid #eee;
+    }
+    
+    .logout-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 12px 15px;
+      background: #ffe0b8;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+    
+    .logout-btn:hover {
+      background: #ffd1a4;
+    }
+  </style>
+</head>
+<body class="child-friendly">
+  <!-- الهيدر الثابت -->
+  <header class="main-header">
+    <div class="header-container">
+      <div class="header-logo-container">
+        <img src="logo.jpeg" alt="EduKid AI Logo" class="header-logo">
+      </div>
+      <button class="sidebar-toggle-btn" id="headerSidebarToggle">
+        <span>القائمة</span>
+        <span>☰</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- القائمة الجانبية -->
+  <div class="sidebar-overlay"></div>
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2>القائمة الرئيسية</h2>
+      <button class="sidebar-close">×</button>
+    </div>
+    
+    <div class="sidebar-user">
+      <div class="sidebar-user-avatar" id="user-avatar-sidebar">ط</div>
+      <div class="sidebar-user-info">
+        <h3 id="sidebar-student-name">اسم الطالب</h3>
+        <p id="sidebar-grade">المرحلة: رياض الأطفال</p>
+      </div>
+    </div>
+    
+    <ul class="sidebar-menu">
+      <li><a href="index.html">الصفحة الرئيسية</a></li>
+      <li><a href="dashboard.html" id="sidebar-dashboard-link">لوحة التعلم</a></li>
+      <li><a href="games.html">الألعاب التعليمية</a></li>
+      <li><a href="books.html">المكتبة الرقمية</a></li>
+      <li><a href="stories.html">القصص الصوتية</a></li>
+      <li><a href="parent-report.html">لوحة ولي الأمر</a></li>
+    </ul>
+    
+    <div class="sidebar-footer">
+      <button class="logout-btn" id="logout-btn-sidebar">
+        <span>تسجيل الخروج</span>
+        <span>🚪</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- زر القائمة الجانبية القديم (مخفي عبر CSS) -->
+  <button class="sidebar-toggle">☰ القائمة</button>
+  
+  <!-- زر الذكاء الاصطناعي -->
+  <div class="ai-assistant-btn" id="aiAssistantBtn">
+    <div class="robot-icon">🤖</div>
+  </div>
+
+  <!-- نافذة الذكاء الاصطناعي -->
+  <div class="ai-chat-modal" id="aiChatModal">
+    <div class="ai-chat-header">
+      <div class="ai-chat-title">
+        <span>🤖</span>
+        <span>مساعد AduKid الذكي</span>
+      </div>
+      <button class="ai-close-btn" id="aiCloseBtn">×</button>
+    </div>
+    <div class="ai-chat-messages" id="aiChatMessages">
+      <div class="ai-message bot">
+        مرحباً! أنا مساعد AduKid الذكي. كيف يمكنني مساعدتك في رحلة طفلك التعليمية اليوم؟
+      </div>
+    </div>
+    <div class="ai-chat-input">
+      <input type="text" class="ai-message-input" id="aiMessageInput" placeholder="اكتب سؤالك هنا...">
+      <button class="ai-send-btn" id="aiSendBtn">
+        <span>➤</span>
+      </button>
+    </div>
+  </div>
+  
+  <!-- القائمة الجانبية -->
+  <div class="sidebar-overlay"></div>
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2>القائمة الرئيسية</h2>
+      <button class="sidebar-close">×</button>
+    </div>
+    
+    <div class="sidebar-user">
+      <div class="sidebar-user-avatar" id="user-avatar">ط</div>
+      <div class="sidebar-user-info">
+        <h3 id="sidebar-student-name">اسم الطالب</h3>
+        <p id="sidebar-grade">المرحلة: رياض الأطفال</p>
+      </div>
+    </div>
+    
+    <ul class="sidebar-menu">
+      <li><a href="index.html">الصفحة الرئيسية</a></li>
+      <li><a href="dashboard.html" id="sidebar-dashboard-link">لوحة التعلم</a></li>
+      <li><a href="games.html">الألعاب التعليمية</a></li>
+      <li><a href="books.html">المكتبة الرقمية</a></li>
+      <li><a href="stories.html">القصص الصوتية</a></li>
+      <li><a href="parent-report.html">لوحة ولي الأمر</a></li>
+    </ul>
+    
+    <div class="sidebar-footer">
+      <button class="logout-btn" id="logout-btn">
+        <span>تسجيل الخروج</span>
+        <span>🚪</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="main-card">
+      <!-- العناصر الديكورية -->
+      <div class="decoration decoration-1"></div>
+      <div class="decoration decoration-2"></div>
+      <div class="decoration decoration-3"></div>
+      <div class="decoration decoration-4"></div>
+      
+      <div class="content-wrapper">
+        <!-- الهيدر -->
+        <div class="header">
+          <div class="logo">AduKid_AI <span class="fun-emoji">🧸</span></div>
+          <div class="tagline">منصة التعلم الذكي لرياض الأطفال - معرض ISEF 2025</div>
+        </div>
+
+        <!-- محتوى الصفحة الرئيسية -->
+        <div class="page-layout">
+          <!-- قسم KG1 -->
+          <div class="stage-section">
+            <h2 class="section-title">مرحلة KG1 <span class="fun-emoji">🌟</span></h2>
+            
+            <div class="stage-card">
+              <div class="stage-header">
+                <div class="stage-name">بداية الرحلة</div>
+                <span class="stage-label kg1">KG1</span>
+              </div>
+              
+              <div class="stage-meta">
+                <span>⏳ مدة المقترحة: 30 دقيقة يوميًا</span>
+                <span>🎨 أسلوب التعلم: لعب واستكشاف</span>
+              </div>
+
+              <p>
+                نركّز في هذه المرحلة على تعريف الطفل بالبيئة المدرسية الافتراضية، وتعزيز الفضول وحب السؤال عبر قصص قصيرة،
+                أنشطة حسية، وألعاب تبني المهارات اللغوية الأولى.
+              </p>
+
+              <h3>الأهداف الأساسية</h3>
+              <ul>
+                <li>التعرّف على الحروف العربية والإنجليزية بشكل بصري وسمعي.</li>
+                <li>تعزيز المهارات الحركية الدقيقة عبر التلوين والقص واللصق.</li>
+                <li>العد حتى الرقم 10 باستخدام أدوات وأنشطة تفاعلية.</li>
+                <li>استخدام مفردات بسيطة للتعبير عن المشاعر والاحتياجات.</li>
+              </ul>
+
+              <div class="stage-actions">
+                <button class="form-button enter-dashboard" data-stage="kg1">دخول لوحة KG1</button>
+                <a class="btn-pill" href="games.html#arabic">ألعاب اللغة لـ KG1</a>
+              </div>
+            </div>
+          </div>
+          
+          <!-- قسم KG2 -->
+          <div class="stage-section">
+            <h2 class="section-title">مرحلة KG2 <span class="fun-emoji">🚀</span></h2>
+            
+            <div class="stage-card">
+              <div class="stage-header">
+                <div class="stage-name">الانطلاقة المتقدمة</div>
+                <span class="stage-label kg2">KG2</span>
+              </div>
+              
+              <div class="stage-meta">
+                <span>⏳ مدة المقترحة: 40 دقيقة يوميًا</span>
+                <span>📚 أسلوب التعلم: مهام صغيرة + مشاريع</span>
+              </div>
+
+              <p>
+                نطوّر المهارات التي بُنيت في KG1، مع إدخال محتوى أكثر عمقًا في القراءة، الحساب، والعلوم المبسطة. كما نركز على
+                الاستقلالية والثقة بالنفس تمهيدًا للمرحلة الابتدائية.
+              </p>
+
+              <h3>الأهداف الأساسية</h3>
+              <ul>
+                <li>قراءة جمل بسيطة وفهم الفكرة العامة للقصة.</li>
+                <li>حل مسائل جمع وطرح داخل نطاق 20، وتمييز الأشكال الهندسية.</li>
+                <li>التعبير الشفهي عن أحداث يومية باستخدام جمل مترابطة.</li>
+                <li>تنفيذ مشاريع صغيرة (مثل صنع مجسمات أو تجارب علمية بسيطة).</li>
+              </ul>
+
+              <div class="stage-actions">
+                <button class="form-button enter-dashboard" data-stage="kg2">دخول لوحة KG2</button>
+                <a class="btn-pill" href="games.html#math">ألعاب الرياضيات لـ KG2</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- الفوتر -->
+        <div class="footer" style="text-align: center; margin-top: 2rem; color: #718096; font-size: 0.9rem; padding: 1rem; background: #fffaf0; border-radius: 15px;">
+          © <span id="year">2024</span> AduKid_AI - مشروع معرض ISEF 2025. جميع الحقوق محفوظة. <span class="fun-emoji">🎉</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
+  <script src="activity.js"></script>
+  <script>
+    function getCurrentUser() {
+      try {
+        const rawUser = localStorage.getItem('adukid_user');
+        return rawUser ? JSON.parse(rawUser) : null;
+      } catch (error) {
+        return null;
+      }
+    }
+
+    function updateStageStorage(stage) {
+      if (stage === 'kg1' || stage === 'kg2') {
+        localStorage.setItem('selectedStage', stage.toUpperCase());
+      }
+    }
+
+    function clearSessionAndGoHome() {
+      localStorage.removeItem('adukid_user');
+      localStorage.removeItem('selectedStage');
+      window.location.href = 'index.html';
+    }
+
+    function checkLoggedInUser() {
+      const user = getCurrentUser();
+      if (user && user.studentName) {
+        document.getElementById('sidebar-student-name').textContent = user.studentName;
+        document.getElementById('sidebar-grade').textContent = `المرحلة: ${user.gradeText || 'غير محدد'}`;
+        document.getElementById('user-avatar').textContent = user.studentName.charAt(0);
+        updateStageStorage(user.grade);
+        const dashboardLink = document.getElementById('sidebar-dashboard-link');
+        if (dashboardLink) {
+          dashboardLink.href = getCurrentDashboardUrl();
+          dashboardLink.textContent = `لوحة تعلم ${getStageLabel(user.grade)}`;
+        }
+        const lockedStage = getStageLabel(user.grade);
+        document.querySelectorAll('.stage-section').forEach(section => {
+          const label = (section.querySelector('.stage-label')?.textContent || '').trim().toUpperCase();
+          if (label && label !== lockedStage) {
+            section.style.display = 'none';
+          }
+        });
+        document.querySelectorAll('.enter-dashboard').forEach(button => {
+          const isAllowed = button.dataset.stage.toUpperCase() === getStageLabel(user.grade);
+          button.disabled = !isAllowed;
+          button.textContent = isAllowed ? `دخول لوحة ${getStageLabel(user.grade)}` : `هذه اللوحة غير متاحة لحسابك`;
+        });
+      } else {
+        window.location.href = 'index.html';
+      }
+    }
+
+    // تفعيل زر القائمة الجانبية
+    const sidebarToggle = document.querySelector('.sidebar-toggle');
+    const headerSidebarToggle = document.getElementById('headerSidebarToggle');
+    const sidebar = document.querySelector('.sidebar');
+    const sidebarOverlay = document.querySelector('.sidebar-overlay');
+    const sidebarClose = document.querySelector('.sidebar-close');
+    
+    function openSidebar() {
+      sidebar.classList.add('active');
+      sidebarOverlay.classList.add('active');
+    }
+    
+    function closeSidebar() {
+      sidebar.classList.remove('active');
+      sidebarOverlay.classList.remove('active');
+    }
+    
+    if (headerSidebarToggle) headerSidebarToggle.addEventListener('click', openSidebar);
+    if (sidebarToggle) sidebarToggle.addEventListener('click', openSidebar);
+    sidebarClose.addEventListener('click', closeSidebar);
+    sidebarOverlay.addEventListener('click', closeSidebar);
+
+    // تحديث رابط لوحة التعلم
+    const sidebarDashLink = document.getElementById('sidebar-dashboard-link');
+    if (sidebarDashLink) {
+      const user = getCurrentUser();
+      const stage = user ? user.grade : (localStorage.getItem('selectedStage') || '');
+      sidebarDashLink.href = stage && stage.toUpperCase() === 'KG2' ? 'dashboard-kg2.html' : 'dashboard-kg1.html';
+    }
+
+    // تحديث بيانات المستخدم في السايدبار
+    const user = getCurrentUser();
+    if (user && user.studentName) {
+      const sidebarName = document.getElementById('sidebar-student-name');
+      const sidebarGrade = document.getElementById('sidebar-grade');
+      const sidebarAvatar = document.getElementById('user-avatar-sidebar');
+      if (sidebarName) sidebarName.textContent = user.studentName;
+      if (sidebarGrade) sidebarGrade.textContent = `المرحلة: ${user.gradeText || 'رياض الأطفال'}`;
+      if (sidebarAvatar) sidebarAvatar.textContent = user.studentName.charAt(0);
+    }
+
+    // تسجيل الخروج
+    const logoutBtnSidebar = document.getElementById('logout-btn-sidebar');
+    if (logoutBtnSidebar) {
+      logoutBtnSidebar.addEventListener('click', function() {
+        if (confirm('هل أنت متأكد من تسجيل الخروج؟')) {
+          localStorage.removeItem('adukid_user');
+          localStorage.removeItem('selectedStage');
+          window.location.href = 'index.html';
+        }
+      });
+    }
+
+    // تحديث السنة في التذييل
+    const yearEl = document.getElementById('year');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+    // تفعيل أزرار دخول لوحات التحكم
+    document.querySelectorAll('.enter-dashboard').forEach(button => {
+      button.addEventListener('click', function() {
+        const stage = this.getAttribute('data-stage');
+        const currentStage = getCurrentStageSafe().toLowerCase();
+        if (currentStage && stage !== currentStage) {
+          window.location.href = getCurrentDashboardUrl();
+          return;
+        }
+        updateStageStorage(stage);
+        if (stage === 'kg1') {
+          window.location.href = 'dashboard-kg1.html';
+        } else if (stage === 'kg2') {
+          window.location.href = 'dashboard-kg2.html';
+        }
+      });
+    });
+
+    // تفعيل زر الذكاء الاصطناعي
+    const aiAssistantBtn = document.getElementById('aiAssistantBtn');
+    const aiChatModal = document.getElementById('aiChatModal');
+    const aiCloseBtn = document.getElementById('aiCloseBtn');
+    const aiSendBtn = document.getElementById('aiSendBtn');
+    const aiMessageInput = document.getElementById('aiMessageInput');
+    const aiChatMessages = document.getElementById('aiChatMessages');
+
+    aiAssistantBtn.addEventListener('click', function() {
+      aiChatModal.classList.toggle('active');
+    });
+
+    aiCloseBtn.addEventListener('click', function() {
+      aiChatModal.classList.remove('active');
+    });
+
+    // إرسال رسالة في الشات
+    function sendAIMessage() {
+      const message = aiMessageInput.value.trim();
+      if (!message) return;
+
+      // إضافة رسالة المستخدم
+      addAIMessage(message, 'user');
+      aiMessageInput.value = '';
+
+      // محاكاة رد الذكاء الاصطناعي
+      setTimeout(() => {
+        const responses = [
+          "هذا سؤال رائع! يمكنني مساعدتك في توجيه طفلك نحو الأنشطة المناسبة لمرحلته التعليمية.",
+          "أقترح تجربة الألعاب التعليمية التفاعلية الموجودة في قسم الألعاب لتعزيز مهارات طفلك.",
+          "بناءً على مرحلته، يمكننا تصميم خطة تعلم مخصصة تناسب احتياجاته وتطوره.",
+          "هل تود معرفة المزيد عن الأنشطة المناسبة لسن طفلك؟ يمكنني تقديم اقتراحات مخصصة.",
+          "لاحظت أن طفلك يظهر اهتمامًا خاصًا بالقصص، هل تود أن أوصي بقصص مناسبة له؟"
+        ];
+        
+        const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+        addAIMessage(randomResponse, 'bot');
+      }, 1000);
+    }
+
+    function addAIMessage(content, sender) {
+      const messageDiv = document.createElement('div');
+      messageDiv.classList.add('ai-message', sender);
+      messageDiv.textContent = content;
+      aiChatMessages.appendChild(messageDiv);
+      aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
+    }
+
+    aiSendBtn.addEventListener('click', sendAIMessage);
+    aiMessageInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        sendAIMessage();
+      }
+    });
+
+    // التحقق من وجود بيانات مستخدم عند تحميل الصفحة
+    document.addEventListener('DOMContentLoaded', function() {
+      checkLoggedInUser();
+    });
+  </script>
+</body>
+</html>

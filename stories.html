@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>AduKid_AI | القصص الصوتية</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="استمتع بمجموعة متنوعة من القصص الصوتية التعليمية الممتعة للأطفال في منصة AduKid_AI"
+  />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ========== CSS Reset ========== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: linear-gradient(135deg, #fff5e6 0%, #fff9f0 100%);
+      color: #2d3748;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    /* ========== التصميم الرئيسي ========== */
+    .main-card {
+      background: white;
+      border-radius: 30px;
+      box-shadow: 0 15px 50px rgba(232, 130, 42, 0.15);
+      padding: 3rem;
+      position: relative;
+      overflow: hidden;
+      border: 3px solid #ffe0b8;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 3px dashed #ffd1a4;
+    }
+
+    .logo {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #e8822a;
+      margin-bottom: 0.5rem;
+      text-shadow: 2px 2px 4px rgba(232, 130, 42, 0.2);
+    }
+
+    .tagline {
+      color: #718096;
+      font-size: 1.2rem;
+      font-weight: 500;
+    }
+
+    /* ========== تخطيط الصفحة ========== */
+    .page-layout {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #e8822a;
+      margin-bottom: 1.5rem;
+      padding-right: 0.5rem;
+      border-right: 4px solid #e8822a;
+      background: linear-gradient(135deg, #fff8f0 0%, transparent 100%);
+      padding: 0.8rem 1rem;
+      border-radius: 15px;
+    }
+
+    /* ========== قسم البطل الرئيسي ========== */
+    .hero-section {
+      background: #fffaf5;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 5px 15px rgba(232, 130, 42, 0.1);
+      border: 2px solid #ffe8d1;
+      margin-bottom: 2rem;
+    }
+
+    .hero-content h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #e8822a;
+      margin-bottom: 1rem;
+      line-height: 1.3;
+    }
+
+    .hero-content p {
+      color: #4a5568;
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #ffe0b8;
+      color: #e8822a;
+      padding: 0.4rem 1rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .badge-row {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin: 1.5rem 0;
+    }
+
+    /* ========== محدد المرحلة ========== */
+    .stage-switcher {
+      display: flex;
+      gap: 0.5rem;
+      background: #fffaf5;
+      padding: 0.5rem;
+      border-radius: 50px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+      width: fit-content;
+      margin: 1.5rem 0;
+      border: 1px solid #ffe0b8;
+    }
+
+    .stage-switcher button {
+      padding: 0.7rem 1.5rem;
+      border: none;
+      border-radius: 50px;
+      background: transparent;
+      color: #4a5568;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+    }
+
+    .stage-switcher button[data-active="true"] {
+      background: #e8822a;
+      color: white;
+      box-shadow: 0 2px 8px rgba(232, 130, 42, 0.3);
+    }
+
+    .stage-switcher button:hover:not([data-active="true"]) {
+      background: #fff5e6;
+    }
+
+    /* ========== تخطيط القصص ========== */
+    .stories-layout {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .stories-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ========== القصة النشطة ========== */
+    .active-story {
+      background: #fffaf5;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 5px 15px rgba(232, 130, 42, 0.1);
+      border: 2px solid #ffe8d1;
+      margin-bottom: 2rem;
+    }
+
+    .story-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .story-icon {
+      font-size: 3rem;
+      flex-shrink: 0;
+    }
+
+    .story-info h2 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #e8822a;
+      margin-bottom: 0.5rem;
+    }
+
+    .story-description {
+      color: #4a5568;
+      margin-bottom: 1.5rem;
+    }
+
+    .story-meta {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+
+    .story-tag {
+      background: #fff5e6;
+      color: #e8822a;
+      padding: 0.3rem 0.8rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .audio-player {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      border: 1px solid #ffe0b8;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+      text-align: center;
+    }
+
+    .audio-player p {
+      color: #718096;
+      margin-bottom: 1rem;
+    }
+
+    /* ========== قائمة القصص ========== */
+    .stories-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .story-card {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      border: 1px solid #ffe0b8;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .story-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(232, 130, 42, 0.15);
+    }
+
+    .story-card.active {
+      background: #fff5e6;
+      border-color: #e8822a;
+    }
+
+    .story-card h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #e8822a;
+      margin-bottom: 0.5rem;
+    }
+
+    .story-card p {
+      color: #4a5568;
+      margin-bottom: 0.8rem;
+      font-size: 0.9rem;
+    }
+
+    .story-card-meta {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    /* ========== أزرار ========== */
+    .form-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, #e8822a, #ff9d45);
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    .form-button:hover {
+      background: linear-gradient(135deg, #ff9d45, #e8822a);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(232, 130, 42, 0.3);
+    }
+
+    .btn-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: transparent;
+      color: #e8822a;
+      padding: 0.8rem 1.5rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      border: 2px solid #e8822a;
+    }
+
+    .btn-pill:hover {
+      background: #fff5e6;
+      transform: translateY(-2px);
+    }
+
+    /* ========== التصميم الديكوري ========== */
+    .decoration {
+      position: absolute;
+      opacity: 0.15;
+      z-index: 0;
+    }
+
+    .decoration-1 {
+      top: -30px;
+      left: -30px;
+      width: 150px;
+      height: 150px;
+      background: #e8822a;
+      border-radius: 50%;
+    }
+
+    .decoration-2 {
+      bottom: -40px;
+      right: -40px;
+      width: 180px;
+      height: 180px;
+      background: #4299e1;
+      border-radius: 50%;
+    }
+
+    .decoration-3 {
+      top: 20%;
+      left: 30px;
+      width: 80px;
+      height: 80px;
+      background: #38b2ac;
+      border-radius: 20px;
+      transform: rotate(45deg);
+    }
+
+    .decoration-4 {
+      bottom: 30%;
+      right: 10%;
+      width: 60px;
+      height: 60px;
+      background: #ff9d45;
+      border-radius: 50%;
+    }
+
+    .content-wrapper {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ========== إيموجيز وإضافات طفولية ========== */
+    .fun-emoji {
+      font-size: 1.2rem;
+      margin-left: 0.3rem;
+    }
+
+    .child-friendly {
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="%23e8822a" opacity="0.1"/></svg>');
+      background-size: 200px 200px;
+    }
+
+    /* ========== القائمة الجانبية ========== */
+    .sidebar-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      background: #e8822a;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 10px 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: all 0.3s;
+      font-family: 'Tajawal', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      gap: 8px;
+    }
+
+    .sidebar-toggle:hover {
+      background: #ff9d45;
+      transform: scale(1.05);
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 300px;
+      height: 100%;
+      background: white;
+      box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+      z-index: 2000;
+      transition: right 0.3s ease;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    
+    .sidebar.active {
+      right: 0;
+    }
+    
+    .sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1999;
+      display: none;
+    }
+    
+    .sidebar-overlay.active {
+      display: block;
+    }
+    
+    .sidebar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .sidebar-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #666;
+    }
+    
+    .sidebar-user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      padding: 10px;
+      background: #fffaf0;
+      border-radius: 10px;
+    }
+    
+    .sidebar-user-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #e8822a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 20px;
+    }
+    
+    .sidebar-user-info h3 {
+      margin: 0;
+      font-size: 16px;
+    }
+    
+    .sidebar-user-info p {
+      margin: 0;
+      font-size: 14px;
+      color: #666;
+    }
+    
+    .sidebar-menu {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .sidebar-menu li {
+      margin-bottom: 5px;
+    }
+    
+    .sidebar-menu a {
+      display: block;
+      padding: 12px 15px;
+      text-decoration: none;
+      color: #333;
+      border-radius: 8px;
+      transition: all 0.3s;
+    }
+    
+    .sidebar-menu a:hover {
+      background: #fff5e6;
+    }
+    
+    .sidebar-menu a.active {
+      background: #e8822a;
+      color: white;
+    }
+    
+    .sidebar-footer {
+      margin-top: 30px;
+      padding-top: 15px;
+      border-top: 1px solid #eee;
+    }
+    
+    .logout-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 12px 15px;
+      background: #ffe0b8;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+    
+    .logout-btn:hover {
+      background: #ffd1a4;
+    }
+
+    /* ========== مشغل الفيديو ========== */
+    .video-player-container {
+      width: 100%;
+      margin: 1rem 0;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .video-player {
+      width: 100%;
+      height: 300px;
+      background: #000;
+    }
+
+    .video-controls {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    /* ========== التجاوب ========== */
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+      
+      .main-card {
+        padding: 2rem 1.5rem;
+        border-radius: 25px;
+      }
+      
+      .logo {
+        font-size: 2rem;
+      }
+      
+      .section-title {
+        font-size: 1.3rem;
+      }
+      
+      .stage-switcher {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .sidebar {
+        width: 100%;
+        right: -100%;
+      }
+
+      .video-player {
+        height: 200px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .main-card {
+        padding: 1.5rem 1rem;
+        border-radius: 20px;
+      }
+      
+      .logo {
+        font-size: 1.8rem;
+      }
+      
+      .hero-content h1 {
+        font-size: 1.8rem;
+      }
+
+      .video-player {
+        height: 180px;
+      }
+    }
+
+    /* ========== الهيدر الثابت الجديد ========== */
+    .main-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 70px;
+      background: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      z-index: 1100;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .header-container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-logo {
+      height: 50px;
+      object-fit: contain;
+    }
+
+    .sidebar-toggle-btn {
+      background: #e8822a;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 8px 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: all 0.3s;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    .sidebar-toggle-btn:hover {
+      background: #ff9d45;
+      transform: scale(1.05);
+    }
+
+    body {
+      padding-top: 80px !important;
+    }
+
+    .sidebar-toggle {
+      display: none !important;
+    }
+  </style>
+</head>
+<body class="child-friendly">
+  <!-- الهيدر الثابت -->
+  <header class="main-header">
+    <div class="header-container">
+      <div class="header-logo-container">
+        <img src="logo.jpeg" alt="EduKid AI Logo" class="header-logo">
+      </div>
+      <button class="sidebar-toggle-btn" id="headerSidebarToggle">
+        <span>القائمة</span>
+        <span>☰</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- زر القائمة الجانبية القديم (مخفي عبر CSS) -->
+  <button class="sidebar-toggle">☰ القائمة</button>
+  
+  <!-- القائمة الجانبية -->
+  <div class="sidebar-overlay"></div>
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2>القائمة الرئيسية</h2>
+      <button class="sidebar-close">×</button>
+    </div>
+    
+    <div class="sidebar-user">
+      <div class="sidebar-user-avatar" id="user-avatar">ط</div>
+      <div class="sidebar-user-info">
+        <h3 id="sidebar-student-name">اسم الطالب</h3>
+        <p id="sidebar-grade">المرحلة: رياض الأطفال</p>
+      </div>
+    </div>
+    
+    <ul class="sidebar-menu">
+      <li><a href="index.html">الصفحة الرئيسية</a></li>
+      <li><a href="dashboard.html" id="sidebar-dashboard-link">لوحة التعلم</a></li>
+      <li><a href="games.html">الألعاب التعليمية</a></li>
+      <li><a href="books.html">المكتبة الرقمية</a></li>
+      <li><a href="stories.html" class="active">القصص الصوتية</a></li>
+      <li><a href="parent-report.html">لوحة ولي الأمر</a></li>
+    </ul>
+    
+    <div class="sidebar-footer">
+      <button class="logout-btn" id="logout-btn">
+        <span>تسجيل الخروج</span>
+        <span>🚪</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="main-card">
+      <!-- العناصر الديكورية -->
+      <div class="decoration decoration-1"></div>
+      <div class="decoration decoration-2"></div>
+      <div class="decoration decoration-3"></div>
+      <div class="decoration decoration-4"></div>
+      
+      <div class="content-wrapper">
+        <!-- الهيدر -->
+        <div class="header">
+          <div class="logo">AduKid_AI <span class="fun-emoji">🧸</span></div>
+          <div class="tagline">القصص الصوتية التعليمية - معرض ISEF 2025</div>
+        </div>
+
+        <!-- محتوى الصفحة -->
+        <div class="page-layout">
+          <!-- قسم البطل الرئيسي -->
+          <div class="hero-section">
+            <div class="hero-content">
+              <h1>🎧 القصص الصوتية التعليمية</h1>
+              <p>
+                استمتع بمجموعة متنوعة من القصص الصوتية الممتعة التي تساعد طفلك على تنمية مهارات الاستماع والمفردات والخيال. اختر القصة المناسبة وابدأ رحلة الاستماع!
+              </p>
+              
+              <div class="badge-row">
+                <span class="badge">🎵 قصص تفاعلية</span>
+                <span class="badge">🗣️ لغتان: العربية والإنجليزية</span>
+                <span class="badge">🧠 تنمية المهارات</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- محتوى القصص -->
+          <div class="stories-layout">
+            <!-- القصة النشطة -->
+            <div class="active-story" data-active-story>
+              <div class="story-header">
+                <div class="story-icon">🎧</div>
+                <div class="story-info">
+                  <h2>اختر قصة لبدء الاستماع</h2>
+                  <p class="story-description">انقر على أي قصة من القائمة لمعرفة تفاصيلها وبدء الاستماع</p>
+                </div>
+              </div>
+              
+              <div class="story-meta">
+                <span class="story-tag">العربية</span>
+                <span class="story-tag">5 دقائق</span>
+                <span class="story-tag">KG1</span>
+              </div>
+
+              <div class="audio-player">
+                <p>🎵 اختر قصة من القائمة لبدء الاستماع</p>
+                <button class="form-button" disabled>
+                  ▶ تشغيل القصة
+                </button>
+                <p style="margin:1rem 0 0 0; font-size:0.9rem; color: #718096;">
+                  يمكنك تحميل القصة للاستماع إليها لاحقًا
+                </p>
+              </div>
+            </div>
+
+            <!-- قائمة القصص -->
+            <div class="stories-list" data-stories-list>
+              <!-- سيتم ملء القصص عبر JavaScript -->
+            </div>
+          </div>
+        </div>
+
+        <!-- الفوتر -->
+        <div class="footer" style="text-align: center; margin-top: 2rem; color: #718096; font-size: 0.9rem; padding: 1rem; background: #fffaf0; border-radius: 15px;">
+          © 2024 AduKid_AI - مشروع معرض ISEF 2025. جميع الحقوق محفوظة. <span class="fun-emoji">🎉</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
+  <script src="activity.js"></script>
+  <script>
+    function getCurrentUser() {
+      try {
+        const rawUser = localStorage.getItem('adukid_user');
+        return rawUser ? JSON.parse(rawUser) : null;
+      } catch (error) {
+        return null;
+      }
+    }
+
+    function updateStageStorageFromUser(user) {
+      const grade = (user?.grade || '').toString().trim().toLowerCase();
+      if (grade === 'kg1' || grade === 'kg2') {
+        localStorage.setItem('selectedStage', grade.toUpperCase());
+      }
+    }
+
+    function clearSessionAndGoHome() {
+      localStorage.removeItem('adukid_user');
+      localStorage.removeItem('selectedStage');
+      window.location.href = 'index.html';
+    }
+
+    function checkLoggedInUser() {
+      const user = getCurrentUser();
+      if (user && user.studentName) {
+        document.getElementById('sidebar-student-name').textContent = user.studentName;
+        document.getElementById('sidebar-grade').textContent = `المرحلة: ${user.gradeText || 'غير محدد'}`;
+        document.getElementById('user-avatar').textContent = user.studentName.charAt(0);
+        updateStageStorageFromUser(user);
+        const dashboardLink = document.getElementById('sidebar-dashboard-link');
+        if (dashboardLink) {
+          dashboardLink.href = getCurrentDashboardUrl();
+          dashboardLink.textContent = `لوحة تعلم ${getStageLabel(user.grade)}`;
+        }
+      } else {
+        window.location.href = 'index.html';
+      }
+    }
+
+    // تفعيل زر القائمة الجانبية
+    const sidebarToggle = document.querySelector('.sidebar-toggle');
+    const headerSidebarToggle = document.getElementById('headerSidebarToggle');
+    const sidebar = document.querySelector('.sidebar');
+    const sidebarOverlay = document.querySelector('.sidebar-overlay');
+    const sidebarClose = document.querySelector('.sidebar-close');
+    
+    function openSidebar() {
+      sidebar.classList.add('active');
+      sidebarOverlay.classList.add('active');
+    }
+    
+    function closeSidebar() {
+      sidebar.classList.remove('active');
+      sidebarOverlay.classList.remove('active');
+    }
+    
+    if (headerSidebarToggle) {
+      headerSidebarToggle.addEventListener('click', openSidebar);
+    }
+    if (sidebarToggle) {
+      sidebarToggle.addEventListener('click', openSidebar);
+    }
+    sidebarClose.addEventListener('click', closeSidebar);
+    sidebarOverlay.addEventListener('click', closeSidebar);
+
+    // تفعيل زر تسجيل الخروج
+    document.getElementById('logout-btn').addEventListener('click', function() {
+      if (confirm('هل أنت متأكد من تسجيل الخروج؟')) {
+        clearSessionAndGoHome();
+      }
+    });
+
+    // التحقق من وجود بيانات مستخدم عند تحميل الصفحة
+    document.addEventListener('DOMContentLoaded', function() {
+      checkLoggedInUser();
+    });
+
+    // بيانات القصص الصوتية (الفيديوهات المطلوبة) - نفسها لكل المراحل
+    const storiesData = [
+      {
+        id: 1,
+        title: "الأرنب والثعلب - طيور بيبي",
+        description: "قصة تعليمية ممتعة للأطفال عن الأرنب والثعلب",
+        duration: "5 دقائق",
+        videoUrl: "الأرنب والثعلب - طيور بيبي Toyor Baby.mp4",
+        language: "العربية",
+        level: "KG1", // متاحة لـ KG1 و KG2
+        icon: "🐰",
+        subject: "arabic"
+      },
+      {
+        id: 2,
+        title: "أغنية الحروف الإنجليزية ABC",
+        description: "أغنية تعليمية ممتعة لتعلم الحروف الإنجليزية",
+        duration: "3 دقائق",
+        videoUrl: "أغنية الحروف الانجليزيه ABC 2023_ ABC Song Learn ABC Alphabet for Children.mp4",
+        language: "الإنجليزية",
+        level: "KG1", // متاحة لـ KG1 و KG2
+        icon: "🔤",
+        subject: "english"
+      },
+      {
+        id: 3,
+        title: "أنشودة الحروف العربية",
+        description: "أنشودة تعليمية لتعلم الحروف العربية للأطفال",
+        duration: "4 دقائق",
+        videoUrl: "Arabic alphabet song for kids 12 - Chancon alphabet arabe 12 - أنشودة الحروف العربية 12.mp4",
+        language: "العربية",
+        level: "KG1", // متاحة لـ KG1 و KG2
+        icon: "📚",
+        subject: "arabic"
+      }
+    ];
+
+    // دالة عرض القصص
+    function renderStories() {
+      const storiesList = document.querySelector('[data-stories-list]');
+      const activeStory = document.querySelector('[data-active-story]');
+      
+      // الحصول على المرحلة الحالية من localStorage
+      const currentStage = getCurrentStageSafe() || 'KG1';
+      
+      // عرض جميع القصص في كل المراحل (نفس القصص لكل من KG1 و KG2)
+      const filteredStories = storiesData;
+
+      // عرض القصة الأولى كقصة نشطة إذا كانت هناك قصص
+      if (filteredStories.length > 0) {
+        displayActiveStory(filteredStories[0]);
+      }
+
+      // عرض قائمة القصص
+      storiesList.innerHTML = '';
+      filteredStories.forEach(story => {
+        const storyCard = document.createElement('div');
+        storyCard.className = 'story-card';
+        storyCard.innerHTML = `
+          <h3>${story.icon} ${story.title}</h3>
+          <p>${story.description}</p>
+          <div class="story-card-meta">
+            <span class="story-tag">${story.language}</span>
+            <span class="story-tag">${story.duration}</span>
+          </div>
+        `;
+        
+        storyCard.addEventListener('click', async () => {
+          // إزالة النشاط من جميع البطاقات
+          document.querySelectorAll('.story-card').forEach(card => {
+            card.classList.remove('active');
+          });
+          
+          // إضافة النشاط للبطاقة المختارة
+          storyCard.classList.add('active');
+          
+          // عرض القصة النشطة
+          displayActiveStory(story);
+          try {
+            await logActivity({
+              type: 'story',
+              subType: 'select',
+              title: story.title,
+              meta: { id: story.id, subject: story.subject }
+            });
+          } catch (e) {}
+        });
+        
+        storiesList.appendChild(storyCard);
+      });
+
+      // تفعيل البطاقة الأولى إذا كانت هناك قصص
+      if (filteredStories.length > 0) {
+        storiesList.firstChild.classList.add('active');
+      }
+    }
+
+    // دالة عرض القصة النشطة
+    function displayActiveStory(story) {
+      const activeStory = document.querySelector('[data-active-story]');
+      const currentStage = getCurrentStageSafe() || 'KG1';
+      
+      activeStory.innerHTML = `
+        <div class="story-header">
+          <div class="story-icon">${story.icon}</div>
+          <div class="story-info">
+            <h2>${story.title}</h2>
+            <p class="story-description">${story.description}</p>
+          </div>
+        </div>
+        
+        <div class="story-meta">
+          <span class="story-tag">${story.language}</span>
+          <span class="story-tag">${story.duration}</span>
+          <span class="story-tag">${currentStage}</span>
+        </div>
+
+        <div class="audio-player">
+          <p>🎬 اضغط على زر التشغيل لمشاهدة الفيديو</p>
+          <div class="video-player-container">
+            <video class="video-player" id="story-video" controls>
+              <source src="${story.videoUrl}" type="video/mp4">
+              متصفحك لا يدعم تشغيل الفيديو.
+            </video>
+          </div>
+          <div class="video-controls">
+            <button class="form-button" onclick="playVideo()">
+              ▶ تشغيل الفيديو
+            </button>
+            <button class="btn-pill" onclick="pauseVideo()">
+              ⏸ إيقاف مؤقت
+            </button>
+          </div>
+          <p style="margin:1rem 0 0 0; font-size:0.9rem; color: #718096;">
+            يمكنك تحميل القصة للاستماع إليها لاحقًا
+          </p>
+        </div>
+      `;
+      try {
+        const v = document.getElementById('story-video');
+        if (v) {
+          v.addEventListener('play', async function() {
+            try {
+              await logActivity({
+                type: 'story',
+                subType: 'play',
+                title: story.title,
+                meta: { id: story.id, subject: story.subject }
+              });
+            } catch (e) {}
+          }, { once: true });
+        }
+      } catch (e) {}
+    }
+
+    // دالة تشغيل الفيديو
+    function playVideo() {
+      const video = document.getElementById('story-video');
+      if (video) {
+        video.play();
+      }
+    }
+
+    // دالة إيقاف الفيديو مؤقتاً
+    function pauseVideo() {
+      const video = document.getElementById('story-video');
+      if (video) {
+        video.pause();
+      }
+    }
+
+    // دالة تغيير المرحلة
+    function setStage(stage) {
+      const lockedStage = getCurrentStageSafe() || 'KG1';
+      localStorage.setItem('selectedStage', lockedStage);
+      renderStories();
+    }
+
+    // تهيئة الصفحة
+    function init() {
+      const savedStage = getCurrentStageSafe() || 'KG1';
+      setStage(savedStage);
+    }
+
+    // تشغيل التهيئة عند تحميل الصفحة
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
