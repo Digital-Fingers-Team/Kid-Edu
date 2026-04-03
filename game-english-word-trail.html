@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Word Trail | سمارت كيدز</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="رتب الحروف لتكوين كلمات إنجليزية بسيطة، مع دعم صوتي وتشجيع مستمر." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #FF9E1F;
+      --primary-dark: #E88A0D;
+      --primary-light: #FFD699;
+      --secondary: #4A90E2;
+      --secondary-light: #8EC0F0;
+      --accent: #FF6B6B;
+      --dark: #2D3748;
+      --light: #F7FAFC;
+      --white: #FFFFFF;
+      --gray-light: #E2E8F0;
+      --gray: #A0AEC0;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.12);
+      --radius: 16px;
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background-color: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+      padding-top: 80px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ========== الهيدر الثابت ========== */
+    .main-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 70px;
+      background: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      z-index: 1100;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .header-container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-logo {
+      height: 50px;
+      object-fit: contain;
+    }
+
+    .sidebar-toggle-btn {
+      background: #e8822a;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 8px 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: all 0.3s;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    .sidebar-toggle-btn:hover {
+      background: #ff9d45;
+      transform: scale(1.05);
+    }
+
+    /* ========== القائمة الجانبية ========== */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 300px;
+      height: 100%;
+      background: white;
+      box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+      z-index: 2000;
+      transition: right 0.3s ease;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    
+    .sidebar.active {
+      right: 0;
+    }
+    
+    .sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1999;
+      display: none;
+    }
+    
+    .sidebar-overlay.active {
+      display: block;
+    }
+    
+    .sidebar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .sidebar-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #666;
+    }
+    
+    .sidebar-user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      padding: 10px;
+      background: #fffaf0;
+      border-radius: 10px;
+    }
+    
+    .sidebar-user-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #e8822a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 20px;
+    }
+    
+    .sidebar-user-info h3 {
+      margin: 0;
+      font-size: 16px;
+    }
+    
+    .sidebar-user-info p {
+      margin: 0;
+      font-size: 14px;
+      color: #666;
+    }
+    
+    .sidebar-menu {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .sidebar-menu li {
+      margin-bottom: 5px;
+    }
+    
+    .sidebar-menu a {
+      display: block;
+      padding: 12px 15px;
+      text-decoration: none;
+      color: #333;
+      border-radius: 8px;
+      transition: all 0.3s;
+    }
+    
+    .sidebar-menu a:hover {
+      background: #fff5e6;
+    }
+    
+    .sidebar-menu a.active {
+      background: #e8822a;
+      color: white;
+    }
+    
+    .sidebar-footer {
+      margin-top: 30px;
+      padding-top: 15px;
+      border-top: 1px solid #eee;
+    }
+    
+    .logout-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 12px 15px;
+      background: #ffe0b8;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+    
+    .logout-btn:hover {
+      background: #ffd1a4;
+    }
+
+    main {
+      max-width: min(1200px, 94vw);
+      margin: 0 auto;
+      padding: 1.5rem 0;
+      flex: 1;
+      width: 100%;
+    }
+
+    .game-hero {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .game-header {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      padding: 0.4rem 1rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      align-self: flex-start;
+    }
+
+    .game-header h1 {
+      font-size: 2.2rem;
+      margin: 0;
+      color: var(--dark);
+    }
+
+    .game-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      padding: 0.8rem 1.8rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: var(--transition);
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--primary);
+      padding: 0.8rem 1.8rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: var(--transition);
+      border: 2px solid var(--primary);
+    }
+
+    .btn-secondary:hover {
+      background: var(--primary-light);
+    }
+
+    .game-sidebar {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+
+    .game-progress dt {
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+
+    .game-progress dd {
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    /* منطقة اللعبة */
+    .game-area {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      display: none;
+      text-align: center;
+      position: relative;
+      direction: ltr; /* English content should be LTR */
+    }
+
+    .game-area.active {
+      display: block;
+    }
+
+    /* مودال النتيجة */
+    .result-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      border-radius: var(--radius);
+      animation: fadeIn 0.5s;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .result-content {
+      text-align: center;
+    }
+
+    .result-icon {
+      font-size: 5rem;
+      margin-bottom: 1rem;
+    }
+
+    .result-title {
+      font-size: 2.5rem;
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .result-score {
+      font-size: 1.5rem;
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: 2rem;
+    }
+
+    .target-image {
+      font-size: 6rem;
+      margin-bottom: 1rem;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .sound-btn {
+      background: var(--secondary);
+      color: white;
+      border: none;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      font-size: 1.8rem;
+      cursor: pointer;
+      transition: var(--transition);
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+    }
+
+    .sound-btn:hover {
+      transform: scale(1.1);
+      background: var(--secondary-light);
+    }
+
+    .slots-container {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 2rem 0;
+      flex-wrap: wrap;
+    }
+
+    .slot {
+      width: 80px;
+      height: 80px;
+      border: 4px dashed var(--gray-light);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--primary);
+      background: var(--light);
+      transition: all 0.3s;
+    }
+
+    .slot.hovered {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .slot.filled {
+      border-style: solid;
+      border-color: var(--primary);
+      background: white;
+      transform: scale(1.05);
+      box-shadow: var(--shadow);
+    }
+
+    .letters-pool {
+      display: flex;
+      justify-content: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      margin-top: 3rem;
+      padding: 2rem;
+      background: #F0F4F8;
+      border-radius: 24px;
+      min-height: 100px;
+    }
+
+    .letter-card {
+      width: 70px;
+      height: 70px;
+      background: white;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: 800;
+      cursor: grab;
+      box-shadow: var(--shadow);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      user-select: none;
+      border: 2px solid transparent;
+    }
+
+    .letter-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary-light);
+    }
+
+    .letter-card.dragging {
+      opacity: 0.3;
+      transform: scale(0.8);
+    }
+
+    .letter-card.used {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0);
+    }
+
+    .game-feedback {
+      margin-top: 2rem;
+      font-size: 1.8rem;
+      font-weight: 800;
+      min-height: 2.5rem;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--dark);
+      opacity: 0.7;
+      border-top: 1px solid var(--gray-light);
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .game-hero {
+        grid-template-columns: 1fr;
+      }
+      .slot { width: 50px; height: 50px; font-size: 1.5rem; }
+      .letter-card { width: 50px; height: 50px; font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="main-header">
+    <div class="header-container">
+      <div class="header-logo-container">
+        <img src="logo.jpeg" alt="EduKid AI Logo" class="header-logo">
+      </div>
+      <button class="sidebar-toggle-btn" id="headerSidebarToggle">
+        <span>القائمة</span>
+        <span>☰</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="sidebar-overlay"></div>
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2>القائمة الرئيسية</h2>
+      <button class="sidebar-close">×</button>
+    </div>
+    <div class="sidebar-user">
+      <div class="sidebar-user-avatar" id="sidebar-user-avatar">ط</div>
+      <div class="sidebar-user-info">
+        <h3 id="sidebar-student-name">اسم الطالب</h3>
+        <p id="sidebar-grade">المرحلة: رياض الأطفال</p>
+      </div>
+    </div>
+    <ul class="sidebar-menu">
+      <li><a href="index.html">الصفحة الرئيسية</a></li>
+      <li><a href="dashboard.html" id="sidebar-dashboard-link">لوحة التعلم</a></li>
+      <li><a href="games.html">الألعاب التعليمية</a></li>
+      <li><a href="books.html">المكتبة الرقمية</a></li>
+      <li><a href="stories.html">القصص الصوتية</a></li>
+      <li><a href="parent-report.html">لوحة ولي الأمر</a></li>
+    </ul>
+    <div class="sidebar-footer">
+      <button class="logout-btn" id="logout-btn">
+        <span>تسجيل الخروج</span>
+        <span>🚪</span>
+      </button>
+    </div>
+  </div>
+
+  <main>
+    <div class="game-hero">
+      <section class="game-header">
+        <span class="badge">🛤️ Word Trail</span>
+        <h1>Build Your <span>Happy Words!</span></h1>
+        <p>Listen to the word and drag the letters to the correct boxes. Let's learn spelling!</p>
+        <div class="game-actions">
+          <button class="btn-primary" id="start-game">Start Word Trail</button>
+          <a href="games.html" class="btn-secondary">Back to Hub</a>
+        </div>
+      </section>
+
+      <aside class="game-sidebar">
+        <h2>Progress</h2>
+        <dl class="game-progress">
+          <dt>Words Built</dt>
+          <dd id="game-score">0 / 5</dd>
+          <dt>Stars</dt>
+          <dd id="game-stars">⭐ 0</dd>
+        </dl>
+      </aside>
+    </div>
+
+    <div class="game-area" id="game-area">
+      <div class="result-overlay" id="result-overlay">
+        <div class="result-content">
+          <div class="result-icon" id="result-icon">🏆</div>
+          <h2 class="result-title" id="result-title">Word Master!</h2>
+          <p class="result-score" id="result-score-text">You earned 50 stars!</p>
+          <button class="btn-primary" onclick="location.reload()">Play Again</button>
+        </div>
+      </div>
+
+      <div class="target-image" id="target-emoji">🍎</div>
+      <button class="sound-btn" id="play-sound">🔊</button>
+      
+      <div class="slots-container" id="slots-container">
+        <!-- Slots generated by JS -->
+      </div>
+
+      <div class="letters-pool" id="letters-pool">
+        <!-- Letters generated by JS -->
+      </div>
+
+      <div class="game-feedback" id="game-feedback"></div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>© 2025 سمارت كيدز – English is easy and fun!</p>
+  </footer>
+
+  <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
+  <script src="activity.js"></script>
+  <script>
+    // ========== UI Logic ==========
+    const sidebarToggle = document.getElementById('headerSidebarToggle');
+    const sidebar = document.querySelector('.sidebar');
+    const sidebarOverlay = document.querySelector('.sidebar-overlay');
+    const sidebarClose = document.querySelector('.sidebar-close');
+    
+    function openSidebar() {
+      sidebar.classList.add('active');
+      sidebarOverlay.classList.add('active');
+    }
+    
+    function closeSidebar() {
+      sidebar.classList.remove('active');
+      sidebarOverlay.classList.remove('active');
+    }
+    
+    sidebarToggle.addEventListener('click', openSidebar);
+    sidebarClose.addEventListener('click', closeSidebar);
+    sidebarOverlay.addEventListener('click', closeSidebar);
+
+    function checkLoggedInUser() {
+      const rawUser = localStorage.getItem('adukid_user');
+      const user = rawUser ? JSON.parse(rawUser) : null;
+      if (user && user.studentName) {
+        document.getElementById('sidebar-student-name').textContent = user.studentName;
+        document.getElementById('sidebar-grade').textContent = `المرحلة: ${user.gradeText || 'غير محدد'}`;
+        document.getElementById('sidebar-user-avatar').textContent = user.studentName.charAt(0);
+        const dashboardLink = document.getElementById('sidebar-dashboard-link');
+        if (dashboardLink) {
+          const grade = (user?.grade || '').toString().trim().toUpperCase();
+          dashboardLink.href = grade === 'KG2' ? 'dashboard-kg2.html' : 'dashboard-kg1.html';
+        }
+      }
+    }
+
+    document.getElementById('logout-btn').addEventListener('click', function() {
+      if (confirm('هل أنت متأكد من تسجيل الخروج؟')) {
+        localStorage.removeItem('adukid_user');
+        window.location.href = 'index.html';
+      }
+    });
+
+    // ========== Game Logic ==========
+    const gameData = [
+      { word: 'CAT', emoji: '🐈' },
+      { word: 'DOG', emoji: '🐕' },
+      { word: 'SUN', emoji: '☀️' },
+      { word: 'RED', emoji: '🔴' },
+      { word: 'APPLE', emoji: '🍎' },
+      { word: 'BOOK', emoji: '📖' },
+      { word: 'CAR', emoji: '🚗' },
+      { word: 'TREE', emoji: '🌳' }
+    ];
+
+    let currentIdx = 0;
+    let score = 0;
+    let stars = 0;
+    let currentGuess = [];
+    const maxWords = 5; // We'll pick 5 random words from the pool
+
+    const startBtn = document.getElementById('start-game');
+    const gameArea = document.getElementById('game-area');
+    const slotsContainer = document.getElementById('slots-container');
+    const poolContainer = document.getElementById('letters-pool');
+    const emojiDisplay = document.getElementById('target-emoji');
+    const feedback = document.getElementById('game-feedback');
+    const scoreDisplay = document.getElementById('game-score');
+    const starsDisplay = document.getElementById('game-stars');
+    const soundBtn = document.getElementById('play-sound');
+    const resultOverlay = document.getElementById('result-overlay');
+
+    let sessionWords = [];
+
+    function speak(text) {
+      if (!text) return;
+      window.speechSynthesis.cancel();
+      const msg = new SpeechSynthesisUtterance();
+      msg.text = text;
+      msg.lang = 'en-US';
+      msg.rate = 0.8;
+      window.speechSynthesis.speak(msg);
+    }
+
+    function initLevel() {
+      if (currentIdx >= maxWords) {
+        endGame();
+        return;
+      }
+
+      const data = sessionWords[currentIdx];
+      emojiDisplay.textContent = data.emoji;
+      feedback.textContent = "Spell the word!";
+      feedback.style.color = "var(--dark)";
+      currentGuess = new Array(data.word.length).fill(null);
+      
+      // Create Slots
+      slotsContainer.innerHTML = '';
+      for (let i = 0; i < data.word.length; i++) {
+        const slot = document.createElement('div');
+        slot.className = 'slot';
+        slot.dataset.index = i;
+        
+        // Drag over & drop events
+        slot.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          if (!slot.textContent) slot.classList.add('hovered');
+        });
+        slot.addEventListener('dragleave', () => slot.classList.remove('hovered'));
+        slot.addEventListener('drop', (e) => {
+          e.preventDefault();
+          slot.classList.remove('hovered');
+          const char = e.dataTransfer.getData('text/plain');
+          const cardId = e.dataTransfer.getData('cardId');
+          if (char && cardId) {
+            const card = document.getElementById(cardId);
+            fillSlot(slot, char, card);
+          }
+        });
+        
+        slotsContainer.appendChild(slot);
+      }
+
+      // Create Letters Pool
+      poolContainer.innerHTML = '';
+      // Shuffle letters and add some distractors if needed
+      const letters = data.word.split('');
+      // Add one random letter as a distractor for words longer than 3
+      if (data.word.length >= 4) {
+        const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const distractor = alphabet[Math.floor(Math.random() * alphabet.length)];
+        if (!letters.includes(distractor)) letters.push(distractor);
+      }
+      
+      letters.sort(() => Math.random() - 0.5);
+
+      letters.forEach((char, idx) => {
+        const card = document.createElement('div');
+        card.className = 'letter-card';
+        card.id = `letter-${idx}`;
+        card.textContent = char;
+        card.draggable = true;
+        
+        // Drag events
+        card.addEventListener('dragstart', (e) => {
+          e.dataTransfer.setData('text/plain', char);
+          e.dataTransfer.setData('cardId', card.id);
+          card.classList.add('dragging');
+        });
+        card.addEventListener('dragend', () => card.classList.remove('dragging'));
+        
+        // Click/Touch support
+        card.addEventListener('click', () => {
+          const emptySlot = Array.from(document.querySelectorAll('.slot')).find(s => !s.textContent);
+          if (emptySlot) {
+            fillSlot(emptySlot, char, card);
+          }
+        });
+        
+        poolContainer.appendChild(card);
+      });
+
+      scoreDisplay.textContent = `${currentIdx + 1} / ${maxWords}`;
+      speak(data.word);
+    }
+
+    function fillSlot(slot, char, card) {
+      if (slot.textContent) return;
+      
+      slot.textContent = char;
+      slot.classList.add('filled');
+      card.classList.add('used');
+      
+      const index = parseInt(slot.dataset.index);
+      currentGuess[index] = char;
+
+      // Small sound feedback
+      const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3');
+      audio.volume = 0.2;
+      // audio.play().catch(() => {}); // Optional
+
+      if (currentGuess.every(c => c !== null)) {
+        checkWin();
+      }
+    }
+
+    function checkWin() {
+      const target = sessionWords[currentIdx].word;
+      const guess = currentGuess.join('');
+
+      if (guess === target) {
+        score++;
+        stars += 20;
+        starsDisplay.textContent = `⭐ ${stars}`;
+        feedback.textContent = "Excellent! 🌟";
+        feedback.style.color = "#4CAF50";
+        speak("Great job! " + target);
+
+        setTimeout(() => {
+          currentIdx++;
+          initLevel();
+        }, 1500);
+      } else {
+        feedback.textContent = "Oops! Let's try again! 💪";
+        feedback.style.color = "#FF6B6B";
+        speak("Almost! Let's try that word again.");
+        
+        setTimeout(() => {
+          // Reset only current level
+          const slots = document.querySelectorAll('.slot');
+          slots.forEach(s => {
+            s.textContent = '';
+            s.classList.remove('filled');
+          });
+          const cards = document.querySelectorAll('.letter-card');
+          cards.forEach(c => c.classList.remove('used'));
+          currentGuess = new Array(target.length).fill(null);
+          feedback.textContent = "Try again!";
+        }, 1500);
+      }
+    }
+
+    function endGame() {
+      const resultIcon = document.getElementById('result-icon');
+      const resultTitle = document.getElementById('result-title');
+      const resultScore = document.getElementById('result-score-text');
+      
+      resultOverlay.style.display = 'flex';
+      resultScore.textContent = `You earned ${stars} Stars!`;
+      
+      if (stars >= 80) {
+        resultIcon.textContent = '🏆';
+        resultTitle.textContent = 'Word Master!';
+        speak("Fantastic! You are a word master!");
+      } else {
+        resultIcon.textContent = '⭐';
+        resultTitle.textContent = 'Great Job!';
+        speak("Well done! You built many words!");
+      }
+
+      logActivity({
+        type: 'game',
+        subType: 'complete',
+        title: 'Word Trail',
+        meta: {
+          score: stars,
+          maxScore: maxWords * 20,
+          subject: 'english',
+          wordsCount: score
+        }
+      });
+    }
+
+    startBtn.addEventListener('click', () => {
+      document.querySelector('.game-hero').style.display = 'none';
+      gameArea.classList.add('active');
+      
+      // Pick 5 random words
+      sessionWords = [...gameData].sort(() => 0.5 - Math.random()).slice(0, maxWords);
+      currentIdx = 0;
+      score = 0;
+      stars = 0;
+      
+      initLevel();
+      logActivity({ 
+        type: 'game', 
+        subType: 'start', 
+        title: 'Word Trail',
+        meta: { subject: 'english' }
+      });
+    });
+
+    soundBtn.addEventListener('click', () => {
+      if (sessionWords[currentIdx]) speak(sessionWords[currentIdx].word);
+    });
+
+    document.addEventListener('DOMContentLoaded', checkLoggedInUser);
+  </script>
+</body>
+</html>

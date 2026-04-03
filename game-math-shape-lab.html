@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Shape Lab | سمارت كيدز</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="معمل الأشكال العجيبة! ساعد العالم الصغير في ترتيب الأشكال في أماكنها الصحيحة." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #FF9E1F;
+      --primary-dark: #E88A0D;
+      --primary-light: #FFD699;
+      --secondary: #4A90E2;
+      --secondary-light: #8EC0F0;
+      --accent: #FF6B6B;
+      --dark: #2D3748;
+      --light: #F7FAFC;
+      --white: #FFFFFF;
+      --gray-light: #E2E8F0;
+      --gray: #A0AEC0;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.12);
+      --radius: 16px;
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background-color: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+      padding-top: 80px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ========== الهيدر الثابت ========== */
+    .main-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 70px;
+      background: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      z-index: 1100;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .header-container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-logo {
+      height: 50px;
+      object-fit: contain;
+    }
+
+    .sidebar-toggle-btn {
+      background: #e8822a;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 8px 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: all 0.3s;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    .sidebar-toggle-btn:hover {
+      background: #ff9d45;
+      transform: scale(1.05);
+    }
+
+    /* ========== القائمة الجانبية ========== */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 300px;
+      height: 100%;
+      background: white;
+      box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+      z-index: 2000;
+      transition: right 0.3s ease;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    
+    .sidebar.active {
+      right: 0;
+    }
+    
+    .sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1999;
+      display: none;
+    }
+    
+    .sidebar-overlay.active {
+      display: block;
+    }
+    
+    .sidebar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .sidebar-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #666;
+    }
+    
+    .sidebar-user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      padding: 10px;
+      background: #fffaf0;
+      border-radius: 10px;
+    }
+    
+    .sidebar-user-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #e8822a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 20px;
+    }
+    
+    .sidebar-user-info h3 {
+      margin: 0;
+      font-size: 16px;
+    }
+    
+    .sidebar-user-info p {
+      margin: 0;
+      font-size: 14px;
+      color: #666;
+    }
+    
+    .sidebar-menu {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .sidebar-menu li {
+      margin-bottom: 5px;
+    }
+    
+    .sidebar-menu a {
+      display: block;
+      padding: 12px 15px;
+      text-decoration: none;
+      color: #333;
+      border-radius: 8px;
+      transition: all 0.3s;
+    }
+    
+    .sidebar-menu a:hover {
+      background: #fff5e6;
+    }
+    
+    .sidebar-menu a.active {
+      background: #e8822a;
+      color: white;
+    }
+    
+    .sidebar-footer {
+      margin-top: 30px;
+      padding-top: 15px;
+      border-top: 1px solid #eee;
+    }
+    
+    .logout-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 12px 15px;
+      background: #ffe0b8;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+    
+    .logout-btn:hover {
+      background: #ffd1a4;
+    }
+
+    main {
+      max-width: min(1200px, 94vw);
+      margin: 0 auto;
+      padding: 1.5rem 0;
+      flex: 1;
+      width: 100%;
+    }
+
+    .game-hero {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .game-header {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      padding: 0.4rem 1rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      align-self: flex-start;
+    }
+
+    .game-header h1 {
+      font-size: 2.2rem;
+      margin: 0;
+      color: var(--dark);
+    }
+
+    .game-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      padding: 0.8rem 1.8rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: var(--transition);
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--primary);
+      padding: 0.8rem 1.8rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: var(--transition);
+      border: 2px solid var(--primary);
+    }
+
+    .btn-secondary:hover {
+      background: var(--primary-light);
+    }
+
+    .game-sidebar {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+
+    .game-progress dt {
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+
+    .game-progress dd {
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    /* منطقة اللعبة */
+    .game-area {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      box-shadow: var(--shadow);
+      display: none;
+      text-align: center;
+      position: relative;
+      direction: ltr; /* Lab layout should be LTR */
+    }
+
+    .game-area.active {
+      display: block;
+    }
+
+    /* مودال النتيجة */
+    .result-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      border-radius: var(--radius);
+      animation: fadeIn 0.5s;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .result-content {
+      text-align: center;
+    }
+
+    .result-icon {
+      font-size: 5rem;
+      margin-bottom: 1rem;
+    }
+
+    .result-title {
+      font-size: 2.5rem;
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .result-score {
+      font-size: 1.5rem;
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: 2rem;
+    }
+
+    .lab-container {
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-start;
+      gap: 3rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+      padding: 1rem;
+    }
+
+    .shape-pool {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+      padding: 2.5rem;
+      background: #F8FAFC;
+      border-radius: 30px;
+      border: 3px solid var(--gray-light);
+      box-shadow: inset 0 2px 10px rgba(0,0,0,0.05);
+      min-width: 180px;
+    }
+
+    .target-container {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    .shape {
+      width: 100px;
+      height: 100px;
+      cursor: grab;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+      touch-action: none; /* Crucial for touch dragging */
+    }
+
+    .shape:hover {
+      transform: scale(1.15) rotate(5deg);
+    }
+
+    .shape.dragging {
+      opacity: 0.4;
+      transform: scale(0.8);
+    }
+
+    .shape.hidden {
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .shape svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 6px 8px rgba(0,0,0,0.15));
+    }
+
+    .target-slot {
+      width: 130px;
+      height: 130px;
+      border: 4px dashed var(--gray);
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    .target-slot::before {
+      content: 'Drop Here';
+      position: absolute;
+      bottom: -25px;
+      font-size: 0.8rem;
+      color: var(--gray);
+      font-weight: 700;
+    }
+
+    .target-slot.hovered {
+      background: var(--primary-light);
+      border-color: var(--primary);
+      transform: scale(1.05);
+    }
+
+    .target-slot.filled {
+      border-style: solid;
+      border-color: #4CAF50;
+      background: #E8F5E9;
+      animation: pop-in 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes pop-in {
+      0% { transform: scale(0.5); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .game-feedback {
+      margin-top: 3.5rem;
+      font-size: 2rem;
+      font-weight: 800;
+      min-height: 3rem;
+      transition: all 0.3s;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--dark);
+      opacity: 0.7;
+      border-top: 1px solid var(--gray-light);
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .game-hero { grid-template-columns: 1fr; }
+      .lab-container { flex-direction: column; }
+      .shape-pool { flex-direction: row; }
+    }
+  </style>
+</head>
+<body>
+  <header class="main-header">
+    <div class="header-container">
+      <div class="header-logo-container">
+        <img src="logo.jpeg" alt="EduKid AI Logo" class="header-logo">
+      </div>
+      <button class="sidebar-toggle-btn" id="headerSidebarToggle">
+        <span>القائمة</span>
+        <span>☰</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="sidebar-overlay"></div>
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2>القائمة الرئيسية</h2>
+      <button class="sidebar-close">×</button>
+    </div>
+    <div class="sidebar-user">
+      <div class="sidebar-user-avatar" id="sidebar-user-avatar">ط</div>
+      <div class="sidebar-user-info">
+        <h3 id="sidebar-student-name">اسم الطالب</h3>
+        <p id="sidebar-grade">المرحلة: رياض الأطفال</p>
+      </div>
+    </div>
+    <ul class="sidebar-menu">
+      <li><a href="index.html">الصفحة الرئيسية</a></li>
+      <li><a href="dashboard.html" id="sidebar-dashboard-link">لوحة التعلم</a></li>
+      <li><a href="games.html">الألعاب التعليمية</a></li>
+      <li><a href="books.html">المكتبة الرقمية</a></li>
+      <li><a href="stories.html">القصص الصوتية</a></li>
+      <li><a href="parent-report.html">لوحة ولي الأمر</a></li>
+    </ul>
+    <div class="sidebar-footer">
+      <button class="logout-btn" id="logout-btn">
+        <span>تسجيل الخروج</span>
+        <span>🚪</span>
+      </button>
+    </div>
+  </div>
+
+  <main>
+    <div class="game-hero">
+      <section class="game-header">
+        <span class="badge">📐 Shape Lab</span>
+        <h1>Welcome to the <span>Shape Lab!</span></h1>
+        <p>Our scientist needs help! Drag the shapes from the left and drop them into the correct white boxes.</p>
+        <div class="game-actions">
+          <button class="btn-primary" id="start-game">Enter the Lab</button>
+          <a href="games.html" class="btn-secondary">Back to Hub</a>
+        </div>
+      </section>
+
+      <aside class="game-sidebar">
+        <h2>Lab Progress</h2>
+        <dl class="game-progress">
+          <dt>Current Level</dt>
+          <dd id="game-level">1 / 5</dd>
+          <dt>Matched Shapes</dt>
+          <dd id="game-score">0 / 2</dd>
+          <dt>Science Points</dt>
+          <dd id="game-points">💎 0</dd>
+        </dl>
+      </aside>
+    </div>
+
+    <div class="game-area" id="game-area">
+      <div class="result-overlay" id="result-overlay">
+        <div class="result-content">
+          <div class="result-icon" id="result-icon">🧪🏆</div>
+          <h2 class="result-title" id="result-title">Genius Scientist!</h2>
+          <p class="result-score" id="result-score-text">Final Points: 150</p>
+          <button class="btn-primary" onclick="location.reload()">New Experiment</button>
+        </div>
+      </div>
+
+      <div class="lab-container">
+        <div class="shape-pool" id="shape-pool">
+          <!-- Shapes generated by JS -->
+        </div>
+        <div class="target-container" id="target-container">
+          <!-- Slots generated by JS -->
+        </div>
+      </div>
+      <div class="game-feedback" id="game-feedback"></div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>© 2025 سمارت كيدز – Discover the world of shapes!</p>
+  </footer>
+
+  <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
+  <script src="activity.js"></script>
+  <script>
+    // ========== UI Logic ==========
+    const sidebarToggle = document.getElementById('headerSidebarToggle');
+    const sidebar = document.querySelector('.sidebar');
+    const sidebarOverlay = document.querySelector('.sidebar-overlay');
+    const sidebarClose = document.querySelector('.sidebar-close');
+    
+    function openSidebar() {
+      sidebar.classList.add('active');
+      sidebarOverlay.classList.add('active');
+    }
+    
+    function closeSidebar() {
+      sidebar.classList.remove('active');
+      sidebarOverlay.classList.remove('active');
+    }
+    
+    sidebarToggle.addEventListener('click', openSidebar);
+    sidebarClose.addEventListener('click', closeSidebar);
+    sidebarOverlay.addEventListener('click', closeSidebar);
+
+    function checkLoggedInUser() {
+      const rawUser = localStorage.getItem('adukid_user');
+      const user = rawUser ? JSON.parse(rawUser) : null;
+      if (user && user.studentName) {
+        document.getElementById('sidebar-student-name').textContent = user.studentName;
+        document.getElementById('sidebar-grade').textContent = `المرحلة: ${user.gradeText || 'غير محدد'}`;
+        document.getElementById('sidebar-user-avatar').textContent = user.studentName.charAt(0);
+        const dashboardLink = document.getElementById('sidebar-dashboard-link');
+        if (dashboardLink) {
+          const grade = (user?.grade || '').toString().trim().toUpperCase();
+          dashboardLink.href = grade === 'KG2' ? 'dashboard-kg2.html' : 'dashboard-kg1.html';
+        }
+      }
+    }
+
+    document.getElementById('logout-btn').addEventListener('click', function() {
+      if (confirm('هل أنت متأكد من تسجيل الخروج؟')) {
+        localStorage.removeItem('adukid_user');
+        window.location.href = 'index.html';
+      }
+    });
+
+    // ========== Game Logic ==========
+    const shapes = [
+      { id: 'square', color: '#FF9E1F', svg: '<rect x="10" y="10" width="80" height="80" fill="currentColor"/>', name: 'Square' },
+      { id: 'circle', color: '#4A90E2', svg: '<circle cx="50" cy="50" r="40" fill="currentColor"/>', name: 'Circle' },
+      { id: 'triangle', color: '#FF6B6B', svg: '<path d="M50 10 L90 90 L10 90 Z" fill="currentColor"/>', name: 'Triangle' },
+      { id: 'star', color: '#FFD700', svg: '<path d="M50 5 L63 40 L100 40 L70 65 L82 100 L50 80 L18 100 L30 65 L0 40 L37 40 Z" fill="currentColor"/>', name: 'Star' },
+      { id: 'pentagon', color: '#9C27B0', svg: '<path d="M50 5 L95 38 L78 92 L22 92 L5 38 Z" fill="currentColor"/>', name: 'Pentagon' },
+      { id: 'hexagon', color: '#00BCD4', svg: '<path d="M50 5 L90 25 L90 75 L50 95 L10 75 L10 25 Z" fill="currentColor"/>', name: 'Hexagon' },
+      { id: 'heart', color: '#E91E63', svg: '<path d="M50 90 C20 70 5 50 5 30 C5 15 20 5 35 5 C42 5 47 8 50 12 C53 8 58 5 65 5 C80 5 95 15 95 30 C95 50 80 70 50 90 Z" fill="currentColor"/>', name: 'Heart' },
+      { id: 'diamond', color: '#3F51B5', svg: '<path d="M50 5 L90 50 L50 95 L10 50 Z" fill="currentColor"/>', name: 'Diamond' }
+    ];
+
+    let currentLevel = 1;
+    const maxLevels = 5;
+    let matchedCount = 0;
+    let totalToMatch = 2;
+    let points = 0;
+    let isTransitioning = false;
+
+    const startBtn = document.getElementById('start-game');
+    const gameArea = document.getElementById('game-area');
+    const pool = document.getElementById('shape-pool');
+    const targetContainer = document.getElementById('target-container');
+    const feedback = document.getElementById('game-feedback');
+    const scoreDisplay = document.getElementById('game-score');
+    const levelDisplay = document.getElementById('game-level');
+    const pointsDisplay = document.getElementById('game-points');
+    const resultOverlay = document.getElementById('result-overlay');
+
+    function speak(text) {
+      if (!text) return;
+      window.speechSynthesis.cancel();
+      const msg = new SpeechSynthesisUtterance();
+      msg.text = text;
+      msg.lang = 'en-US';
+      msg.rate = 0.9;
+      window.speechSynthesis.speak(msg);
+    }
+
+    function initLevel() {
+      if (currentLevel > maxLevels) {
+        endGame();
+        return;
+      }
+
+      isTransitioning = false;
+      matchedCount = 0;
+      totalToMatch = 1 + currentLevel; // 2, 3, 4, 5, 6
+      
+      pool.innerHTML = '';
+      targetContainer.innerHTML = '';
+      feedback.textContent = `Level ${currentLevel}: Match ${totalToMatch} shapes!`;
+      feedback.style.color = "var(--dark)";
+      
+      levelDisplay.textContent = `${currentLevel} / ${maxLevels}`;
+      scoreDisplay.textContent = `0 / ${totalToMatch}`;
+
+      // Pick random shapes for this level
+      const currentShapes = [...shapes].sort(() => Math.random() - 0.5).slice(0, totalToMatch);
+      const shuffledTargets = [...currentShapes].sort(() => Math.random() - 0.5);
+
+      // Add distractors for levels > 2
+      let poolShapes = [...currentShapes];
+      if (currentLevel > 2) {
+        const distractorsCount = currentLevel - 2;
+        const availableDistractors = shapes.filter(s => !currentShapes.includes(s));
+        const distractors = availableDistractors.sort(() => Math.random() - 0.5).slice(0, distractorsCount);
+        poolShapes = [...poolShapes, ...distractors].sort(() => Math.random() - 0.5);
+      } else {
+        poolShapes = poolShapes.sort(() => Math.random() - 0.5);
+      }
+
+      poolShapes.forEach(shapeData => {
+        const div = document.createElement('div');
+        div.className = 'shape';
+        div.id = `drag-${shapeData.id}`;
+        div.draggable = true;
+        div.style.color = shapeData.color;
+        div.innerHTML = `<svg viewBox="0 0 100 100">${shapeData.svg}</svg>`;
+        
+        // Desktop Drag
+        div.addEventListener('dragstart', (e) => {
+          if (isTransitioning) { e.preventDefault(); return; }
+          e.dataTransfer.setData('text/plain', shapeData.id);
+          div.classList.add('dragging');
+          speak(shapeData.name);
+        });
+        div.addEventListener('dragend', () => div.classList.remove('dragging'));
+        
+        // Touch Drag (Mobile)
+        div.addEventListener('touchstart', handleTouchStart, { passive: false });
+        div.addEventListener('touchmove', handleTouchMove, { passive: false });
+        div.addEventListener('touchend', handleTouchEnd, { passive: false });
+        
+        pool.appendChild(div);
+      });
+
+      shuffledTargets.forEach(shapeData => {
+        const slot = document.createElement('div');
+        slot.className = 'target-slot';
+        slot.dataset.id = shapeData.id;
+        slot.innerHTML = `<svg viewBox="0 0 100 100" style="opacity: 0.15; color: #ccc;">${shapeData.svg}</svg>`;
+        
+        slot.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          if (!isTransitioning && !slot.classList.contains('filled')) slot.classList.add('hovered');
+        });
+        slot.addEventListener('dragleave', () => slot.classList.remove('hovered'));
+        slot.addEventListener('drop', (e) => {
+          e.preventDefault();
+          slot.classList.remove('hovered');
+          const droppedId = e.dataTransfer.getData('text/plain');
+          handleDrop(droppedId, slot);
+        });
+
+        targetContainer.appendChild(slot);
+      });
+
+      if (currentLevel === 1) {
+        speak("Welcome to the Shape Lab! Match the shapes to level up.");
+      } else {
+        speak(`Level ${currentLevel}. Match ${totalToMatch} shapes.`);
+      }
+    }
+
+    // Touch Handling Variables
+    let activeTouchShape = null;
+    let touchOffsetX = 0;
+    let touchOffsetY = 0;
+
+    function handleTouchStart(e) {
+      e.preventDefault();
+      const touch = e.touches[0];
+      activeTouchShape = e.currentTarget;
+      
+      const rect = activeTouchShape.getBoundingClientRect();
+      touchOffsetX = touch.clientX - rect.left;
+      touchOffsetY = touch.clientY - rect.top;
+      
+      activeTouchShape.classList.add('dragging');
+      activeTouchShape.style.position = 'fixed';
+      activeTouchShape.style.zIndex = '1000';
+      activeTouchShape.style.width = rect.width + 'px';
+      activeTouchShape.style.height = rect.height + 'px';
+      
+      moveShape(touch.clientX, touch.clientY);
+      
+      const shapeId = activeTouchShape.id.replace('drag-', '');
+      const shapeName = shapes.find(s => s.id === shapeId)?.name;
+      if (shapeName) speak(shapeName);
+    }
+
+    function handleTouchMove(e) {
+      if (!activeTouchShape) return;
+      e.preventDefault();
+      const touch = e.touches[0];
+      moveShape(touch.clientX, touch.clientY);
+      
+      // Highlight potential slots
+      const slot = getSlotAt(touch.clientX, touch.clientY);
+      document.querySelectorAll('.target-slot').forEach(s => s.classList.remove('hovered'));
+      if (slot && !slot.classList.contains('filled')) {
+        slot.classList.add('hovered');
+      }
+    }
+
+    function handleTouchEnd(e) {
+      if (!activeTouchShape || isTransitioning) {
+        if (activeTouchShape) {
+          activeTouchShape.classList.remove('dragging');
+          activeTouchShape.style.position = '';
+          activeTouchShape.style.zIndex = '';
+          activeTouchShape.style.left = '';
+          activeTouchShape.style.top = '';
+          activeTouchShape = null;
+        }
+        return;
+      }
+      
+      const touch = e.changedTouches[0];
+      const slot = getSlotAt(touch.clientX, touch.clientY);
+      const droppedId = activeTouchShape.id.replace('drag-', '');
+      
+      activeTouchShape.classList.remove('dragging');
+      activeTouchShape.style.position = '';
+      activeTouchShape.style.zIndex = '';
+      activeTouchShape.style.left = '';
+      activeTouchShape.style.top = '';
+      
+      if (slot) {
+        handleDrop(droppedId, slot);
+      }
+      
+      document.querySelectorAll('.target-slot').forEach(s => s.classList.remove('hovered'));
+      activeTouchShape = null;
+    }
+
+    function moveShape(x, y) {
+      activeTouchShape.style.left = (x - touchOffsetX) + 'px';
+      activeTouchShape.style.top = (y - touchOffsetY) + 'px';
+    }
+
+    function getSlotAt(x, y) {
+      const slots = document.querySelectorAll('.target-slot');
+      for (const slot of slots) {
+        const rect = slot.getBoundingClientRect();
+        if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
+          return slot;
+        }
+      }
+      return null;
+    }
+
+    function handleDrop(id, slot) {
+      if (isTransitioning) return;
+
+      if (slot.dataset.id === id && !slot.classList.contains('filled')) {
+        const originalShape = document.getElementById(`drag-${id}`);
+        slot.innerHTML = originalShape.innerHTML;
+        slot.style.color = shapes.find(s => s.id === id).color;
+        slot.classList.add('filled');
+        originalShape.classList.add('hidden');
+        
+        matchedCount++;
+        points += 50;
+        scoreDisplay.textContent = `${matchedCount} / ${totalToMatch}`;
+        pointsDisplay.textContent = `💎 ${points}`;
+        
+        feedback.textContent = "Perfect Match! 🧪✨";
+        feedback.style.color = "#4CAF50";
+        speak("Correct! " + id);
+
+        if (matchedCount === totalToMatch) {
+          isTransitioning = true;
+          if (currentLevel < maxLevels) {
+            feedback.textContent = "Level Complete! Getting harder... 🚀";
+            setTimeout(() => {
+              currentLevel++;
+              initLevel();
+            }, 1500);
+          } else {
+            setTimeout(endGame, 1000);
+          }
+        }
+      } else {
+        feedback.textContent = "Not quite... Try again! 🧐";
+        feedback.style.color = "#FF6B6B";
+        speak("Try again");
+      }
+    }
+
+    function endGame() {
+      const resultIcon = document.getElementById('result-icon');
+      const resultTitle = document.getElementById('result-title');
+      const resultScore = document.getElementById('result-score-text');
+      
+      resultOverlay.style.display = 'flex';
+      resultScore.textContent = `Total Points: ${points}`;
+      
+      const maxPossiblePoints = (2+3+4+5+6) * 50; // Sum of shapes per level * 50
+      
+      if (points >= maxPossiblePoints * 0.8) {
+        resultIcon.textContent = '🧪🏆';
+        resultTitle.textContent = 'Genius Scientist!';
+        speak("Incredible! You matched all shapes perfectly and completed all experiments!");
+      } else {
+        resultIcon.textContent = '🧪⭐';
+        resultTitle.textContent = 'Great Experiment!';
+        speak("Well done! You are a great scientist! Experiment complete.");
+      }
+
+      logActivity({
+        type: 'game',
+        subType: 'complete',
+        title: 'Shape Lab',
+        meta: { 
+          score: points, 
+          maxScore: maxPossiblePoints,
+          subject: 'math',
+          matchedCount: matchedCount,
+          completedLevels: currentLevel
+        }
+      });
+    }
+
+    startBtn.addEventListener('click', () => {
+      document.querySelector('.game-hero').style.display = 'none';
+      gameArea.classList.add('active');
+      points = 0;
+      currentLevel = 1;
+      initLevel();
+      logActivity({ 
+        type: 'game', 
+        subType: 'start', 
+        title: 'Shape Lab',
+        meta: { subject: 'math' }
+      });
+    });
+
+    document.addEventListener('DOMContentLoaded', checkLoggedInUser);
+  </script>
+</body>
+</html>

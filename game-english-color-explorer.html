@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Color Explorer | سمارت كيدز</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="تعلم أسماء الألوان باللغة الإنجليزية عبر بطاقات تفاعلية وصوت واضح لكل كلمة." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #FF9E1F;
+      --primary-dark: #E88A0D;
+      --primary-light: #FFD699;
+      --secondary: #4A90E2;
+      --secondary-light: #8EC0F0;
+      --accent: #FF6B6B;
+      --dark: #2D3748;
+      --light: #F7FAFC;
+      --white: #FFFFFF;
+      --gray-light: #E2E8F0;
+      --gray: #A0AEC0;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.12);
+      --radius: 16px;
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background-color: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+      padding-top: 80px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ========== الهيدر الثابت ========== */
+    .main-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 70px;
+      background: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      z-index: 1100;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .header-container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-logo {
+      height: 50px;
+      object-fit: contain;
+    }
+
+    .sidebar-toggle-btn {
+      background: #e8822a;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 8px 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: all 0.3s;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    .sidebar-toggle-btn:hover {
+      background: #ff9d45;
+      transform: scale(1.05);
+    }
+
+    /* ========== القائمة الجانبية ========== */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 300px;
+      height: 100%;
+      background: white;
+      box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+      z-index: 2000;
+      transition: right 0.3s ease;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    
+    .sidebar.active {
+      right: 0;
+    }
+    
+    .sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1999;
+      display: none;
+    }
+    
+    .sidebar-overlay.active {
+      display: block;
+    }
+    
+    .sidebar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .sidebar-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #666;
+    }
+    
+    .sidebar-user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      padding: 10px;
+      background: #fffaf0;
+      border-radius: 10px;
+    }
+    
+    .sidebar-user-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #e8822a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 20px;
+    }
+    
+    .sidebar-user-info h3 {
+      margin: 0;
+      font-size: 16px;
+    }
+    
+    .sidebar-user-info p {
+      margin: 0;
+      font-size: 14px;
+      color: #666;
+    }
+    
+    .sidebar-menu {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .sidebar-menu li {
+      margin-bottom: 5px;
+    }
+    
+    .sidebar-menu a {
+      display: block;
+      padding: 12px 15px;
+      text-decoration: none;
+      color: #333;
+      border-radius: 8px;
+      transition: all 0.3s;
+    }
+    
+    .sidebar-menu a:hover {
+      background: #fff5e6;
+    }
+    
+    .sidebar-menu a.active {
+      background: #e8822a;
+      color: white;
+    }
+    
+    .sidebar-footer {
+      margin-top: 30px;
+      padding-top: 15px;
+      border-top: 1px solid #eee;
+    }
+    
+    .logout-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 12px 15px;
+      background: #ffe0b8;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+    
+    .logout-btn:hover {
+      background: #ffd1a4;
+    }
+
+    main {
+      max-width: min(1200px, 94vw);
+      margin: 0 auto;
+      padding: 1.5rem 0;
+      flex: 1;
+      width: 100%;
+    }
+
+    .game-hero {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .game-header {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      padding: 0.4rem 1rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      align-self: flex-start;
+    }
+
+    .game-header h1 {
+      font-size: 2.2rem;
+      margin: 0;
+      color: var(--dark);
+    }
+
+    .game-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      padding: 0.8rem 1.8rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: var(--transition);
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--primary);
+      padding: 0.8rem 1.8rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: var(--transition);
+      border: 2px solid var(--primary);
+    }
+
+    .btn-secondary:hover {
+      background: var(--primary-light);
+    }
+
+    .game-sidebar {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+
+    .game-progress dt {
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+
+    .game-progress dd {
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    /* منطقة اللعبة */
+    .game-area {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      display: none;
+      text-align: center;
+      position: relative;
+      direction: ltr; /* English content should be LTR */
+    }
+
+    .game-area.active {
+      display: block;
+    }
+
+    /* مودال النتيجة */
+    .result-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      border-radius: var(--radius);
+      animation: fadeIn 0.5s;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .result-content {
+      text-align: center;
+    }
+
+    .result-icon {
+      font-size: 5rem;
+      margin-bottom: 1rem;
+    }
+
+    .result-title {
+      font-size: 2.5rem;
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .result-score {
+      font-size: 1.5rem;
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: 2rem;
+    }
+
+    .current-color-display {
+      margin-bottom: 2rem;
+    }
+
+    .color-name {
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+
+    .sound-btn {
+      background: var(--secondary);
+      color: white;
+      border: none;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      font-size: 1.8rem;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+    }
+
+    .sound-btn:hover {
+      transform: scale(1.1) rotate(5deg);
+      background: var(--secondary-light);
+    }
+
+    .color-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 2rem;
+      margin: 2rem auto;
+      max-width: 800px;
+    }
+
+    .color-card {
+      aspect-ratio: 1;
+      border-radius: 24px;
+      cursor: pointer;
+      transition: var(--transition);
+      border: 6px solid white;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .color-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.1);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .color-card:hover::after {
+      opacity: 1;
+    }
+
+    .color-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .color-card.correct {
+      border-color: #4CAF50;
+      animation: pulse 0.5s;
+    }
+
+    .color-card.incorrect {
+      border-color: #FF6B6B;
+      animation: shake 0.5s;
+    }
+
+    .color-card.disabled {
+      pointer-events: none;
+      opacity: 0.6;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); border-width: 8px; }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-12px); }
+      75% { transform: translateX(12px); }
+    }
+
+    .game-feedback {
+      margin-top: 2rem;
+      font-size: 1.8rem;
+      font-weight: 800;
+      min-height: 2.5rem;
+      transition: all 0.3s;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--dark);
+      opacity: 0.7;
+      border-top: 1px solid var(--gray-light);
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .game-hero {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="main-header">
+    <div class="header-container">
+      <div class="header-logo-container">
+        <img src="logo.jpeg" alt="EduKid AI Logo" class="header-logo">
+      </div>
+      <button class="sidebar-toggle-btn" id="headerSidebarToggle">
+        <span>القائمة</span>
+        <span>☰</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="sidebar-overlay"></div>
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2>القائمة الرئيسية</h2>
+      <button class="sidebar-close">×</button>
+    </div>
+    <div class="sidebar-user">
+      <div class="sidebar-user-avatar" id="sidebar-user-avatar">ط</div>
+      <div class="sidebar-user-info">
+        <h3 id="sidebar-student-name">اسم الطالب</h3>
+        <p id="sidebar-grade">المرحلة: رياض الأطفال</p>
+      </div>
+    </div>
+    <ul class="sidebar-menu">
+      <li><a href="index.html">الصفحة الرئيسية</a></li>
+      <li><a href="dashboard.html" id="sidebar-dashboard-link">لوحة التعلم</a></li>
+      <li><a href="games.html">الألعاب التعليمية</a></li>
+      <li><a href="books.html">المكتبة الرقمية</a></li>
+      <li><a href="stories.html">القصص الصوتية</a></li>
+      <li><a href="parent-report.html">لوحة ولي الأمر</a></li>
+    </ul>
+    <div class="sidebar-footer">
+      <button class="logout-btn" id="logout-btn">
+        <span>تسجيل الخروج</span>
+        <span>🚪</span>
+      </button>
+    </div>
+  </div>
+
+  <main>
+    <div class="game-hero">
+      <section class="game-header">
+        <span class="badge">🌈 Color Explorer</span>
+        <h1>Welcome to the <span>Color Adventure!</span></h1>
+        <p>Help our friendly robot find the right colors. Listen to the name and pick the correct circle!</p>
+        <div class="game-actions">
+          <button class="btn-primary" id="start-game">Start Game Now</button>
+          <a href="games.html" class="btn-secondary">Back to Hub</a>
+        </div>
+      </section>
+
+      <aside class="game-sidebar">
+        <h2>Progress</h2>
+        <dl class="game-progress">
+          <dt>Score</dt>
+          <dd id="game-score">0</dd>
+          <dt>Level</dt>
+          <dd id="game-level">1 / 10</dd>
+        </dl>
+      </aside>
+    </div>
+
+    <div class="game-area" id="game-area">
+      <div class="result-overlay" id="result-overlay">
+        <div class="result-content">
+          <div class="result-icon" id="result-icon">🏆</div>
+          <h2 class="result-title" id="result-title">Great Job!</h2>
+          <p class="result-score" id="result-score-text">Final Score: 100</p>
+          <button class="btn-primary" onclick="location.reload()">Play Again</button>
+        </div>
+      </div>
+
+      <div class="current-color-display">
+        <div class="color-name" id="target-color-name">BLUE</div>
+        <button class="sound-btn" id="play-sound">🔊</button>
+      </div>
+      <div class="color-options" id="color-options">
+        <!-- Cards generated by JS -->
+      </div>
+      <div class="game-feedback" id="game-feedback"></div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>© 2025 سمارت كيدز – Learning is Fun!</p>
+  </footer>
+
+  <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
+  <script src="activity.js"></script>
+  <script>
+    // ========== UI Logic ==========
+    const sidebarToggle = document.getElementById('headerSidebarToggle');
+    const sidebar = document.querySelector('.sidebar');
+    const sidebarOverlay = document.querySelector('.sidebar-overlay');
+    const sidebarClose = document.querySelector('.sidebar-close');
+    
+    function openSidebar() {
+      sidebar.classList.add('active');
+      sidebarOverlay.classList.add('active');
+    }
+    
+    function closeSidebar() {
+      sidebar.classList.remove('active');
+      sidebarOverlay.classList.remove('active');
+    }
+    
+    sidebarToggle.addEventListener('click', openSidebar);
+    sidebarClose.addEventListener('click', closeSidebar);
+    sidebarOverlay.addEventListener('click', closeSidebar);
+
+    function checkLoggedInUser() {
+      const rawUser = localStorage.getItem('adukid_user');
+      const user = rawUser ? JSON.parse(rawUser) : null;
+      if (user && user.studentName) {
+        document.getElementById('sidebar-student-name').textContent = user.studentName;
+        document.getElementById('sidebar-grade').textContent = `المرحلة: ${user.gradeText || 'غير محدد'}`;
+        document.getElementById('sidebar-user-avatar').textContent = user.studentName.charAt(0);
+        const dashboardLink = document.getElementById('sidebar-dashboard-link');
+        if (dashboardLink) {
+          const grade = (user?.grade || '').toString().trim().toUpperCase();
+          dashboardLink.href = grade === 'KG2' ? 'dashboard-kg2.html' : 'dashboard-kg1.html';
+        }
+      }
+    }
+
+    document.getElementById('logout-btn').addEventListener('click', function() {
+      if (confirm('هل أنت متأكد من تسجيل الخروج؟')) {
+        localStorage.removeItem('adukid_user');
+        window.location.href = 'index.html';
+      }
+    });
+
+    // ========== Game Logic ==========
+    const colors = [
+      { name: 'RED', hex: '#FF0000', ar: 'أحمر' },
+      { name: 'BLUE', hex: '#0000FF', ar: 'أزرق' },
+      { name: 'GREEN', hex: '#008000', ar: 'أخضر' },
+      { name: 'YELLOW', hex: '#FFFF00', ar: 'أصفر' },
+      { name: 'ORANGE', hex: '#FFA500', ar: 'برتقالي' },
+      { name: 'PURPLE', hex: '#800080', ar: 'بنفسجي' },
+      { name: 'PINK', hex: '#FFC0CB', ar: 'وردي' },
+      { name: 'BROWN', hex: '#A52A2A', ar: 'بني' },
+      { name: 'BLACK', hex: '#000000', ar: 'أسود' },
+      { name: 'WHITE', hex: '#FFFFFF', ar: 'أبيض' }
+    ];
+
+    let score = 0;
+    let level = 1;
+    const maxLevels = 10;
+    let targetColor = null;
+    let isTransitioning = false;
+
+    const startBtn = document.getElementById('start-game');
+    const gameArea = document.getElementById('game-area');
+    const optionsContainer = document.getElementById('color-options');
+    const targetNameDisplay = document.getElementById('target-color-name');
+    const feedbackDisplay = document.getElementById('game-feedback');
+    const scoreDisplay = document.getElementById('game-score');
+    const levelDisplay = document.getElementById('game-level');
+    const soundBtn = document.getElementById('play-sound');
+    const resultOverlay = document.getElementById('result-overlay');
+
+    function speak(text) {
+      if (!text) return;
+      window.speechSynthesis.cancel();
+      const msg = new SpeechSynthesisUtterance();
+      msg.text = text;
+      msg.lang = 'en-US';
+      msg.rate = 0.9;
+      window.speechSynthesis.speak(msg);
+    }
+
+    function initLevel() {
+      if (level > maxLevels) {
+        endGame();
+        return;
+      }
+
+      isTransitioning = false;
+      feedbackDisplay.textContent = "Which one is " + colors.find(c => c.name === targetColor?.name)?.name || "Ready?";
+      feedbackDisplay.style.color = "var(--dark)";
+      
+      // Select random color
+      targetColor = colors[Math.floor(Math.random() * colors.length)];
+      targetNameDisplay.textContent = targetColor.name;
+      
+      optionsContainer.innerHTML = '';
+      
+      // Shuffle colors and ensure target is included
+      const otherColors = colors.filter(c => c.name !== targetColor.name);
+      const shuffledOthers = otherColors.sort(() => 0.5 - Math.random()).slice(0, 3);
+      const levelOptions = [...shuffledOthers, targetColor].sort(() => 0.5 - Math.random());
+
+      levelOptions.forEach(color => {
+        const card = document.createElement('div');
+        card.className = 'color-card';
+        card.style.backgroundColor = color.hex;
+        card.setAttribute('aria-label', color.name);
+        card.addEventListener('click', () => checkAnswer(color, card));
+        optionsContainer.appendChild(card);
+      });
+
+      levelDisplay.textContent = `${level} / ${maxLevels}`;
+      speak(targetColor.name);
+    }
+
+    function checkAnswer(selected, card) {
+      if (isTransitioning) return;
+
+      if (selected.name === targetColor.name) {
+        isTransitioning = true;
+        score += 10;
+        scoreDisplay.textContent = score;
+        
+        feedbackDisplay.textContent = "Excellent! That's " + selected.name + "! 🌟";
+        feedbackDisplay.style.color = "#4CAF50";
+        card.classList.add('correct');
+        
+        // Disable all cards
+        document.querySelectorAll('.color-card').forEach(c => c.classList.add('disabled'));
+        
+        speak("Correct! " + selected.name);
+
+        setTimeout(() => {
+          level++;
+          initLevel();
+        }, 1500);
+      } else {
+        feedbackDisplay.textContent = "Not quite, try again! 💪";
+        feedbackDisplay.style.color = "#FF6B6B";
+        card.classList.add('incorrect');
+        speak("Try again");
+        setTimeout(() => card.classList.remove('incorrect'), 600);
+      }
+    }
+
+    function endGame() {
+      const resultIcon = document.getElementById('result-icon');
+      const resultTitle = document.getElementById('result-title');
+      const resultScore = document.getElementById('result-score-text');
+      
+      resultOverlay.style.display = 'flex';
+      resultScore.textContent = `Total Score: ${score} Points`;
+      
+      if (score >= 80) {
+        resultIcon.textContent = '🏆';
+        resultTitle.textContent = 'Color Master!';
+        speak("Congratulations! You are a color master!");
+      } else {
+        resultIcon.textContent = '⭐';
+        resultTitle.textContent = 'Great Effort!';
+        speak("Well done! You did a great job!");
+      }
+
+      logActivity({
+        type: 'game',
+        subType: 'complete',
+        title: 'Color Explorer',
+        meta: { 
+          score: score, 
+          maxScore: maxLevels * 10,
+          subject: 'english',
+          level: level - 1
+        }
+      });
+    }
+
+    startBtn.addEventListener('click', () => {
+      document.querySelector('.game-hero').style.display = 'none';
+      gameArea.classList.add('active');
+      level = 1;
+      score = 0;
+      initLevel();
+      logActivity({ 
+        type: 'game', 
+        subType: 'start', 
+        title: 'Color Explorer',
+        meta: { subject: 'english' }
+      });
+    });
+
+    soundBtn.addEventListener('click', () => {
+      if (targetColor) speak(targetColor.name);
+    });
+
+    document.addEventListener('DOMContentLoaded', checkLoggedInUser);
+  </script>
+</body>
+</html>
