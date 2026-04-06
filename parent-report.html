@@ -1,0 +1,1775 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>AduKid_AI | لوحة ولي الأمر</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="لوحة ولي الأمر في منصة AduKid_AI تتيح متابعة تقدم الطفل، الحضور، الملاحظات الأسبوعية، والمهام القادمة بطريقة واضحة وسهلة."
+  />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ========== CSS Reset ========== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: linear-gradient(135deg, #fff5e6 0%, #fff9f0 100%);
+      color: #2d3748;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    /* ========== التصميم الرئيسي ========== */
+    .main-card {
+      background: white;
+      border-radius: 30px;
+      box-shadow: 0 15px 50px rgba(232, 130, 42, 0.15);
+      padding: 3rem;
+      position: relative;
+      overflow: hidden;
+      border: 3px solid #ffe0b8;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 3px dashed #ffd1a4;
+    }
+
+    .logo {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #e8822a;
+      margin-bottom: 0.5rem;
+      text-shadow: 2px 2px 4px rgba(232, 130, 42, 0.2);
+    }
+
+    .tagline {
+      color: #718096;
+      font-size: 1.2rem;
+      font-weight: 500;
+    }
+
+    /* ========== تخطيط الصفحة ========== */
+    .page-layout {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .stage-section {
+      flex: 1;
+      background: #fffaf5;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 5px 15px rgba(232, 130, 42, 0.1);
+      border: 2px solid #ffe8d1;
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #e8822a;
+      margin-bottom: 1.5rem;
+      padding-right: 0.5rem;
+      border-right: 4px solid #e8822a;
+      background: linear-gradient(135deg, #fff8f0 0%, transparent 100%);
+      padding: 0.8rem 1rem;
+      border-radius: 15px;
+    }
+
+    /* ========== تنسيق البطاقات ========== */
+    .stage-card {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid #ffe0b8;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .stage-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .stage-name {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #e8822a;
+    }
+
+    .stage-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      font-weight: 800;
+      color: white;
+    }
+
+    .stage-label.kg1 {
+      background: #118ab2;
+    }
+
+    .stage-label.kg2 {
+      background: #fb8500;
+    }
+
+    .stage-meta {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .stage-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: 999px;
+      font-weight: 700;
+      background: rgba(168, 218, 220, 0.32);
+      color: rgba(2, 48, 71, 0.68);
+      font-size: 0.9rem;
+    }
+
+    .stage-card p {
+      margin-bottom: 1rem;
+      color: #4a5568;
+    }
+
+    .stage-card h3 {
+      color: #e8822a;
+      margin-bottom: 0.8rem;
+      font-size: 1.2rem;
+    }
+
+    .stage-card ul {
+      margin-bottom: 1.5rem;
+      padding-right: 1.4rem;
+      color: #4a5568;
+    }
+
+    .stage-card li {
+      margin-bottom: 0.5rem;
+    }
+
+    .stage-actions {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .form-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, #e8822a, #ff9d45);
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Tajawal', sans-serif;
+      text-decoration: none;
+    }
+
+    .form-button:hover {
+      background: linear-gradient(135deg, #ff9d45, #e8822a);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(232, 130, 42, 0.3);
+    }
+
+    .btn-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: transparent;
+      color: #e8822a;
+      padding: 0.8rem 1.5rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      border: 2px solid #e8822a;
+    }
+
+    .btn-pill:hover {
+      background: #fff5e6;
+      transform: translateY(-2px);
+    }
+
+    /* ========== التصميم الديكوري ========== */
+    .decoration {
+      position: absolute;
+      opacity: 0.15;
+      z-index: 0;
+    }
+
+    .decoration-1 {
+      top: -30px;
+      left: -30px;
+      width: 150px;
+      height: 150px;
+      background: #e8822a;
+      border-radius: 50%;
+    }
+
+    .decoration-2 {
+      bottom: -40px;
+      right: -40px;
+      width: 180px;
+      height: 180px;
+      background: #4299e1;
+      border-radius: 50%;
+    }
+
+    .decoration-3 {
+      top: 20%;
+      left: 30px;
+      width: 80px;
+      height: 80px;
+      background: #38b2ac;
+      border-radius: 20px;
+      transform: rotate(45deg);
+    }
+
+    .decoration-4 {
+      bottom: 30%;
+      right: 10%;
+      width: 60px;
+      height: 60px;
+      background: #ff9d45;
+      border-radius: 50%;
+    }
+
+    .content-wrapper {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ========== إيموجيز وإضافات طفولية ========== */
+    .fun-emoji {
+      font-size: 1.2rem;
+      margin-left: 0.3rem;
+    }
+
+    .child-friendly {
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="%23e8822a" opacity="0.1"/></svg>');
+      background-size: 200px 200px;
+    }
+
+    /* ========== القائمة الجانبية ========== */
+    .sidebar-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      background: #e8822a;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 10px 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: all 0.3s;
+      font-family: 'Tajawal', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      gap: 8px;
+    }
+
+    .sidebar-toggle:hover {
+      background: #ff9d45;
+      transform: scale(1.05);
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 300px;
+      height: 100%;
+      background: white;
+      box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+      z-index: 2000;
+      transition: right 0.3s ease;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    
+    .sidebar.active {
+      right: 0;
+    }
+    
+    .sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1999;
+      display: none;
+    }
+    
+    .sidebar-overlay.active {
+      display: block;
+    }
+    
+    .sidebar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .sidebar-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #666;
+    }
+    
+    .sidebar-user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      padding: 10px;
+      background: #fffaf0;
+      border-radius: 10px;
+    }
+    
+    .sidebar-user-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #e8822a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 20px;
+    }
+    
+    .sidebar-user-info h3 {
+      margin: 0;
+      font-size: 16px;
+    }
+    
+    .sidebar-user-info p {
+      margin: 0;
+      font-size: 14px;
+      color: #666;
+    }
+    
+    .sidebar-menu {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .sidebar-menu li {
+      margin-bottom: 5px;
+    }
+    
+    .sidebar-menu a {
+      display: block;
+      padding: 12px 15px;
+      text-decoration: none;
+      color: #333;
+      border-radius: 8px;
+      transition: all 0.3s;
+    }
+    
+    .sidebar-menu a:hover {
+      background: #fff5e6;
+    }
+    
+    .sidebar-menu a.active {
+      background: #e8822a;
+      color: white;
+    }
+    
+    .sidebar-footer {
+      margin-top: 30px;
+      padding-top: 15px;
+      border-top: 1px solid #eee;
+    }
+    
+    .logout-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 12px 15px;
+      background: #ffe0b8;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+    
+    .logout-btn:hover {
+      background: #ffd1a4;
+    }
+
+    /* ========== زر الذكاء الاصطناعي ========== */
+    .ai-assistant-btn {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      width: 70px;
+      height: 70px;
+      background: linear-gradient(135deg, #4a6cf7, #6c5ce7);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(74, 108, 247, 0.4);
+      z-index: 999;
+      transition: all 0.3s ease;
+      border: 3px solid white;
+      animation: pulse 2s infinite;
+    }
+
+    .ai-assistant-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 12px 30px rgba(74, 108, 247, 0.6);
+    }
+
+    .ai-assistant-btn .robot-icon {
+      font-size: 28px;
+      color: white;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 8px 25px rgba(74, 108, 247, 0.4);
+      }
+      50% {
+        box-shadow: 0 8px 30px rgba(74, 108, 247, 0.7);
+      }
+      100% {
+        box-shadow: 0 8px 25px rgba(74, 108, 247, 0.4);
+      }
+    }
+
+    /* ========== نافذة الذكاء الاصطناعي ========== */
+    .ai-chat-modal {
+      display: none;
+      position: fixed;
+      bottom: 120px;
+      left: 30px;
+      width: 350px;
+      height: 500px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 15px 50px rgba(0,0,0,0.2);
+      z-index: 1000;
+      overflow: hidden;
+      border: 3px solid #4a6cf7;
+    }
+
+    .ai-chat-modal.active {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ai-chat-header {
+      background: linear-gradient(135deg, #4a6cf7, #6c5ce7);
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .ai-chat-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    .ai-close-btn {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      padding: 5px;
+    }
+
+    .ai-chat-messages {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      background: #f8f9fa;
+    }
+
+    .ai-message {
+      max-width: 80%;
+      padding: 12px 16px;
+      border-radius: 18px;
+      margin-bottom: 15px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .ai-message.bot {
+      background: white;
+      border-bottom-left-radius: 5px;
+      align-self: flex-start;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .ai-message.user {
+      background: #4a6cf7;
+      color: white;
+      border-bottom-right-radius: 5px;
+      align-self: flex-end;
+      margin-left: auto;
+    }
+
+    .ai-chat-input {
+      padding: 15px;
+      border-top: 1px solid #eee;
+      background: white;
+      display: flex;
+      gap: 10px;
+    }
+
+    .ai-message-input {
+      flex: 1;
+      padding: 12px 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 25px;
+      font-size: 14px;
+      font-family: inherit;
+    }
+
+    .ai-send-btn {
+      background: #4a6cf7;
+      color: white;
+      border: none;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .ai-send-btn:hover {
+      background: #3a56d4;
+      transform: scale(1.05);
+    }
+
+    /* ========== تصميم لوحة ولي الأمر ========== */
+    .parent-dashboard {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .parent-dashboard {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .dashboard-card {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 5px 15px rgba(232, 130, 42, 0.1);
+      border: 2px solid #ffe8d1;
+    }
+
+    .dashboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .dashboard-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #e8822a;
+    }
+
+    .child-selector {
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+      border: 2px solid #ffe0b8;
+      background: white;
+      font-family: inherit;
+      font-size: 0.9rem;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .metric-card {
+      background: #fffaf5;
+      border-radius: 15px;
+      padding: 1.5rem;
+      text-align: center;
+      border: 1px solid #ffe0b8;
+    }
+
+    .metric-value {
+      display: block;
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #e8822a;
+      margin-bottom: 0.5rem;
+    }
+
+    .metric-label {
+      font-size: 0.9rem;
+      color: #718096;
+    }
+
+    .metric-trend {
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
+    }
+
+    .metric-trend.positive {
+      color: #10b981;
+    }
+
+    .metric-trend.neutral {
+      color: #6b7280;
+    }
+
+    .progress-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .progress-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+    }
+
+    .progress-bar {
+      height: 10px;
+      background: #e5e7eb;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(135deg, #e8822a, #ff9d45);
+      border-radius: 5px;
+      transition: width 0.5s ease;
+    }
+
+    .tasks-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .task-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      background: #fffaf5;
+      border-radius: 10px;
+      border: 1px solid #ffe0b8;
+    }
+
+    .task-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .task-title {
+      font-weight: 500;
+    }
+
+    .task-date {
+      font-size: 0.85rem;
+      color: #6b7280;
+    }
+
+    .task-badge {
+      padding: 0.3rem 0.8rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .task-badge.pending {
+      background: #fef3c7;
+      color: #d97706;
+    }
+
+    .task-badge.in-progress {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .task-badge.completed {
+      background: #e5e7eb;
+      color: #4b5563;
+    }
+
+    .attendance-summary {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .attendance-value {
+      display: block;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #e8822a;
+    }
+
+    .attendance-label {
+      font-size: 0.85rem;
+      color: #6b7280;
+    }
+
+    .attendance-legend {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .attendance-legend span {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .dot-present {
+      background: #10b981;
+    }
+
+    .dot-notice {
+      background: #f59e0b;
+    }
+
+    .dot-absence {
+      background: #ef4444;
+    }
+
+    .notes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .note-card {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+      border: 1px solid #ffe0b8;
+    }
+
+    .note-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .note-date {
+      font-size: 0.9rem;
+      color: #6b7280;
+    }
+
+    .note-tag {
+      padding: 0.3rem 0.8rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .note-tag.positive {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .note-tag.neutral {
+      background: #e5e7eb;
+      color: #4b5563;
+    }
+
+    .note-tag.success {
+      background: #fef3c7;
+      color: #d97706;
+    }
+
+    .accordion {
+      border: 1px solid #ffe0b8;
+      border-radius: 15px;
+      overflow: hidden;
+    }
+
+    .accordion-item {
+      border-bottom: 1px solid #ffe0b8;
+    }
+
+    .accordion-item:last-child {
+      border-bottom: none;
+    }
+
+    .accordion-trigger {
+      width: 100%;
+      padding: 1.5rem;
+      background: white;
+      border: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-family: inherit;
+      font-size: 1rem;
+    }
+
+    .accordion-trigger:hover {
+      background: #fffaf5;
+    }
+
+    .accordion-panel {
+      padding: 0 1.5rem;
+      background: white;
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+
+    .accordion-item.is-open .accordion-panel {
+      padding: 1.5rem;
+      max-height: 500px;
+    }
+
+    .trigger-pill {
+      background: #ffe0b8;
+      color: #e8822a;
+      padding: 0.3rem 0.8rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .panel-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1rem 0;
+    }
+
+    .panel-list li {
+      padding: 0.5rem 0;
+      color: #4a5568;
+      position: relative;
+      padding-right: 1.5rem;
+    }
+
+    .panel-list li::before {
+      content: "•";
+      color: #e8822a;
+      position: absolute;
+      right: 0;
+    }
+
+    .panel-footer {
+      border-top: 1px solid #ffe0b8;
+      padding-top: 1rem;
+      font-size: 0.9rem;
+      color: #6b7280;
+    }
+
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .resource-card {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      border: 1px solid #ffe0b8;
+    }
+
+    .resource-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(232, 130, 42, 0.2);
+    }
+
+    .resource-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .resource-card h3 {
+      margin: 0 0 1rem 0;
+      color: #2d3748;
+    }
+
+    .resource-card p {
+      margin: 0 0 1.5rem 0;
+      color: #4a5568;
+      flex-grow: 1;
+    }
+
+    .btn-link {
+      background: none;
+      border: none;
+      color: #e8822a;
+      font-weight: 500;
+      text-decoration: underline;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.9rem;
+    }
+
+    .btn-pill {
+      background: #e8822a;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.85rem;
+      transition: all 0.3s;
+    }
+
+    .btn-pill:hover {
+      background: #ff9d45;
+    }
+
+    .btn-pill.outline {
+      background: transparent;
+      color: #e8822a;
+      border: 1px solid #e8822a;
+    }
+
+    .btn-pill.outline:hover {
+      background: #fff5e6;
+    }
+
+    .section-actions {
+      display: flex;
+      gap: 1rem;
+    }
+
+    /* ========== التجاوب ========== */
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+      
+      .main-card {
+        padding: 2rem 1.5rem;
+        border-radius: 25px;
+      }
+      
+      .page-layout {
+        flex-direction: column;
+      }
+      
+      .logo {
+        font-size: 2rem;
+      }
+      
+      .section-title {
+        font-size: 1.3rem;
+      }
+      
+      .stage-actions {
+        flex-direction: column;
+      }
+      
+      .form-button, .btn-pill {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .ai-chat-modal {
+        width: 300px;
+        height: 450px;
+        left: 20px;
+        bottom: 100px;
+      }
+      
+      .ai-assistant-btn {
+        left: 20px;
+        bottom: 20px;
+        width: 60px;
+        height: 60px;
+      }
+      
+      .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+      
+      .attendance-summary {
+        grid-template-columns: 1fr;
+      }
+      
+      .section-actions {
+        flex-direction: column;
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .main-card {
+        padding: 1.5rem 1rem;
+        border-radius: 20px;
+      }
+      
+      .logo {
+        font-size: 1.8rem;
+      }
+      
+      .stage-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
+      
+      .sidebar {
+        width: 100%;
+        right: -100%;
+      }
+      
+      .ai-chat-modal {
+        width: calc(100% - 40px);
+        left: 20px;
+        right: 20px;
+      }
+    }
+
+    /* ========== الهيدر الثابت الجديد ========== */
+    .main-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 70px;
+      background: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      z-index: 1100;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .header-container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-logo {
+      height: 50px;
+      object-fit: contain;
+    }
+
+    .sidebar-toggle-btn {
+      background: #e8822a;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 8px 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: all 0.3s;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    .sidebar-toggle-btn:hover {
+      background: #ff9d45;
+      transform: scale(1.05);
+    }
+
+    body {
+      padding-top: 80px !important;
+    }
+
+    .sidebar-toggle {
+      display: none !important;
+    }
+  </style>
+</head>
+<body class="child-friendly">
+  <!-- الهيدر الثابت -->
+  <header class="main-header">
+    <div class="header-container">
+      <div class="header-logo-container">
+        <img src="logo.jpeg" alt="EduKid AI Logo" class="header-logo">
+      </div>
+      <button class="sidebar-toggle-btn" id="headerSidebarToggle">
+        <span>القائمة</span>
+        <span>☰</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- زر القائمة الجانبية القديم (مخفي عبر CSS) -->
+  <button class="sidebar-toggle">☰ القائمة</button>
+  
+  <!-- زر الذكاء الاصطناعي -->
+  <div class="ai-assistant-btn" id="aiAssistantBtn">
+    <div class="robot-icon">🤖</div>
+  </div>
+
+  <!-- نافذة الذكاء الاصطناعي -->
+  <div class="ai-chat-modal" id="aiChatModal">
+    <div class="ai-chat-header">
+      <div class="ai-chat-title">
+        <span>🤖</span>
+        <span>مساعد AduKid الذكي</span>
+      </div>
+      <button class="ai-close-btn" id="aiCloseBtn">×</button>
+    </div>
+    <div class="ai-chat-messages" id="aiChatMessages">
+      <div class="ai-message bot">
+        مرحباً! أنا مساعد AduKid الذكي. كيف يمكنني مساعدتك في متابعة تقدم طفلك اليوم؟
+      </div>
+    </div>
+    <div class="ai-chat-input">
+      <input type="text" class="ai-message-input" id="aiMessageInput" placeholder="اكتب سؤالك هنا...">
+      <button class="ai-send-btn" id="aiSendBtn">
+        <span>➤</span>
+      </button>
+    </div>
+  </div>
+  
+  <!-- القائمة الجانبية -->
+  <div class="sidebar-overlay"></div>
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2>القائمة الرئيسية</h2>
+      <button class="sidebar-close">×</button>
+    </div>
+    
+    <div class="sidebar-user">
+      <div class="sidebar-user-avatar" id="user-avatar">ط</div>
+      <div class="sidebar-user-info">
+        <h3 id="sidebar-student-name">اسم الطالب</h3>
+        <p id="sidebar-grade">المرحلة: رياض الأطفال</p>
+      </div>
+    </div>
+    
+    <ul class="sidebar-menu">
+      <li><a href="index.html">الصفحة الرئيسية</a></li>
+      <li><a href="dashboard.html" id="sidebar-dashboard-link">لوحة التعلم</a></li>
+      <li><a href="games.html">الألعاب التعليمية</a></li>
+      <li><a href="books.html">المكتبة الرقمية</a></li>
+      <li><a href="stories.html">القصص الصوتية</a></li>
+      <li><a href="parent-report.html" class="active">لوحة ولي الأمر</a></li>
+    </ul>
+    
+    <div class="sidebar-footer">
+      <button class="logout-btn" id="logout-btn">
+        <span>تسجيل الخروج</span>
+        <span>🚪</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="main-card">
+      <!-- العناصر الديكورية -->
+      <div class="decoration decoration-1"></div>
+      <div class="decoration decoration-2"></div>
+      <div class="decoration decoration-3"></div>
+      <div class="decoration decoration-4"></div>
+      
+      <div class="content-wrapper">
+        <!-- الهيدر -->
+        <div class="header">
+          <div class="logo">AduKid_AI <span class="fun-emoji">👨‍👩‍👧‍👦</span></div>
+          <div class="tagline">لوحة متابعة ولي الأمر - معرض ISEF 2025</div>
+        </div>
+
+        <!-- محتوى لوحة ولي الأمر -->
+        <div class="parent-dashboard">
+          <!-- بطاقة الطفل -->
+          <div class="dashboard-card">
+            <div class="dashboard-header">
+              <h2 class="dashboard-title">معلومات الطفل</h2>
+              <select class="child-selector" id="child-selector">
+                <option value="noor" selected>نور – KG1</option>
+                <option value="omar">عمر – KG2</option>
+                <option value="maya">مايا – KG1</option>
+              </select>
+            </div>
+            
+            <div class="metrics-grid">
+              <div class="metric-card">
+                <span class="metric-value" id="attendance-rate">0%</span>
+                <span class="metric-label">معدل التفاعل الأكاديمي</span>
+                <span class="metric-trend positive" style="color: #718096;">بانتظار أول تفاعل داخل المنصة</span>
+              </div>
+              
+              <div class="metric-card">
+                <span class="metric-value" id="completed-activities">0/20</span>
+                <span class="metric-label">الأنشطة المكتملة</span>
+                <span class="metric-trend neutral" style="color: #718096;">ابدأ أول نشاط اليوم</span>
+              </div>
+              
+              <div class="metric-card">
+                <span class="metric-value" id="mastered-skills">0</span>
+                <span class="metric-label">المهارات المتقنة</span>
+                <span class="metric-trend" style="color: #718096;">لم تكتمل مهارات بعد</span>
+              </div>
+            </div>
+            
+            <h3 class="section-title">منحنى التقدم</h3>
+            <div class="progress-list">
+              <div class="progress-item">
+                <div class="progress-meta">
+                  <span>اللغة العربية</span>
+                  <span>0%</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-bar-fill" style="width: 0%"></div>
+                </div>
+              </div>
+              <div class="progress-item">
+                <div class="progress-meta">
+                  <span>الرياضيات</span>
+                  <span>0%</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-bar-fill" style="width: 0%"></div>
+                </div>
+              </div>
+              <div class="progress-item">
+                <div class="progress-meta">
+                  <span>اللغة الإنجليزية</span>
+                  <span>0%</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-bar-fill" style="width: 0%"></div>
+                </div>
+              </div>
+              <div class="progress-item">
+                <div class="progress-meta">
+                  <span>المهارات الحياتية</span>
+                  <span>0%</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-bar-fill" style="width: 0%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- بطاقة المهام والحضور -->
+          <div class="dashboard-card">
+            <div class="dashboard-header">
+              <h2 class="dashboard-title">تسجيل الحضور اليومي</h2>
+              <div id="attendance-status-badge"></div>
+            </div>
+            
+            <div class="attendance-actions" id="attendance-actions-container" style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+              <button class="form-button" onclick="handleRecordAttendance('present')" id="btn-present">حاضر ✅</button>
+              <button class="btn-pill outline" onclick="handleRecordAttendance('excused')" id="btn-excused">غياب بعذر 📝</button>
+            </div>
+
+            <h3 class="section-title">إحصائيات الحضور</h3>
+            <div class="attendance-summary">
+              <div>
+                <span class="attendance-value" id="count-present">0</span>
+                <span class="attendance-label">أيام حضور</span>
+              </div>
+              <div>
+                <span class="attendance-value" id="count-excused">0</span>
+                <span class="attendance-label">غياب بعذر</span>
+              </div>
+              <div>
+                <span class="attendance-value" id="count-absent">0</span>
+                <span class="attendance-label">غياب</span>
+              </div>
+            </div>
+            
+            <h3 class="section-title">آخر النشاطات المسجلة</h3>
+            <ul class="tasks-list">
+              <li class="task-item">
+                <div class="task-info">
+                  <span class="task-title">جاري تحميل النشاطات المحفوظة...</span>
+                  <span class="task-date">سيتم عرضها من قاعدة البيانات المحلية</span>
+                </div>
+                <span class="task-badge in-progress">تحميل</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- تحليل الأنشطة التفصيلي -->
+        <div class="dashboard-card" style="margin-bottom: 2rem;">
+          <div class="dashboard-header">
+            <h2 class="dashboard-title">تحليل نشاط الطفل الذكي 🧠</h2>
+            <p class="section-subtitle">تحليل تلقائي لنقاط القوة والاهتمامات بناءً على تفاعل الطفل</p>
+          </div>
+          
+          <div class="analysis-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+            <div class="strength-card" style="background: #f0fff4; padding: 1.5rem; border-radius: 15px; border: 1px solid #c6f6d5;">
+              <h3 style="color: #2f855a; margin-bottom: 1rem;">🌟 نقاط القوة الحالية</h3>
+              <ul id="strengths-list" style="list-style: none; padding: 0;">
+                <!-- سيتم ملؤها برمجياً -->
+              </ul>
+            </div>
+            
+            <div class="interest-card" style="background: #ebf8ff; padding: 1.5rem; border-radius: 15px; border: 1px solid #bee3f8;">
+              <h3 style="color: #2b6cb0; margin-bottom: 1rem;">🎨 الاهتمامات والذكاءات</h3>
+              <div id="interests-analysis">
+                <!-- سيتم ملؤها برمجياً -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- الفوتر -->
+        <div class="footer" style="text-align: center; margin-top: 2rem; color: #718096; font-size: 0.9rem; padding: 1rem; background: #fffaf0; border-radius: 15px;">
+          © 2024 AduKid_AI - مشروع معرض ISEF 2025. جميع الحقوق محفوظة. <span class="fun-emoji">🎉</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
+  <script src="activity.js"></script>
+  <script>
+    function getCurrentUser() {
+      try {
+        const rawUser = localStorage.getItem('adukid_user');
+        return rawUser ? JSON.parse(rawUser) : null;
+      } catch (error) {
+        return null;
+      }
+    }
+
+    function updateStageStorageFromUser(user) {
+      const grade = (user?.grade || '').toString().trim().toLowerCase();
+      if (grade === 'kg1' || grade === 'kg2') {
+        localStorage.setItem('selectedStage', grade.toUpperCase());
+      }
+    }
+
+    function clearSessionAndGoHome() {
+      localStorage.removeItem('adukid_user');
+      localStorage.removeItem('selectedStage');
+      window.location.href = 'index.html';
+    }
+
+    async function checkLoggedInUser() {
+      const user = getCurrentUser();
+      if (user && user.studentName) {
+        const name = user.studentName;
+        document.getElementById('sidebar-student-name').textContent = name;
+        document.getElementById('sidebar-grade').textContent = `المرحلة: ${user.gradeText || 'غير محدد'}`;
+        document.getElementById('user-avatar').textContent = name.charAt(0);
+        
+        // تحديث الاسم في الهيدر والترحيب
+        const headerTitle = document.querySelector('.header-title h1');
+        if (headerTitle) headerTitle.textContent = `تقرير أداء ${name}`;
+        
+        const welcomeText = document.querySelector('.welcome-text h1');
+        if (welcomeText) welcomeText.textContent = `مرحباً بك، ولي أمر ${name} 👋`;
+
+        updateStageStorageFromUser(user);
+        const dashboardLink = document.getElementById('sidebar-dashboard-link');
+        if (dashboardLink) {
+          dashboardLink.href = getCurrentDashboardUrl();
+          dashboardLink.textContent = `لوحة تعلم ${getStageLabel(user.grade)}`;
+        }
+        const childSelector = document.getElementById('child-selector');
+        if (childSelector) {
+          childSelector.innerHTML = `<option value="${(user.grade || '').toLowerCase()}" selected>${name} – ${user.gradeText || getStageLabel(user.grade)}</option>`;
+          childSelector.disabled = true;
+        }
+        await updateChildData((user.grade || '').toLowerCase());
+      } else {
+        window.location.href = 'index.html';
+      }
+    }
+
+    // تفعيل زر القائمة الجانبية
+    const sidebarToggle = document.getElementById('headerSidebarToggle');
+    const sidebar = document.querySelector('.sidebar');
+    const sidebarOverlay = document.querySelector('.sidebar-overlay');
+    const sidebarClose = document.querySelector('.sidebar-close');
+    
+    function openSidebar() {
+      sidebar.classList.add('active');
+      sidebarOverlay.classList.add('active');
+    }
+    
+    function closeSidebar() {
+      sidebar.classList.remove('active');
+      sidebarOverlay.classList.remove('active');
+    }
+    
+    if (sidebarToggle) {
+      sidebarToggle.addEventListener('click', openSidebar);
+    }
+    sidebarClose.addEventListener('click', closeSidebar);
+    sidebarOverlay.addEventListener('click', closeSidebar);
+
+    // تفعيل زر تسجيل الخروج
+    document.getElementById('logout-btn').addEventListener('click', function() {
+      if (confirm('هل أنت متأكد من تسجيل الخروج؟')) {
+        clearSessionAndGoHome();
+      }
+    });
+
+    // تفعيل زر الذكاء الاصطناعي
+    const aiAssistantBtn = document.getElementById('aiAssistantBtn');
+    const aiChatModal = document.getElementById('aiChatModal');
+    const aiCloseBtn = document.getElementById('aiCloseBtn');
+    const aiSendBtn = document.getElementById('aiSendBtn');
+    const aiMessageInput = document.getElementById('aiMessageInput');
+    const aiChatMessages = document.getElementById('aiChatMessages');
+
+    aiAssistantBtn.addEventListener('click', function() {
+      aiChatModal.classList.toggle('active');
+    });
+
+    aiCloseBtn.addEventListener('click', function() {
+      aiChatModal.classList.remove('active');
+    });
+
+    // إرسال رسالة في الشات
+    function sendAIMessage() {
+      const message = aiMessageInput.value.trim();
+      if (!message) return;
+
+      // إضافة رسالة المستخدم
+      addAIMessage(message, 'user');
+      aiMessageInput.value = '';
+
+      // محاكاة رد الذكاء الاصطناعي
+      setTimeout(() => {
+        const responses = [
+          "هذا سؤال رائع! يمكنني مساعدتك في توجيه طفلك نحو الأنشطة المناسبة لمرحلته التعليمية.",
+          "أقترح تجربة الألعاب التعليمية التفاعلية الموجودة في قسم الألعاب لتعزيز مهارات طفلك.",
+          "بناءً على مرحلته، يمكننا تصميم خطة تعلم مخصصة تناسب احتياجاته وتطوره.",
+          "هل تود معرفة المزيد عن الأنشطة المناسبة لسن طفلك؟ يمكنني تقديم اقتراحات مخصصة.",
+          "لاحظت أن طفلك يظهر اهتمامًا خاصًا بالقصص، هل تود أن أوصي بقصص مناسبة له؟"
+        ];
+        
+        const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+        addAIMessage(randomResponse, 'bot');
+      }, 1000);
+    }
+
+    function addAIMessage(content, sender) {
+      const messageDiv = document.createElement('div');
+      messageDiv.classList.add('ai-message', sender);
+      messageDiv.textContent = content;
+      aiChatMessages.appendChild(messageDiv);
+      aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
+    }
+
+    aiSendBtn.addEventListener('click', sendAIMessage);
+    aiMessageInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        sendAIMessage();
+      }
+    });
+
+    // تفعيل اختيار الطفل
+    const childSelector = document.getElementById('child-selector');
+    childSelector.addEventListener('change', function() {
+      const selectedChild = this.value;
+      updateChildData(selectedChild);
+    });
+
+    function getReportStage(childId) {
+      return (childId || getCurrentStageSafe() || 'kg1').toString().toUpperCase();
+    }
+
+    function getActivityTypeLabel(type) {
+      if (type === 'game') return 'لعبة';
+      if (type === 'book') return 'كتاب';
+      if (type === 'story') return 'قصة';
+      return 'تفاعل';
+    }
+
+    async function refreshParentReport(stageHint) {
+      const nextStage = getReportStage(stageHint || childSelector?.value);
+      await updateChildData(nextStage);
+    }
+
+    async function updateChildData(childId) {
+      const stage = getReportStage(childId);
+      const summary = await summarizeActivities(stage);
+      const attSummary = await getAttendanceSummary(stage);
+      
+      // تحديث معدل التفاعل الأكاديمي من البيانات الحقيقية
+      document.getElementById('attendance-rate').textContent = `${summary.overallAcademic}%`;
+      
+      // تحديث الأنشطة المكتملة
+      document.getElementById('completed-activities').textContent = `${summary.total}/20`;
+      
+      // تحديث المهارات المتقنة (عدد أنواع الأنشطة)
+      const uniqueTypes = (summary.games > 0 ? 1 : 0) + (summary.books > 0 ? 1 : 0) + (summary.stories > 0 ? 1 : 0);
+      document.getElementById('mastered-skills').textContent = (uniqueTypes + Math.floor(summary.total / 3)).toString();
+      
+      // تحديث التريند
+      const trends = document.querySelectorAll('.metric-trend');
+      if (summary.lastTs) {
+        trends[0].textContent = `آخر تفاعل: ${formatArDate(summary.lastTs)}`;
+        trends[1].textContent = `أتم ${summary.total} نشاط حتى الآن`;
+        trends[2].textContent = `يتحسن في ${summary.games > summary.books ? 'الألعاب' : 'المطالعة'}`;
+        trends.forEach(t => t.style.color = '#10b981');
+      } else {
+        trends[0].textContent = 'بانتظار أول تفاعل أكاديمي';
+        trends[1].textContent = 'ابدأ أول نشاط اليوم';
+        trends[2].textContent = 'لم تكتمل مهارات بعد';
+        trends.forEach(t => t.style.color = '#718096');
+      }
+
+      // تحديث أشرطة التقدم
+      const progressMap = {
+        'اللغة العربية': summary.progress.arabic,
+        'الرياضيات': summary.progress.math,
+        'اللغة الإنجليزية': summary.progress.english,
+        'المهارات الحياتية': summary.progress.life
+      };
+
+      document.querySelectorAll('.progress-item').forEach(item => {
+        const label = item.querySelector('.progress-meta span:first-child').textContent;
+        const value = progressMap[label] || 0;
+        item.querySelector('.progress-meta span:last-child').textContent = `${value}%`;
+        item.querySelector('.progress-bar-fill').style.width = `${value}%`;
+      });
+
+      // تحديث حالة الحضور اليومي
+      const checkedIn = await hasCheckedInToday();
+      const statusBadge = document.getElementById('attendance-status-badge');
+      const actionsContainer = document.getElementById('attendance-actions-container');
+      
+      if (checkedIn) {
+        statusBadge.innerHTML = '<span class="task-badge completed">تم تسجيل الحضور اليوم ✓</span>';
+        actionsContainer.style.display = 'none';
+      } else {
+        statusBadge.innerHTML = '<span class="task-badge pending">بانتظار تسجيل الحضور</span>';
+        actionsContainer.style.display = 'flex';
+      }
+
+      // تحديث إحصائيات الحضور
+      document.getElementById('count-present').textContent = attSummary.present;
+      document.getElementById('count-excused').textContent = attSummary.excused;
+      document.getElementById('count-absent').textContent = attSummary.absent;
+
+      // تحديث قائمة المهام
+      const taskList = document.querySelector('.tasks-list');
+      const lastActivities = await getRecentActivities(stage, 6);
+      let tasksHtml = '';
+      if (lastActivities.length > 0) {
+        lastActivities.forEach(act => {
+          tasksHtml += `
+            <li class="task-item">
+              <div class="task-info">
+                <span class="task-title">${act.title || 'تفاعل جديد'}</span>
+                <span class="task-date">${formatArDate(act.ts)} • ${getActivityTypeLabel(act.type)}</span>
+              </div>
+              <span class="task-badge completed">مسجل</span>
+            </li>
+          `;
+        });
+      } else {
+        tasksHtml = `
+          <li class="task-item">
+            <div class="task-info">
+              <span class="task-title">لا توجد نشاطات مسجلة بعد</span>
+              <span class="task-date">ابدأ لعبة أو افتح كتابا أو شغّل قصة ليظهر هنا</span>
+            </div>
+            <span class="task-badge pending">بانتظار</span>
+          </li>
+        `;
+      }
+      taskList.innerHTML = tasksHtml;
+
+      // تحديث التحليل الذكي
+      updateSmartAnalysis(summary, stage);
+    }
+
+    async function handleRecordAttendance(status) {
+      if (confirm(`هل تود تسجيل حالة الحضور: ${status === 'present' ? 'حاضر' : 'غياب بعذر'}؟`)) {
+        await recordAttendance(status);
+        const user = getCurrentUser();
+        await updateChildData((user?.grade || 'kg1').toLowerCase());
+      }
+    }
+
+    function updateSmartAnalysis(summary, stage) {
+      const strengthsList = document.getElementById('strengths-list');
+      const interestsContainer = document.getElementById('interests-analysis');
+      
+      // تحليل نقاط القوة
+      let strengthsHtml = '';
+      if (summary.progress.arabic > 50) strengthsHtml += '<li style="margin-bottom: 0.5rem;">✅ تميز ملحوظ في التعرف على الحروف العربية</li>';
+      if (summary.progress.math > 50) strengthsHtml += '<li style="margin-bottom: 0.5rem;">✅ سرعة بديهة في حل مسائل الجمع البسيطة</li>';
+      if (summary.progress.english > 50) strengthsHtml += '<li style="margin-bottom: 0.5rem;">✅ ذاكرة بصرية قوية في تمييز الألوان والكلمات</li>';
+      if (summary.total > 10) strengthsHtml += '<li style="margin-bottom: 0.5rem;">✅ التزام واستمرارية في أداء الأنشطة اليومية</li>';
+      
+      if (!strengthsHtml) strengthsHtml = '<li>بانتظار مزيد من الأنشطة للتحليل...</li>';
+      strengthsList.innerHTML = strengthsHtml;
+      
+      // تحليل الاهتمامات
+      let interestsHtml = '';
+      const totalActivities = summary.games + summary.books + summary.stories;
+      if (totalActivities > 0) {
+        const gamePerc = Math.round((summary.games / totalActivities) * 100);
+        const bookPerc = Math.round((summary.books / totalActivities) * 100);
+        const storyPerc = Math.round((summary.stories / totalActivities) * 100);
+        
+        interestsHtml = `
+          <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">توزيع اهتمام الطفل:</p>
+          <div style="height: 20px; display: flex; border-radius: 10px; overflow: hidden; margin-bottom: 1rem;">
+            <div style="width: ${gamePerc}%; background: #4a6cf7;" title="ألعاب"></div>
+            <div style="width: ${bookPerc}%; background: #e8822a;" title="كتب"></div>
+            <div style="width: ${storyPerc}%; background: #10b981;" title="قصص"></div>
+          </div>
+          <p style="font-size: 0.85rem; color: #4a5568;">
+            ${gamePerc > 50 ? 'يميل الطفل للتعلم من خلال اللعب التفاعلي بشكل كبير.' : ''}
+            ${bookPerc > 50 ? 'يظهر الطفل شغفاً بالقراءة والمطالعة البصرية.' : ''}
+            ${storyPerc > 50 ? 'ينجذب الطفل للقصص الصوتية والوسائط المتعددة.' : ''}
+            ${!gamePerc && !bookPerc && !storyPerc ? 'ابدأ الأنشطة لتحديد اهتمامات طفلك.' : ''}
+          </p>
+        `;
+      } else {
+        interestsHtml = '<p>لا توجد بيانات كافية لتحليل الاهتمامات بعد.</p>';
+      }
+      interestsContainer.innerHTML = interestsHtml;
+    }
+
+    let parentReportRefreshTimer = null;
+
+    function initParentReportAutoRefresh() {
+      if (parentReportRefreshTimer) {
+        clearInterval(parentReportRefreshTimer);
+      }
+
+      parentReportRefreshTimer = setInterval(() => {
+        if (!document.hidden) {
+          refreshParentReport();
+        }
+      }, 10000);
+
+      window.addEventListener('focus', () => {
+        refreshParentReport();
+      });
+
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) {
+          refreshParentReport();
+        }
+      });
+    }
+
+    // التحقق من وجود بيانات مستخدم عند تحميل الصفحة
+    document.addEventListener('DOMContentLoaded', async function() {
+      await checkLoggedInUser();
+      initParentReportAutoRefresh();
+    });
+  </script>
+</body>
+</html>

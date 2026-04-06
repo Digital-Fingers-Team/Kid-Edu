@@ -316,16 +316,47 @@
       }
     }
 
+    .target-word-container {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
     .target-word {
       font-size: 3.5rem;
       font-weight: 800;
       color: var(--dark);
-      margin: 1rem 0;
       letter-spacing: 2px;
       background: #FFFAF0;
       padding: 0.5rem 1.5rem;
       border-radius: 60px;
       display: inline-block;
+    }
+
+    .btn-listen {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--secondary);
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+      box-shadow: 0 4px 10px rgba(74, 144, 226, 0.3);
+    }
+
+    .btn-listen:hover {
+      transform: scale(1.1);
+      background: var(--secondary-light);
+    }
+
+    .btn-listen:active {
+      transform: scale(0.9);
     }
 
     .breathing-guide {
@@ -578,7 +609,10 @@
           <span>🌬️ خذ نفساً عميقاً ... ثم اضغط على الزر وتحدث ببطء</span>
         </div>
         <div class="character-container" id="character">🐸</div>
-        <div class="target-word" id="wordDisplay">أَ... نَ... ا</div>
+        <div class="target-word-container">
+          <div class="target-word" id="wordDisplay">أَ... نَ... ا</div>
+          <button class="btn-listen" id="listenBtn" title="استمع للكلمة">🔊</button>
+        </div>
 
         <div class="visualizer-container" id="visualizer"></div>
         <div id="feedbackMessage" style="font-weight: 700; color: var(--secondary); min-height: 2.5rem;"></div>
@@ -613,16 +647,16 @@
   <script>
     // ======================= كلمات علاج التلعثم - إيموجيات ملائمة لكل كلمة ===================
     const words = [
-      { text: "أَ... نَ... ا", hint: "نَفَس عميق، مد الألف 3 ثوانٍ ثم انطق نا بهدوء", char: "👩‍👧", targetDuration: 1800 },    // أنا تعبر عن الشخصية
-      { text: "بَ... ا... ب", hint: "افتح فمك ببطء ومد صوت الباء", char: "👨‍👧", targetDuration: 1600 },    // باب -> عائلة/منزل
-      { text: "تُ... فَّ... ا... ح", hint: "قسّم الكلمة لمقاطع طويلة مع تدفق الهواء", char: "🍎", targetDuration: 2000 },   // تفاحة
-      { text: "جَ... مَ... ل", hint: "ارسم الحروف في الهواء بصوتك ببطء شديد", char: "🐪", targetDuration: 1700 },   // جمل
-      { text: "مَ... ا... مَ... ا", hint: "أجمل كلمة، انطقها بأطول نَفَس عندك بدون تقطيع", char: "👩‍👦", targetDuration: 2200 },   // ماما
-      { text: "قِ... ط...", hint: "مد حرف القاف ثم قل ط بسلاسة", char: "🐈", targetDuration: 1300 },    // قط
-      { text: "كِ... تَ... ا... ب", hint: "تخيل أنك تفتح كتاباً ببطء وأنت تنطق", char: "📚", targetDuration: 1900 },   // كتاب
-      { text: "زَه... رَة", hint: "انفث الهواء بلطف مع الزاي", char: "🌻", targetDuration: 1500 },   // زهرة
-      { text: "فِ... ي... ل", hint: "مد صوت الفاء ببطء ثم يل", char: "🐘", targetDuration: 1600 },   // فيل
-      { text: "أُ... س... د", hint: "تحدث بصوت الأسد الشجاع ببطء", char: "🦁", targetDuration: 1400 }    // أسد
+      { text: "أَ... نَ... ا", clean: "أنا", hint: "نَفَس عميق، مد الألف 3 ثوانٍ ثم انطق نا بهدوء", char: "👩‍👧", targetDuration: 1800 },
+      { text: "بَ... ا... ب", clean: "باب", hint: "افتح فمك ببطء ومد صوت الباء", char: "👨‍👧", targetDuration: 1600 },
+      { text: "تُ... فَّ... ا... ح", clean: "تفاحة", hint: "قسّم الكلمة لمقاطع طويلة مع تدفق الهواء", char: "🍎", targetDuration: 2000 },
+      { text: "جَ... مَ... ل", clean: "جمل", hint: "ارسم الحروف في الهواء بصوتك ببطء شديد", char: "🐪", targetDuration: 1700 },
+      { text: "مَ... ا... مَ... ا", clean: "ماما", hint: "أجمل كلمة، انطقها بأطول نَفَس عندك بدون تقطيع", char: "👩‍👦", targetDuration: 2200 },
+      { text: "قِ... ط...", clean: "قط", hint: "مد حرف القاف ثم قل ط بسلاسة", char: "🐈", targetDuration: 1300 },
+      { text: "كِ... تَ... ا... ب", clean: "كتاب", hint: "تخيل أنك تفتح كتاباً ببطء وأنت تنطق", char: "📚", targetDuration: 1900 },
+      { text: "زَه... رَة", clean: "زهرة", hint: "انفث الهواء بلطف مع الزاي", char: "🌻", targetDuration: 1500 },
+      { text: "فِ... ي... ل", clean: "فيل", hint: "مد صوت الفاء ببطء ثم يل", char: "🐘", targetDuration: 1600 },
+      { text: "أُ... س... د", clean: "أسد", hint: "تحدث بصوت الأسد الشجاع ببطء", char: "🦁", targetDuration: 1400 }
     ];
 
     let currentIndex = 0;
@@ -634,8 +668,25 @@
     let mediaStream;
     let recordingStartTime = 0;
     let soundIntensityHistory = [];
+    
+    // إعداد Speech Recognition
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    let recognition;
+    let recognizedText = "";
+    if (SpeechRecognition) {
+      recognition = new SpeechRecognition();
+      recognition.lang = 'ar-SA';
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+
+      recognition.onresult = (event) => {
+        recognizedText = event.results[0][0].transcript;
+        console.log("Recognized:", recognizedText);
+      };
+    }
 
     const recordBtn = document.getElementById('recordBtn');
+    const listenBtn = document.getElementById('listenBtn');
     const nextBtn = document.getElementById('nextBtn');
     const wordDisplay = document.getElementById('wordDisplay');
     const character = document.getElementById('character');
@@ -644,6 +695,18 @@
     const feedbackDiv = document.getElementById('feedbackMessage');
     const fluencyScoreDiv = document.getElementById('fluencyScore');
     const dotsContainer = document.getElementById('progressDots');
+
+    // نطق الكلمة للطفل
+    function speakWord() {
+      const cleanWord = words[currentIndex].clean;
+      const utterance = new SpeechSynthesisUtterance(cleanWord);
+      utterance.lang = 'ar-SA';
+      utterance.rate = 0.6; // سرعة بطيئة للتعلم
+      utterance.pitch = 1.2; // نغمة محببة للأطفال
+      window.speechSynthesis.speak(utterance);
+    }
+
+    listenBtn.addEventListener('click', speakWord);
 
     // إنشاء أشرطة الـ Visualizer
     for (let i = 0; i < 24; i++) {
@@ -674,9 +737,12 @@
     }
 
     // تحليل متقدم لسلاسة النطق وعلاج التلعثم (تحليل الشدة والاستمرارية)
-    function analyzeFluency(audioDataArray, durationMs, targetDur) {
+    function analyzeFluency(audioDataArray, durationMs, targetDur, recognized) {
       if (!audioDataArray.length || durationMs < 300) return { score: 30, message: "حاول التحدث لمدة أطول قليلاً ببطء ⏳" };
 
+      const targetWord = words[currentIndex].clean;
+      const isWordCorrect = recognized.includes(targetWord) || targetWord.includes(recognized);
+      
       const avgIntensity = audioDataArray.reduce((a, b) => a + b, 0) / audioDataArray.length;
       let suddenChanges = 0;
       for (let i = 1; i < audioDataArray.length; i++) {
@@ -685,32 +751,55 @@
       }
       const changeRate = suddenChanges / audioDataArray.length;
 
+      // 1. درجة الدقة (هل قال الكلمة صح؟)
+      let accuracyScore = isWordCorrect ? 40 : 10;
+      if (!isWordCorrect && recognized.length > 0) accuracyScore = 20;
+
+      // 2. درجة المد والإطالة (هل نطق ببطء كما طلبنا؟)
       let durationScore = 0;
-      if (durationMs >= targetDur - 400 && durationMs <= targetDur + 800) durationScore = 40;
-      else if (durationMs >= targetDur - 800) durationScore = 25;
-      else if (durationMs > 1200) durationScore = 20;
+      if (durationMs >= targetDur - 400 && durationMs <= targetDur + 1500) durationScore = 30;
+      else if (durationMs >= targetDur - 800) durationScore = 20;
       else durationScore = 10;
 
-      const intensityScore = avgIntensity > 35 ? 30 : (avgIntensity > 20 ? 20 : 10);
+      // 3. درجة السلاسة (هل كان الصوت مستقراً؟)
       let smoothScore = 30;
-      if (changeRate < 0.08) smoothScore = 30;
-      else if (changeRate < 0.2) smoothScore = 20;
-      else if (changeRate < 0.35) smoothScore = 10;
-      else smoothScore = 5;
+      if (changeRate < 0.12) smoothScore = 30;
+      else if (changeRate < 0.25) smoothScore = 20;
+      else smoothScore = 10;
 
-      let total = durationScore + intensityScore + smoothScore;
+      let total = accuracyScore + durationScore + smoothScore;
       total = Math.min(100, Math.max(0, total));
 
       let message = "";
-      if (total >= 85) message = "🌟 ممتاز جداً! نطق سلس وواثق خالي من التلعثم!";
-      else if (total >= 70) message = "🎉 جيد جداً! حاول إطالة الحروف أكثر قليلاً واستمر بالتنفس العميق.";
-      else if (total >= 55) message = "👍 بداية رائعة! ركز على التنفس قبل الكلمة وإطالة أول مقطع.";
-      else if (total >= 35) message = "🌱 جميل أنك تتدرب! حاول التحدث بهدوء أكثر ومد الصوت كالعلكة المطاطية.";
-      else message = "💪 أنت شجاع! دعنا نتدرب معاً: خذ نفساً، ثم قل الكلمة ببطء شديد كأنك تغنيها.";
+      let encouragement = "";
 
-      if (changeRate > 0.4) message += " 🧘 تذكّر: لا تتعجل، ابدأ ببطء وأطلق كل حرف بهدوء.";
+      if (isWordCorrect) {
+        if (total >= 85) {
+          message = "🌟 مذهل! نطقتها بشكل مثالي وسلس جداً!";
+          encouragement = "أنت بطل حقيقي في الكلام الواثق!";
+        } else if (total >= 70) {
+          message = "🎉 أحسنت! الكلمة صحيحة، ركز في المرة القادمة على الهدوء أكثر.";
+          encouragement = "رائع يا بطل، تقدمك ملحوظ!";
+        } else {
+          message = "👍 الكلمة صحيحة! لكن حاول أن تمد الحروف أكثر لتعالج التلعثم.";
+          encouragement = "أنا فخور بك، استمر في المحاولة!";
+        }
+      } else {
+        if (recognized.length > 0) {
+          message = `🤔 سمعتك تقول "${recognized}"، حاول أن تنطق "${targetWord}" ببطء أكبر.`;
+          encouragement = "لا بأس، الخطأ جزء من التعلم، جرب مرة أخرى!";
+        } else {
+          message = "💪 لم أسمعك جيداً، خذ نفساً عميقاً وقل الكلمة بصوت واضح وبطء.";
+          encouragement = "هيا يا بطل، يمكنك فعلها!";
+        }
+      }
 
-      return { score: total, message };
+      // إضافة نصيحة بناءً على نوع الخطأ
+      let advice = "";
+      if (changeRate > 0.3) advice = " 🧘 نصيحة: حاول ألا تقطع صوتك، اجعل الكلمة تخرج كقطعة واحدة ممتدة.";
+      if (durationMs < targetDur - 500) advice = " 🐢 نصيحة: السرعة تزيد التلعثم، ابطئ أكثر لتكون واثقاً.";
+
+      return { score: total, message: `${message} ${encouragement} ${advice}`, isCorrect: isWordCorrect };
     }
 
     async function startRecording() {
@@ -726,11 +815,16 @@
         dataArray = new Uint8Array(analyser.frequencyBinCount);
 
         isRecording = true;
+        recognizedText = "";
         recordingStartTime = Date.now();
         soundIntensityHistory = [];
         recordBtn.classList.add('recording');
         document.getElementById('recordText').textContent = "🎙️ تكلم ببطء ومد الحروف...";
         feedbackDiv.innerHTML = "✨ استمر، أنا أستمع إليك... حاول ألا تتوقف فجأة!";
+        
+        if (recognition) {
+          try { recognition.start(); } catch(e) { console.log("Recognition already started"); }
+        }
 
         visualizeAndCollect();
       } catch (err) {
@@ -763,6 +857,10 @@
       const duration = Date.now() - recordingStartTime;
       isRecording = false;
       if (animationId) cancelAnimationFrame(animationId);
+      
+      if (recognition) {
+        try { recognition.stop(); } catch(e) {}
+      }
 
       const intensityCopy = [...soundIntensityHistory];
 
@@ -773,32 +871,35 @@
       document.getElementById('recordText').textContent = "اضغط وتحدث ببطء";
       bars.forEach(bar => bar.style.height = '10px');
 
-      let analysis;
-      if (intensityCopy.length < 5 || duration < 400) {
-        analysis = { score: 25, message: "حاول الضغط والتحدث لمدة أطول، تنفس بعمق وابدأ ببطء 🐢" };
-      } else {
-        analysis = analyzeFluency(intensityCopy, duration, words[currentIndex].targetDuration);
-      }
+      // ننتظر قليلاً حتى تكتمل نتيجة التعرف على الصوت
+      setTimeout(() => {
+        let analysis;
+        if (intensityCopy.length < 5 || duration < 400) {
+          analysis = { score: 25, message: "حاول الضغط والتحدث لمدة أطول، تنفس بعمق وابدأ ببطء 🐢" };
+        } else {
+          analysis = analyzeFluency(intensityCopy, duration, words[currentIndex].targetDuration, recognizedText);
+        }
 
-      feedbackDiv.innerHTML = `🔊 ${analysis.message}`;
-      fluencyScoreDiv.style.display = "inline-block";
-      fluencyScoreDiv.innerHTML = `🏆 درجة السلاسة: ${analysis.score}% - ${analysis.score >= 70 ? 'نطق رائع!' : 'واصل التدريب!'}`;
+        feedbackDiv.innerHTML = `🔊 ${analysis.message}`;
+        fluencyScoreDiv.style.display = "inline-block";
+        fluencyScoreDiv.innerHTML = `🏆 درجة السلاسة: ${analysis.score}% - ${analysis.score >= 70 ? 'نطق رائع!' : 'واصل التدريب!'}`;
 
-      if (analysis.score >= 50 || duration > 900) {
-        nextBtn.disabled = false;
-        let reports = JSON.parse(localStorage.getItem('speech_reports') || '[]');
-        reports.push({ word: words[currentIndex].text, score: analysis.score, date: new Date().toISOString() });
-        localStorage.setItem('speech_reports', JSON.stringify(reports.slice(-15)));
-      } else {
-        nextBtn.disabled = true;
-        feedbackDiv.innerHTML += " 🧸 دعنا نحاول مرة أخرى، ركز على الإطالة والتنفس.";
-      }
+        // نطق التغذية الراجعة صوتياً
+        const feedbackUtterance = new SpeechSynthesisUtterance(analysis.message);
+        feedbackUtterance.lang = 'ar-SA';
+        feedbackUtterance.rate = 0.9;
+        window.speechSynthesis.speak(feedbackUtterance);
 
-      if (analysis.score < 45) {
-        setTimeout(() => {
-          feedbackDiv.innerHTML = "💙 لا تقلق، كل الأبطال يتدربون! جرب تقطيع الكلمة لمقاطع: " + words[currentIndex].text.split('...').join(' • ');
-        }, 2000);
-      }
+        if (analysis.score >= 50 || analysis.isCorrect) {
+          nextBtn.disabled = false;
+          let reports = JSON.parse(localStorage.getItem('speech_reports') || '[]');
+          reports.push({ word: words[currentIndex].text, score: analysis.score, date: new Date().toISOString() });
+          localStorage.setItem('speech_reports', JSON.stringify(reports.slice(-15)));
+        } else {
+          nextBtn.disabled = true;
+          feedbackDiv.innerHTML += " 🧸 دعنا نحاول مرة أخرى، ركز على الإطالة والتنفس.";
+        }
+      }, 500);
     }
 
     recordBtn.addEventListener('mousedown', startRecording);
