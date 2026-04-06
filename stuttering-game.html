@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>لعبة النطق السلس | سمارت كيدز - علاج التلعثم المتقدم</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="description"
+    content="لعبة تفاعلية متطورة لعلاج التلعثم لدى الأطفال - تمارين التنفس، الإطالة الصوتية، الاستماع الذكي وتقييم فوري بأسلوب ممتع." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #FF9E1F;
+      --primary-dark: #E88A0D;
+      --primary-light: #FFD699;
+      --secondary: #4A90E2;
+      --secondary-light: #8EC0F0;
+      --accent: #FF6B6B;
+      --success: #10B981;
+      --dark: #2D3748;
+      --light: #F7FAFC;
+      --white: #FFFFFF;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.12);
+      --radius: 20px;
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background-color: var(--light);
+      color: var(--dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .main-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 70px;
+      background: white;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      z-index: 1100;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .header-container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-logo {
+      height: 50px;
+      object-fit: contain;
+    }
+
+    .sidebar-toggle-btn {
+      background: #e8822a;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 8px 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: all 0.3s;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    .sidebar-toggle-btn:hover {
+      background: #ff9d45;
+      transform: scale(1.05);
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 300px;
+      height: 100%;
+      background: white;
+      box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+      z-index: 2000;
+      transition: right 0.3s ease;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .sidebar.active {
+      right: 0;
+    }
+
+    .sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1999;
+      display: none;
+    }
+
+    .sidebar-overlay.active {
+      display: block;
+    }
+
+    .sidebar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .sidebar-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #666;
+    }
+
+    .sidebar-user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      padding: 10px;
+      background: #fffaf0;
+      border-radius: 10px;
+    }
+
+    .sidebar-user-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #e8822a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    .sidebar-user-info h3 {
+      margin: 0;
+      font-size: 16px;
+    }
+
+    .sidebar-user-info p {
+      margin: 0;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .sidebar-menu {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .sidebar-menu li {
+      margin-bottom: 5px;
+    }
+
+    .sidebar-menu a {
+      display: block;
+      padding: 12px 15px;
+      text-decoration: none;
+      color: #333;
+      border-radius: 8px;
+      transition: all 0.3s;
+    }
+
+    .sidebar-menu a:hover {
+      background: #fff5e6;
+    }
+
+    .sidebar-menu a.active {
+      background: #e8822a;
+      color: white;
+    }
+
+    .sidebar-footer {
+      margin-top: 30px;
+      padding-top: 15px;
+      border-top: 1px solid #eee;
+    }
+
+    .logout-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 12px 15px;
+      background: #ffe0b8;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+
+    .logout-btn:hover {
+      background: #ffd1a4;
+    }
+
+    main {
+      max-width: min(1000px, 94vw);
+      margin: 2rem auto;
+      flex: 1;
+      width: 100%;
+      padding-top: 80px;
+    }
+
+    .game-container {
+      background: var(--white);
+      border-radius: 30px;
+      padding: 2.5rem;
+      box-shadow: var(--shadow-lg);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .game-header {
+      margin-bottom: 2rem;
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--secondary-light);
+      color: white;
+      padding: 0.4rem 1.2rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: var(--secondary);
+      margin-bottom: 0.5rem;
+    }
+
+    .description {
+      font-size: 1.1rem;
+      color: var(--dark);
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      opacity: 0.8;
+    }
+
+    .exercise-area {
+      min-height: 350px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      padding: 2rem;
+      border: 3px dashed var(--primary-light);
+      border-radius: var(--radius);
+      margin-bottom: 2rem;
+      position: relative;
+      background: #fffef7;
+    }
+
+    .character-container {
+      width: 150px;
+      height: 150px;
+      font-size: 5rem;
+      background: var(--primary-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: bounce 2s infinite;
+      transition: var(--transition);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    @keyframes bounce {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-15px);
+      }
+    }
+
+    .target-word-container {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .target-word {
+      font-size: 3.5rem;
+      font-weight: 800;
+      color: var(--dark);
+      letter-spacing: 2px;
+      background: #FFFAF0;
+      padding: 0.5rem 1.5rem;
+      border-radius: 60px;
+      display: inline-block;
+    }
+
+    .btn-listen {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--secondary);
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+      box-shadow: 0 4px 10px rgba(74, 144, 226, 0.3);
+    }
+
+    .btn-listen:hover {
+      transform: scale(1.1);
+      background: var(--secondary-light);
+    }
+
+    .btn-listen:active {
+      transform: scale(0.9);
+    }
+
+    .breathing-guide {
+      background: #e6f7ff;
+      border-radius: 30px;
+      padding: 12px 20px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      justify-content: center;
+      font-weight: bold;
+      color: #0077b6;
+      font-size: 1.1rem;
+    }
+
+    .breathing-circle {
+      width: 40px;
+      height: 40px;
+      background: #4A90E2;
+      border-radius: 50%;
+      animation: breathePulse 3s ease-in-out infinite;
+    }
+
+    @keyframes breathePulse {
+      0% {
+        transform: scale(0.8);
+        opacity: 0.6;
+        background: #4A90E2;
+      }
+
+      50% {
+        transform: scale(1.3);
+        opacity: 1;
+        background: #FF9E1F;
+      }
+
+      100% {
+        transform: scale(0.8);
+        opacity: 0.6;
+        background: #4A90E2;
+      }
+    }
+
+    .visualizer-container {
+      width: 100%;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .bar {
+      width: 8px;
+      height: 10px;
+      background: var(--secondary);
+      border-radius: 10px;
+      transition: height 0.08s ease;
+    }
+
+    .controls {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-family: inherit;
+    }
+
+    .btn-record {
+      background: var(--accent);
+      color: white;
+      box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+    }
+
+    .btn-record.recording {
+      animation: pulse-red 1.5s infinite;
+      background: #ff4757;
+    }
+
+    @keyframes pulse-red {
+      0% {
+        box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.7);
+      }
+
+      70% {
+        box-shadow: 0 0 0 15px rgba(255, 107, 107, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(255, 107, 107, 0);
+      }
+    }
+
+    .btn-next {
+      background: var(--success);
+      color: white;
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      filter: brightness(1.1);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .hint-box {
+      background: #EBF8FF;
+      color: #2B6CB0;
+      padding: 1rem 1.5rem;
+      border-radius: 15px;
+      margin-top: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-align: right;
+    }
+
+    .progress-dots {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 1.5rem;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #CBD5E0;
+      transition: var(--transition);
+    }
+
+    .dot.active {
+      background: var(--secondary);
+      transform: scale(1.2);
+    }
+
+    .dot.completed {
+      background: var(--success);
+    }
+
+    .score-badge {
+      margin-top: 10px;
+      background: #f0fff4;
+      border-radius: 40px;
+      padding: 6px 15px;
+      font-weight: bold;
+      color: #2F855A;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--dark);
+      opacity: 0.7;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      .target-word {
+        font-size: 2.2rem;
+      }
+
+      .game-container {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="main-header">
+    <div class="header-container">
+      <div class="header-logo-container">
+        <img src="logo.jpeg" alt="EduKid AI Logo" class="header-logo"
+          onerror="this.src='https://via.placeholder.com/50?text=EduKid'">
+      </div>
+      <button class="sidebar-toggle-btn" id="headerSidebarToggle">
+        <span>القائمة</span>
+        <span>☰</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="sidebar-overlay"></div>
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2>القائمة الرئيسية</h2>
+      <button class="sidebar-close">×</button>
+    </div>
+    <div class="sidebar-user">
+      <div class="sidebar-user-avatar" id="sidebar-user-avatar">ط</div>
+      <div class="sidebar-user-info">
+        <h3 id="sidebar-student-name">اسم الطالب</h3>
+        <p id="sidebar-grade">المرحلة: رياض الأطفال</p>
+      </div>
+    </div>
+    <ul class="sidebar-menu">
+      <li><a href="index.html">الصفحة الرئيسية</a></li>
+      <li><a href="dashboard.html" id="sidebar-dashboard-link">لوحة التعلم</a></li>
+      <li><a href="games.html">الألعاب التعليمية</a></li>
+      <li><a href="books.html">المكتبة الرقمية</a></li>
+      <li><a href="stories.html">القصص الصوتية</a></li>
+      <li><a href="parent-report.html">لوحة ولي الأمر</a></li>
+    </ul>
+    <div class="sidebar-footer">
+      <button class="logout-btn" id="logout-btn">
+        <span>تسجيل الخروج</span>
+        <span>🚪</span>
+      </button>
+    </div>
+  </div>
+
+  <main>
+    <div class="game-container">
+      <div class="game-header">
+        <span class="badge">🧘 تدريب متقدم لعلاج التلعثم</span>
+        <h1>لعبة النطق السلس</h1>
+        <p class="description">
+          🎙️ اضغط مع الاستمرار على الزر وتحدث ببطء وإطالة. التحليل الذكي يساعدك على نطق سلس وخالٍ من التلعثم!
+        </p>
+      </div>
+
+      <div class="exercise-area" id="gameBoard">
+        <div class="breathing-guide" id="breathingGuide">
+          <div class="breathing-circle"></div>
+          <span>🌬️ خذ نفساً عميقاً ... ثم اضغط على الزر وتحدث ببطء</span>
+        </div>
+        <div class="character-container" id="character">🐸</div>
+        <div class="target-word-container">
+          <div class="target-word" id="wordDisplay">أَ... نَ... ا</div>
+          <button class="btn-listen" id="listenBtn" title="استمع للكلمة">🔊</button>
+        </div>
+
+        <div class="visualizer-container" id="visualizer"></div>
+        <div id="feedbackMessage" style="font-weight: 700; color: var(--secondary); min-height: 2.5rem;"></div>
+        <div id="fluencyScore" class="score-badge" style="display: none;"></div>
+      </div>
+
+      <div class="controls">
+        <button class="btn btn-record" id="recordBtn">
+          <span id="recordIcon">🎤</span>
+          <span id="recordText">اضغط وتحدث ببطء</span>
+        </button>
+        <button class="btn btn-next" id="nextBtn" disabled>
+          <span>✨</span>
+          <span>الكلمة التالية</span>
+        </button>
+      </div>
+
+      <div class="progress-dots" id="progressDots"></div>
+
+      <div class="hint-box">
+        <span style="font-size: 1.5rem;">💡</span>
+        <p id="instructionHint">نصيحة: خذ نفساً عميقاً قبل البدء، وحاول إطالة أول حرف من الكلمة.</p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    🎯 تدريب يومي: التنفس + الإطالة = كلام واثق وسلس!
+  </footer>
+
+  <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
+  <script>
+    // ======================= كلمات علاج التلعثم - إيموجيات ملائمة لكل كلمة ===================
+    const words = [
+      { text: "أَ... نَ... ا", clean: "أنا", hint: "نَفَس عميق، مد الألف 3 ثوانٍ ثم انطق نا بهدوء", char: "👩‍👧", targetDuration: 1800 },
+      { text: "بَ... ا... ب", clean: "باب", hint: "افتح فمك ببطء ومد صوت الباء", char: "👨‍👧", targetDuration: 1600 },
+      { text: "تُ... فَّ... ا... ح", clean: "تفاحة", hint: "قسّم الكلمة لمقاطع طويلة مع تدفق الهواء", char: "🍎", targetDuration: 2000 },
+      { text: "جَ... مَ... ل", clean: "جمل", hint: "ارسم الحروف في الهواء بصوتك ببطء شديد", char: "🐪", targetDuration: 1700 },
+      { text: "مَ... ا... مَ... ا", clean: "ماما", hint: "أجمل كلمة، انطقها بأطول نَفَس عندك بدون تقطيع", char: "👩‍👦", targetDuration: 2200 },
+      { text: "قِ... ط...", clean: "قط", hint: "مد حرف القاف ثم قل ط بسلاسة", char: "🐈", targetDuration: 1300 },
+      { text: "كِ... تَ... ا... ب", clean: "كتاب", hint: "تخيل أنك تفتح كتاباً ببطء وأنت تنطق", char: "📚", targetDuration: 1900 },
+      { text: "زَه... رَة", clean: "زهرة", hint: "انفث الهواء بلطف مع الزاي", char: "🌻", targetDuration: 1500 },
+      { text: "فِ... ي... ل", clean: "فيل", hint: "مد صوت الفاء ببطء ثم يل", char: "🐘", targetDuration: 1600 },
+      { text: "أُ... س... د", clean: "أسد", hint: "تحدث بصوت الأسد الشجاع ببطء", char: "🦁", targetDuration: 1400 }
+    ];
+
+    let currentIndex = 0;
+    let isRecording = false;
+    let audioContext;
+    let analyser;
+    let dataArray;
+    let animationId;
+    let mediaStream;
+    let recordingStartTime = 0;
+    let soundIntensityHistory = [];
+    
+    // إعداد Speech Recognition
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    let recognition;
+    let recognizedText = "";
+    if (SpeechRecognition) {
+      recognition = new SpeechRecognition();
+      recognition.lang = 'ar-SA';
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+
+      recognition.onresult = (event) => {
+        recognizedText = event.results[0][0].transcript;
+        console.log("Recognized:", recognizedText);
+      };
+    }
+
+    const recordBtn = document.getElementById('recordBtn');
+    const listenBtn = document.getElementById('listenBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const wordDisplay = document.getElementById('wordDisplay');
+    const character = document.getElementById('character');
+    const hintText = document.getElementById('instructionHint');
+    const visualizer = document.getElementById('visualizer');
+    const feedbackDiv = document.getElementById('feedbackMessage');
+    const fluencyScoreDiv = document.getElementById('fluencyScore');
+    const dotsContainer = document.getElementById('progressDots');
+
+    // نطق الكلمة للطفل
+    function speakWord() {
+      const cleanWord = words[currentIndex].clean;
+      const utterance = new SpeechSynthesisUtterance(cleanWord);
+      utterance.lang = 'ar-SA';
+      utterance.rate = 0.6; // سرعة بطيئة للتعلم
+      utterance.pitch = 1.2; // نغمة محببة للأطفال
+      window.speechSynthesis.speak(utterance);
+    }
+
+    listenBtn.addEventListener('click', speakWord);
+
+    // إنشاء أشرطة الـ Visualizer
+    for (let i = 0; i < 24; i++) {
+      const bar = document.createElement('div');
+      bar.className = 'bar';
+      visualizer.appendChild(bar);
+    }
+    const bars = document.querySelectorAll('.bar');
+
+    function updateDots() {
+      dotsContainer.innerHTML = '';
+      words.forEach((_, i) => {
+        const dot = document.createElement('div');
+        dot.className = `dot ${i === currentIndex ? 'active' : ''} ${i < currentIndex ? 'completed' : ''}`;
+        dotsContainer.appendChild(dot);
+      });
+    }
+
+    function updateWord() {
+      const word = words[currentIndex];
+      wordDisplay.textContent = word.text;
+      character.textContent = word.char;
+      hintText.textContent = `💡 نصيحة ذهبية: ${word.hint}`;
+      nextBtn.disabled = true;
+      feedbackDiv.innerHTML = "";
+      fluencyScoreDiv.style.display = "none";
+      updateDots();
+    }
+
+    // تحليل متقدم لسلاسة النطق وعلاج التلعثم (تحليل الشدة والاستمرارية)
+    function analyzeFluency(audioDataArray, durationMs, targetDur, recognized) {
+      if (!audioDataArray.length || durationMs < 300) return { score: 30, message: "حاول التحدث لمدة أطول قليلاً ببطء ⏳" };
+
+      const targetWord = words[currentIndex].clean;
+      const isWordCorrect = recognized.includes(targetWord) || targetWord.includes(recognized);
+      
+      const avgIntensity = audioDataArray.reduce((a, b) => a + b, 0) / audioDataArray.length;
+      let suddenChanges = 0;
+      for (let i = 1; i < audioDataArray.length; i++) {
+        const diff = Math.abs(audioDataArray[i] - audioDataArray[i - 1]);
+        if (diff > 45) suddenChanges++;
+      }
+      const changeRate = suddenChanges / audioDataArray.length;
+
+      // 1. درجة الدقة (هل قال الكلمة صح؟)
+      let accuracyScore = isWordCorrect ? 40 : 10;
+      if (!isWordCorrect && recognized.length > 0) accuracyScore = 20;
+
+      // 2. درجة المد والإطالة (هل نطق ببطء كما طلبنا؟)
+      let durationScore = 0;
+      if (durationMs >= targetDur - 400 && durationMs <= targetDur + 1500) durationScore = 30;
+      else if (durationMs >= targetDur - 800) durationScore = 20;
+      else durationScore = 10;
+
+      // 3. درجة السلاسة (هل كان الصوت مستقراً؟)
+      let smoothScore = 30;
+      if (changeRate < 0.12) smoothScore = 30;
+      else if (changeRate < 0.25) smoothScore = 20;
+      else smoothScore = 10;
+
+      let total = accuracyScore + durationScore + smoothScore;
+      total = Math.min(100, Math.max(0, total));
+
+      let message = "";
+      let encouragement = "";
+
+      if (isWordCorrect) {
+        if (total >= 85) {
+          message = "🌟 مذهل! نطقتها بشكل مثالي وسلس جداً!";
+          encouragement = "أنت بطل حقيقي في الكلام الواثق!";
+        } else if (total >= 70) {
+          message = "🎉 أحسنت! الكلمة صحيحة، ركز في المرة القادمة على الهدوء أكثر.";
+          encouragement = "رائع يا بطل، تقدمك ملحوظ!";
+        } else {
+          message = "👍 الكلمة صحيحة! لكن حاول أن تمد الحروف أكثر لتعالج التلعثم.";
+          encouragement = "أنا فخور بك، استمر في المحاولة!";
+        }
+      } else {
+        if (recognized.length > 0) {
+          message = `🤔 سمعتك تقول "${recognized}"، حاول أن تنطق "${targetWord}" ببطء أكبر.`;
+          encouragement = "لا بأس، الخطأ جزء من التعلم، جرب مرة أخرى!";
+        } else {
+          message = "💪 لم أسمعك جيداً، خذ نفساً عميقاً وقل الكلمة بصوت واضح وبطء.";
+          encouragement = "هيا يا بطل، يمكنك فعلها!";
+        }
+      }
+
+      // إضافة نصيحة بناءً على نوع الخطأ
+      let advice = "";
+      if (changeRate > 0.3) advice = " 🧘 نصيحة: حاول ألا تقطع صوتك، اجعل الكلمة تخرج كقطعة واحدة ممتدة.";
+      if (durationMs < targetDur - 500) advice = " 🐢 نصيحة: السرعة تزيد التلعثم، ابطئ أكثر لتكون واثقاً.";
+
+      return { score: total, message: `${message} ${encouragement} ${advice}`, isCorrect: isWordCorrect };
+    }
+
+    async function startRecording() {
+      if (isRecording) return;
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaStream = stream;
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const source = audioContext.createMediaStreamSource(stream);
+        analyser = audioContext.createAnalyser();
+        analyser.fftSize = 128;
+        source.connect(analyser);
+        dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+        isRecording = true;
+        recognizedText = "";
+        recordingStartTime = Date.now();
+        soundIntensityHistory = [];
+        recordBtn.classList.add('recording');
+        document.getElementById('recordText').textContent = "🎙️ تكلم ببطء ومد الحروف...";
+        feedbackDiv.innerHTML = "✨ استمر، أنا أستمع إليك... حاول ألا تتوقف فجأة!";
+        
+        if (recognition) {
+          try { recognition.start(); } catch(e) { console.log("Recognition already started"); }
+        }
+
+        visualizeAndCollect();
+      } catch (err) {
+        console.error(err);
+        alert("يُرجى السماح بالوصول إلى الميكروفون لكي نتمكن من تحسين نطقك معاً!");
+      }
+    }
+
+    function visualizeAndCollect() {
+      if (!isRecording) return;
+      if (analyser && dataArray) {
+        analyser.getByteFrequencyData(dataArray);
+        let avg = 0;
+        for (let i = 0; i < dataArray.length; i++) avg += dataArray[i];
+        avg = avg / dataArray.length;
+        soundIntensityHistory.push(avg);
+
+        bars.forEach((bar, idx) => {
+          const val = dataArray[idx % dataArray.length] || 0;
+          const height = Math.max(6, val / 2.2);
+          bar.style.height = `${height}px`;
+          bar.style.backgroundColor = val > 55 ? 'var(--primary)' : 'var(--secondary)';
+        });
+      }
+      animationId = requestAnimationFrame(visualizeAndCollect);
+    }
+
+    async function stopRecording() {
+      if (!isRecording) return;
+      const duration = Date.now() - recordingStartTime;
+      isRecording = false;
+      if (animationId) cancelAnimationFrame(animationId);
+      
+      if (recognition) {
+        try { recognition.stop(); } catch(e) {}
+      }
+
+      const intensityCopy = [...soundIntensityHistory];
+
+      if (audioContext) await audioContext.close();
+      if (mediaStream) mediaStream.getTracks().forEach(track => track.stop());
+
+      recordBtn.classList.remove('recording');
+      document.getElementById('recordText').textContent = "اضغط وتحدث ببطء";
+      bars.forEach(bar => bar.style.height = '10px');
+
+      // ننتظر قليلاً حتى تكتمل نتيجة التعرف على الصوت
+      setTimeout(() => {
+        let analysis;
+        if (intensityCopy.length < 5 || duration < 400) {
+          analysis = { score: 25, message: "حاول الضغط والتحدث لمدة أطول، تنفس بعمق وابدأ ببطء 🐢" };
+        } else {
+          analysis = analyzeFluency(intensityCopy, duration, words[currentIndex].targetDuration, recognizedText);
+        }
+
+        feedbackDiv.innerHTML = `🔊 ${analysis.message}`;
+        fluencyScoreDiv.style.display = "inline-block";
+        fluencyScoreDiv.innerHTML = `🏆 درجة السلاسة: ${analysis.score}% - ${analysis.score >= 70 ? 'نطق رائع!' : 'واصل التدريب!'}`;
+
+        // نطق التغذية الراجعة صوتياً
+        const feedbackUtterance = new SpeechSynthesisUtterance(analysis.message);
+        feedbackUtterance.lang = 'ar-SA';
+        feedbackUtterance.rate = 0.9;
+        window.speechSynthesis.speak(feedbackUtterance);
+
+        if (analysis.score >= 50 || analysis.isCorrect) {
+          nextBtn.disabled = false;
+          let reports = JSON.parse(localStorage.getItem('speech_reports') || '[]');
+          reports.push({ word: words[currentIndex].text, score: analysis.score, date: new Date().toISOString() });
+          localStorage.setItem('speech_reports', JSON.stringify(reports.slice(-15)));
+        } else {
+          nextBtn.disabled = true;
+          feedbackDiv.innerHTML += " 🧸 دعنا نحاول مرة أخرى، ركز على الإطالة والتنفس.";
+        }
+      }, 500);
+    }
+
+    recordBtn.addEventListener('mousedown', startRecording);
+    recordBtn.addEventListener('mouseup', stopRecording);
+    recordBtn.addEventListener('mouseleave', () => { if (isRecording) stopRecording(); });
+    recordBtn.addEventListener('touchstart', (e) => { e.preventDefault(); startRecording(); });
+    recordBtn.addEventListener('touchend', stopRecording);
+    recordBtn.addEventListener('touchcancel', stopRecording);
+
+    nextBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % words.length;
+      updateWord();
+      if (currentIndex === 0) {
+        const totalScore = "أنت بطل! أكملت الدورة بنجاح 🏆 واصل كل يوم لعلاج التلعثم بثقة!";
+        alert(totalScore);
+        feedbackDiv.innerHTML = "🎉🎉🎉 مذهل! أكملت جميع التمارين. استمر يومياً لتصبح ملك الكلام!";
+      }
+    });
+
+    const sidebarToggle = document.getElementById('headerSidebarToggle');
+    const sidebar = document.querySelector('.sidebar');
+    const sidebarOverlay = document.querySelector('.sidebar-overlay');
+    const sidebarClose = document.querySelector('.sidebar-close');
+
+    function openSidebar() { sidebar.classList.add('active'); sidebarOverlay.classList.add('active'); }
+    function closeSidebar() { sidebar.classList.remove('active'); sidebarOverlay.classList.remove('active'); }
+    if (sidebarToggle) sidebarToggle.addEventListener('click', openSidebar);
+    if (sidebarClose) sidebarClose.addEventListener('click', closeSidebar);
+    if (sidebarOverlay) sidebarOverlay.addEventListener('click', closeSidebar);
+
+    function getCurrentUser() {
+      try { const raw = localStorage.getItem('adukid_user'); return raw ? JSON.parse(raw) : null; } catch (e) { return null; }
+    }
+    function checkLoggedInUser() {
+      const user = getCurrentUser();
+      if (user && user.studentName) {
+        document.getElementById('sidebar-student-name').textContent = user.studentName;
+        document.getElementById('sidebar-grade').textContent = `المرحلة: ${user.gradeText || 'روضة أطفال'}`;
+        document.getElementById('sidebar-user-avatar').textContent = user.studentName.charAt(0);
+        const dashboardLink = document.getElementById('sidebar-dashboard-link');
+        if (dashboardLink) {
+          const grade = (user?.grade || '').toString().trim().toUpperCase();
+          dashboardLink.href = grade === 'KG2' ? 'dashboard-kg2.html' : 'dashboard-kg1.html';
+        }
+      }
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      checkLoggedInUser();
+      updateWord();
+      setInterval(() => {
+        if (!isRecording) {
+          const guide = document.getElementById('breathingGuide');
+          guide.style.opacity = '0.9';
+          setTimeout(() => { if (guide) guide.style.opacity = '1'; }, 500);
+        }
+      }, 3000);
+    });
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      if (confirm('هل أنت متأكد من تسجيل الخروج؟')) { localStorage.removeItem('adukid_user'); window.location.href = 'index.html'; }
+    });
+  </script>
+</body>
+
+</html>
